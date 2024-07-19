@@ -9,102 +9,101 @@ package entity;
  * @author Admin
  */
 public class sanpham {
-    int id;
-    String tensp;
-    int iddmsp;
-    int idth;
-    int mota;
-    String anhsp;
-    int soluong;
-    int gia;
-    boolean trangthai;
+    private int ID;
+    private String TenSP;
+    private int ID_DMSP;
+    private int ID_TH;
+    private String Mota;
+    private String AnhSP;
+    private int SoLuong;
+    private double Gia;
+    private boolean TrangThai;
 
     public sanpham() {
     }
 
-    public sanpham(int id, String tensp, int iddmsp, int idth, int mota, String anhsp, int soluong, int gia, boolean trangthai) {
-        this.id = id;
-        this.tensp = tensp;
-        this.iddmsp = iddmsp;
-        this.idth = idth;
-        this.mota = mota;
-        this.anhsp = anhsp;
-        this.soluong = soluong;
-        this.gia = gia;
-        this.trangthai = trangthai;
+    public sanpham(int ID, String TenSP, int ID_DMSP, int ID_TH, String Mota, String AnhSP, int SoLuong, double Gia, boolean TrangThai) {
+        this.ID = ID;
+        this.TenSP = TenSP;
+        this.ID_DMSP = ID_DMSP;
+        this.ID_TH = ID_TH;
+        this.Mota = Mota;
+        this.AnhSP = AnhSP;
+        this.SoLuong = SoLuong;
+        this.Gia = Gia;
+        this.TrangThai = TrangThai;
     }
 
-    public int getId() {
-        return id;
+    public int getID() {
+        return ID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
-    public String getTensp() {
-        return tensp;
+    public String getTenSP() {
+        return TenSP;
     }
 
-    public void setTensp(String tensp) {
-        this.tensp = tensp;
+    public void setTenSP(String TenSP) {
+        this.TenSP = TenSP;
     }
 
-    public int getIddmsp() {
-        return iddmsp;
+    public int getID_DMSP() {
+        return ID_DMSP;
     }
 
-    public void setIddmsp(int iddmsp) {
-        this.iddmsp = iddmsp;
+    public void setID_DMSP(int ID_DMSP) {
+        this.ID_DMSP = ID_DMSP;
     }
 
-    public int getIdth() {
-        return idth;
+    public int getID_TH() {
+        return ID_TH;
     }
 
-    public void setIdth(int idth) {
-        this.idth = idth;
+    public void setID_TH(int ID_TH) {
+        this.ID_TH = ID_TH;
     }
 
-    public int getMota() {
-        return mota;
+    public String getMota() {
+        return Mota;
     }
 
-    public void setMota(int mota) {
-        this.mota = mota;
+    public void setMota(String Mota) {
+        this.Mota = Mota;
     }
 
-    public String getAnhsp() {
-        return anhsp;
+    public String getAnhSP() {
+        return AnhSP;
     }
 
-    public void setAnhsp(String anhsp) {
-        this.anhsp = anhsp;
+    public void setAnhSP(String AnhSP) {
+        this.AnhSP = AnhSP;
     }
 
-    public int getSoluong() {
-        return soluong;
+    public int getSoLuong() {
+        return SoLuong;
     }
 
-    public void setSoluong(int soluong) {
-        this.soluong = soluong;
+    public void setSoLuong(int SoLuong) {
+        this.SoLuong = SoLuong;
     }
 
-    public int getGia() {
-        return gia;
+    public double getGia() {
+        return Gia;
     }
 
-    public void setGia(int gia) {
-        this.gia = gia;
+    public void setGia(double Gia) {
+        this.Gia = Gia;
     }
 
-    public boolean isTrangthai() {
-        return trangthai;
+    public boolean isTrangThai() {
+        return TrangThai;
     }
 
-    public void setTrangthai(boolean trangthai) {
-        this.trangthai = trangthai;
+    public void setTrangThai(boolean TrangThai) {
+        this.TrangThai = TrangThai;
     }
-    
     
 }

@@ -29,24 +29,29 @@ public class chiTietHoaDonDAO implements ICTHDRepo {
     }
     @Override
     public boolean add(chitiethoadon op) {// cái việc trong excute queryupdate nó có cái j thì phụ thuộc vào thứ tự cột của cau lệnh sql, gọi nó theo thứ tự
-        String sql =" cái j ở đây thì viết vào";
+        String sql ="INSERT INTO CTHOADON (ID_HD, ID_CTSP, SoLuong, Gia, TrangThai) VALUES (?, ?, ?, ?, ?)";
         helper.executeUpdate(sql, op.getIdctsp());
         return true;
     }
 
     @Override
     public boolean update(chitiethoadon op) {
-        return false;
+        String sql = "UPDATE CTHOADON SET ID_HD = ?, ID_CTSP = ?, SoLuong = ?, Gia = ?, TrangThai = ? WHERE ID = ?";
+        helper.executeUpdate(sql, op.getIdhd(), op.getIdctsp(), op.getSoluong(), op.getGia(), op.isTrangthai(), op.getId());
+        return true;
+
     }
 
     @Override
     public boolean delete(chitiethoadon op) {
-        return false;
+    String sql = "DELETE FROM CTHOADON WHERE ID = ?";
+        helper.executeUpdate(sql, op.getId());
+        return true;
     }
 
     @Override
     public List<chitiethoadon> getAll(chitiethoadon op) {
-        return List.of();
+        return selectBySQL("SELECT * FROM CTHOADON");
     }
 
     @Override
@@ -54,17 +59,22 @@ public class chiTietHoaDonDAO implements ICTHDRepo {
         List<chitiethoadon> lstCTHD = new ArrayList<>();
         try {
             ResultSet rs = helper.executeQuery(sql, args);
-            while (rs.next()) {// ở đây thì cái getint thì nên để tên cột thay vì là để số cột như kia
+            while (rs.next()) {
                 chitiethoadon cthd = new chitiethoadon();
-                cthd.setIdctsp(rs.getInt("idchitiethoadon"));
-                cthd.setGia(rs.getInt("gia"));
+                cthd.setId(rs.getInt("ID"));
+                cthd.setIdhd(rs.getInt("ID_HD"));
+                cthd.setIdctsp(rs.getInt("ID_CTSP"));
+                cthd.setSoluong(rs.getInt("SoLuong"));
+                cthd.setGia(rs.getInt("Gia"));
+                cthd.setTrangthai(rs.getBoolean("TrangThai"));
                 lstCTHD.add(cthd);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return List.of();
+        return lstCTHD;
     }
+
 
     @Override
     public List<chitiethoadon> findByID(int id) { // tương tự
