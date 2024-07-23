@@ -53,7 +53,7 @@ public class thuongHieuDAO implements ITHRepo {
         try {
             ResultSet rs = helper.executeQuery(sql, args);
             while (rs.next()) {
-                thuonghieu th = new thuonghieu(rs.getInt("ID"), rs.getString("MaSo"), rs.getString("MoTa"), rs.getBoolean("TrangThai"));
+                thuonghieu th = new thuonghieu(rs.getInt("ID"), rs.getString("Ten"), rs.getString("MoTa"), rs.getBoolean("TrangThai"));
                 lstTH.add(th);
             }
         } catch (Exception e) {
