@@ -80,20 +80,7 @@ public class thongkeDAO {
 "GROUP BY sp.ID, sp.TenSP, sp.Gia, th.Ten\n" +
 "ORDER BY SoLuongDaBan DESC;", ID_DM, month, year);
     }
-    
-    public List<Integer> getMonthFromHD(int year){
-        List<Integer> months = new ArrayList<>();
-        try {
-            ResultSet rs = helper.executeQuery("SELECT DISTINCT MONTH(ThoiGian) AS month FROM HOADON WHERE YEAR(ThoiGian) =? ORDER BY month;", year);
-            while (rs.next()) {
-                System.out.println(rs.getRow());
-                months.add(rs.getInt("month"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return months;
-    }
+
         public List<Integer> getYearFromHD(){
         List<Integer> years = new ArrayList<>();
         try {
@@ -123,6 +110,107 @@ public class thongkeDAO {
 //        return selectSPBySQL("SELECT sp.ID AS ID_SP,sp.TenSP,sp.SoLuong,sp.Gia,sz.Ten AS DacDiem FROM SANPHAM sp\n" +
 //"JOIN CTSIZE cts ON sp.ID = cts.ID_SP JOIN SIZE sz ON cts.ID_SIZE = sz.ID Where sz.ID = ?;", ID_Size);
 //    }
+    public List<Object[]> getAllCTDT(){
+        return selectCTDTBySQL("SELECT \n" +
+"    FORMAT(CONVERT(DATE, hd.ThoiGian), 'dd/MM/yyyy') AS Time,\n" +
+"    COALESCE(SUM(ct.SoLuong), 0) AS SoLuongDaBan,\n" +
+"    COALESCE(FORMAT(SUM(ct.SoLuong * sp.Gia), 'N0'), '0') AS TongDT\n" +
+"FROM HOADON hd\n" +
+"JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n" +
+"JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n" +
+"GROUP BY CONVERT(DATE, hd.ThoiGian)\n" +
+"ORDER BY CONVERT(DATE, hd.ThoiGian);");
+    }
+    public List<Object[]> getCTDTByDay(String dateFrom, String dateTo){
+        return selectCTDTBySQL("SELECT \n" +
+"    FORMAT(CONVERT(DATE, hd.ThoiGian), 'dd/MM/yyyy') AS Time,\n" +
+"    COALESCE(SUM(ct.SoLuong), 0) AS SoLuongDaBan,\n" +
+"    COALESCE(FORMAT(SUM(ct.SoLuong * sp.Gia), 'N0'), '0') AS TongDT\n" +
+"FROM HOADON hd\n" +
+"JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n" +
+"JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n" +
+"GROUP BY CONVERT(DATE, hd.ThoiGian)\n" +
+"HAVING CONVERT(DATE, hd.ThoiGian) BETWEEN ? AND ?"+
+"ORDER BY CONVERT(DATE, hd.ThoiGian);", dateFrom, dateTo);
+    }
+    public List<Object[]> getCTDTByYear(String dateFrom, String dateTo){
+        return selectCTDTBySQL("SELECT \n" +
+"    YEAR(hd.ThoiGian) AS Time,\n" +
+"    COALESCE(SUM(ct.SoLuong), 0) AS SoLuongDaBan,\n" +
+"    COALESCE(FORMAT(SUM(ct.SoLuong * sp.Gia), 'N0'), '0') AS TongDT\n" +
+"FROM HOADON hd\n" +
+"JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n" +
+"JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n" +
+"WHERE CONVERT(DATE, hd.ThoiGian) BETWEEN ? AND ?\n" +
+"GROUP BY YEAR(hd.ThoiGian)\n" +
+"ORDER BY YEAR(hd.ThoiGian);", dateFrom, dateTo);
+    }
+    public List<Object[]> getCTDTByMonth(String dateFrom, String dateTo){
+        return selectCTDTBySQL("SELECT \n" +
+"    FORMAT(hd.ThoiGian, 'MM/yyyy') AS Time,\n" +
+"    COALESCE(SUM(ct.SoLuong), 0) AS SoLuongDaBan,\n" +
+"    COALESCE(FORMAT(SUM(ct.SoLuong * sp.Gia), 'N0'), '0') AS TongDT\n" +
+"FROM HOADON hd\n" +
+"JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n" +
+"JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n" +
+"WHERE CONVERT(DATE, hd.ThoiGian) BETWEEN ? AND ?\n" +
+"GROUP BY FORMAT(hd.ThoiGian, 'MM/yyyy')\n" +
+"ORDER BY MIN(hd.ThoiGian);", dateFrom, dateTo);
+    }
+    public Object[]getHomNayDT(){
+        return selectDTNewsBySQL("SELECT \n" +
+"    COALESCE(FORMAT(SUM(CASE WHEN hd.TrangThai = '1' THEN ct.SoLuong * sp.Gia ELSE 0 END), 'N0'), '0') AS TongDT,\n" +
+"    COUNT(CASE WHEN hd.TrangThai = '1' THEN 1 END) AS SoDonTC,\n" +
+"    COUNT(CASE WHEN hd.TrangThai = '0' THEN 1 END) AS SoDonBH\n" +
+"FROM HOADON hd\n" +
+"JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n" +
+"JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n" +
+"WHERE CONVERT(DATE, hd.ThoiGian) = CONVERT(DATE, GETDATE());");
+    }
+    public Object[]getThangNayDT(){
+        return selectDTNewsBySQL("SELECT \n" +
+"    COALESCE(FORMAT(SUM(CASE WHEN hd.TrangThai = '1' THEN ct.SoLuong * sp.Gia ELSE 0 END), 'N0'), '0') AS TongDT,\n" +
+"    COUNT(CASE WHEN hd.TrangThai = '1' THEN 1 END) AS SoDonTC,\n" +
+"    COUNT(CASE WHEN hd.TrangThai = '0' THEN 1 END) AS SoDonBH\n" +
+"FROM HOADON hd\n" +
+"JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n" +
+"JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n" +
+"WHERE YEAR(hd.ThoiGian) = YEAR(GETDATE()) \n" +
+"  AND MONTH(hd.ThoiGian) = MONTH(GETDATE());");
+    }
+    public Object[]getNamNayDT(){
+        return selectDTNewsBySQL("  SELECT \n" +
+"    COALESCE(FORMAT(SUM(CASE WHEN hd.TrangThai = '1' THEN ct.SoLuong * sp.Gia ELSE 0 END), 'N0'), '0') AS TongDT,\n" +
+"    COUNT(CASE WHEN hd.TrangThai = '1' THEN 1 END) AS SoDonTC,\n" +
+"    COUNT(CASE WHEN hd.TrangThai = '0' THEN 1 END) AS SoDonBH\n" +
+"FROM HOADON hd\n" +
+"JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n" +
+"JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n" +
+"WHERE YEAR(hd.ThoiGian) = YEAR(GETDATE());");
+    }
+    public Object[]getNgayDTCaoNhat(){
+        return selectDTNewsBySQL("WITH RevenuePerDay AS (\n" +
+"    SELECT \n" +
+"        CONVERT(DATE, hd.ThoiGian) AS Ngay,\n" +
+"        SUM(CASE WHEN hd.TrangThai = '1' THEN ct.SoLuong * sp.Gia ELSE 0 END) AS TongDT\n" +
+"    FROM HOADON hd\n" +
+"    JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n" +
+"    JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n" +
+"    GROUP BY CONVERT(DATE, hd.ThoiGian)\n" +
+")\n" +
+"SELECT \n" +
+"    COALESCE(FORMAT(SUM(CASE WHEN hd.TrangThai = '1' THEN ct.SoLuong * sp.Gia ELSE 0 END), 'N0'), '0') AS TongDT,\n" +
+"    COUNT(CASE WHEN hd.TrangThai = '1' THEN 1 END) AS SoDonTC,\n" +
+"    COUNT(CASE WHEN hd.TrangThai = '0' THEN 1 END) AS SoDonBH\n" +
+"FROM HOADON hd\n" +
+"JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n" +
+"JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n" +
+"WHERE CONVERT(DATE, hd.ThoiGian) = (\n" +
+"    SELECT TOP 1 Ngay\n" +
+"    FROM RevenuePerDay\n" +
+"    ORDER BY TongDT DESC\n" +
+");");
+    }
     public List<Object[]> selectSPBySQL(String sql, Object... args) {
         List<Object[]> lstSP = new ArrayList<>();
         try {
@@ -146,7 +234,41 @@ public class thongkeDAO {
         }
         return lstSP;
     }
+        public List<Object[]> selectCTDTBySQL(String sql, Object... args) {
+        List<Object[]> lstSP = new ArrayList<>();
+        try {
+            ResultSet rs = helper.executeQuery(sql, args);
+            while (rs.next()) {
+                System.out.println(rs.getRow());
+                Object[] obj = {
+                    rs.getString("Time"),
+                    rs.getInt("SoLuongDaBan"),
+                    rs.getString("TongDT")
+                };
+                lstSP.add(obj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstSP;
+    }
+        public Object[] selectDTNewsBySQL(String sql, Object... args) {
+        Object[] obj = new Object[]{};
+        try {
+            ResultSet rs = helper.executeQuery(sql, args);
+            while (rs.next()) {
+                System.out.println(rs.getRow());
+                obj = new Object[]{
+                    rs.getString("TongDT"),
+                    rs.getInt("SoDonTC"),
+                    rs.getInt("SoDonBH")
+                };
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return obj;
+    }
     public static void main(String[] args) {
-        new thongkeDAO().getMonthFromHD(2024);
     }
 }
