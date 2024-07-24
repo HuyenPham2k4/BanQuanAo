@@ -1053,9 +1053,9 @@ public class FMGQuanLyBanHang extends javax.swing.JPanel {
                         .addComponent(lblTongTien_HoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel33)
-                .addGap(4, 4, 4)
+                .addGap(10, 10, 10)
                 .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTongTien_HoaDon2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rdDangCho))
@@ -1069,7 +1069,7 @@ public class FMGQuanLyBanHang extends javax.swing.JPanel {
                 .addComponent(btnSua_ChiTietHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnThanhToan_HoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Hoá đơn ", jPanel2);
@@ -1251,7 +1251,7 @@ public class FMGQuanLyBanHang extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 767, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -1617,8 +1617,8 @@ public class FMGQuanLyBanHang extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     public static javax.swing.JPanel jPanelHoaDon;
-    private javax.swing.JScrollPane jScrollPane10;
-    private javax.swing.JScrollPane jScrollPane15;
+    public static javax.swing.JScrollPane jScrollPane10;
+    public static javax.swing.JScrollPane jScrollPane15;
     public static javax.swing.JScrollPane jScrollPane16;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -1637,9 +1637,9 @@ public class FMGQuanLyBanHang extends javax.swing.JPanel {
     private javax.swing.JRadioButton rdDangCho;
     private javax.swing.JRadioButton rdDangGiaoHang;
     private javax.swing.JRadioButton rdGiaoHangThanhcong;
-    private javax.swing.JTable tblCTHoaDon_ChiTietHoaDon;
+    public static javax.swing.JTable tblCTHoaDon_ChiTietHoaDon;
     private javax.swing.JTable tblCTSP;
-    private javax.swing.JTable tblHoaDon_HoaDon;
+    public static javax.swing.JTable tblHoaDon_HoaDon;
     public static javax.swing.JTextField txtDiaChi_HoaDon;
     public static javax.swing.JTextArea txtGhiChu_HoaDon;
     public static javax.swing.JTextField txtIDCTHD;
