@@ -53,7 +53,7 @@ public class sizeDAO implements ISRepo {
         try {
             ResultSet rs = helper.executeQuery(sql, args);
             while (rs.next()) {
-                size s = new size(rs.getInt("ID"), rs.getString("MaSo"), rs.getString("MoTa"));
+                size s = new size(rs.getInt("ID"), rs.getString("Ten"), rs.getString("MoTa"));
                 lstKT.add(s);
             }
         } catch (Exception e) {

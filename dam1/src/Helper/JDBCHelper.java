@@ -8,22 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 public class JDBCHelper {
 
-        private static String forName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        private static String url = "jdbc:sqlserver://localhost:1433;databaseName=TenDatabase;encrypt=false";
-        private static String user = "sa";// user sql
-        private static String password = "123456789";// pass sql
-
-        //nạp drive
-        static {
-            try {
-                Class.forName(forName);
-            } catch (ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
+//        private static String forName = "jdbc:sqlserver://localhost:1436;databaseName= thithu;encrypt=true;trustServerCertificate=true";
+        private static String url = "jdbc:sqlserver://localhost:1436;databaseName= QL_BAN_QUAN_AO;encrypt=true;trustServerCertificate=true";
+        private static final String username = "sa";
+        private static final String password = "1Secure*Password1"; // phụ thuộc tài khoản đăng nhập azude
 
         public static PreparedStatement prepareStatement(String sql, Object... args) throws SQLException {
-            Connection connection = DriverManager.getConnection(url, user, password);
+            Connection connection = DriverManager.getConnection(url, username, password);
 //        System.out.println("Kết nối thành công");
             PreparedStatement pstmt = null;
             if (sql.trim().startsWith("{")) {

@@ -44,7 +44,7 @@ public class danhMucDAO implements IDMRepo {
 
     @Override
     public List<danhmuc> getAll() {
-        return selectBySQL("SELECT * FROM DANH_MUC");
+        return selectBySQL("SELECT * FROM DANHMUC");
     }
 
     @Override

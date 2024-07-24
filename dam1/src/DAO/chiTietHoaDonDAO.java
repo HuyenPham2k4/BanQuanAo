@@ -63,7 +63,7 @@ public class chiTietHoaDonDAO implements ICTHDRepo {
                 chitiethoadon cthd = new chitiethoadon();
                 cthd.setId(rs.getInt("ID"));
                 cthd.setIdhd(rs.getInt("ID_HD"));
-                cthd.setIdctsp(rs.getInt("ID_CTSP"));
+                cthd.setIdctsp(rs.getInt("ID_SP"));
                 cthd.setSoluong(rs.getInt("SoLuong"));
                 cthd.setGia(rs.getInt("Gia"));
                 cthd.setTrangthai(rs.getBoolean("TrangThai"));
