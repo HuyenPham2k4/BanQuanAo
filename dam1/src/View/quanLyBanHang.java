@@ -27,7 +27,7 @@ public class quanLyBanHang extends javax.swing.JPanel {
      */
     public quanLyBanHang() {
         initComponents();
-        System.out.println("ban hang");
+        fillDataTableSanPham();
 //        this.setExtendedState(MAXIMIZED_BOTH);
     }
     public void fillDataTableSanPham(){
