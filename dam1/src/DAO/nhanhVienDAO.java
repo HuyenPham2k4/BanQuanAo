@@ -61,7 +61,7 @@ public class nhanhVienDAO implements INVRepo {
                 nv.setEmail(rs.getString("Email"));
                 nv.setTendangnhap(rs.getString("TenDN"));
                 nv.setMatkhau(rs.getString("MatKhau"));
-                nv.setQuyenhan(rs.getInt("QuyenHan"));
+                nv.setQuyenhan(rs.getBoolean("QuyenHan"));
                 nv.setTrangthai(rs.getBoolean("TrangThai"));
                 lstNV.add(nv);
             }

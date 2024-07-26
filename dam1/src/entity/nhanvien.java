@@ -16,13 +16,13 @@ public class nhanvien {
     String email;
     String tendangnhap;
     String matkhau;
-    int quyenhan;
+    boolean quyenhan;
     boolean trangthai;
 
     public nhanvien() {
     }
 
-    public nhanvien(int id, String manv, String hoten, int sdt, String email, String tendangnhap, String matkhau, int quyenhan, boolean trangthai) {
+    public nhanvien(int id, String manv, String hoten, int sdt, String email, String tendangnhap, String matkhau, boolean quyenhan, boolean trangthai) {
         this.id = id;
         this.manv = manv;
         this.hoten = hoten;
@@ -90,11 +90,11 @@ public class nhanvien {
         this.matkhau = matkhau;
     }
 
-    public int getQuyenhan() {
+    public boolean getQuyenhan() {
         return quyenhan;
     }
 
-    public void setQuyenhan(int quyenhan) {
+    public void setQuyenhan(boolean quyenhan) {
         this.quyenhan = quyenhan;
     }
 

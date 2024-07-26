@@ -266,7 +266,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         );
 
         jPanel2.add(jPanel4);
-        jPanel4.setBounds(0, 0, 269, 270);
+        jPanel4.setBounds(0, 0, 251, 225);
 
         tblThongKe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -282,7 +282,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblThongKe);
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(0, 340, 900, 404);
+        jScrollPane1.setBounds(0, 340, 880, 390);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("SẢN PHẨM BÁN CHẠY NHẤT"));
 
@@ -298,7 +298,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         );
 
         jPanel2.add(jPanel5);
-        jPanel5.setBounds(301, 0, 298, 312);
+        jPanel5.setBounds(301, 0, 280, 293);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("SẢN PHẨM BÁN KÉM NHẤT"));
 
@@ -314,7 +314,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         );
 
         jPanel2.add(jPanel6);
-        jPanel6.setBounds(605, 0, 298, 312);
+        jPanel6.setBounds(605, 0, 280, 293);
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel1.setText("jLabel1");
@@ -332,15 +332,15 @@ public class ThongKe1 extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
+            .addGap(0, 350, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 740, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel1);
-        jPanel1.setBounds(910, 0, 570, 740);
+        jPanel1.setBounds(910, 0, 350, 730);
 
         jTabbedPane4.addTab("SẢN PHẨM", jPanel2);
 
@@ -721,7 +721,7 @@ public class ThongKe1 extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 864, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 4, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -757,7 +757,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 580, Short.MAX_VALUE)
+            .addGap(0, 370, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -771,7 +771,7 @@ public class ThongKe1 extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 878, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -829,9 +829,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

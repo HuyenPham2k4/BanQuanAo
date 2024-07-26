@@ -7,7 +7,9 @@
             <file>file:/D:/BanQuanAo/dam1/src/View/quanLyBanHang.java</file>
             <file>file:/D:/BanQuanAo/dam1/src/View/menu.java</file>
             <file>file:/D:/BanQuanAo/dam1/src/View/quanlynhanvien.java</file>
-            <file>file:/D:/BanQuanAo/dam1/src/View/quanLyVoucher.java</file>
+            <file>file:/D:/BanQuanAo/dam1/src/Helper/JDBCHelper.java</file>
+            <file>file:/D:/BanQuanAo/dam1/src/DAO/sanPhamDAO.java</file>
+            <file>file:/D:/BanQuanAo/dam1/src/Helper/Auth.java</file>
             <file>file:/D:/BanQuanAo/dam1/src/View/dangnhap.java</file>
         </group>
     </open-files>
