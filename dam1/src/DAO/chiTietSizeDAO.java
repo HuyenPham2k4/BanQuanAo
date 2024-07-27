@@ -4,7 +4,7 @@
  */
 package DAO;
 import Helper.JDBCHelper;
-import entity.chitietzise;
+import entity.chitietsize;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -20,40 +20,42 @@ public class chiTietSizeDAO implements ICTSRepo {
     public chiTietSizeDAO() {
         helper = new JDBCHelper();
     }
-
+    public List<chitietsize> findByID_SP(int idsp) {
+        return selectBySQL("SELECT * FROM CTSIZE WHERE ID_SP = ?", idsp);
+    }
     @Override
-    public boolean add(chitietzise ctsize) {
+    public boolean add(chitietsize ctsize) {
         String sql = "INSERT INTO CTSIZE (ID_SP, ID_SIZE, TrangThai) VALUES (?, ?, ?)";
         helper.executeUpdate(sql, ctsize.getIdsp(), ctsize.getIdsize(), ctsize.isTrangthai());
         return true;
     }
 
     @Override
-    public boolean update(chitietzise ctsize) {
+    public boolean update(chitietsize ctsize) {
         String sql = "UPDATE CTSIZE SET ID_SP = ?, ID_SIZE = ?, TrangThai = ? WHERE ID = ?";
         helper.executeUpdate(sql, ctsize.getIdsp(), ctsize.getIdsize(), ctsize.isTrangthai(), ctsize.getId());
         return true;
     }
 
     @Override
-    public boolean delete(chitietzise ctsize) {
+    public boolean delete(chitietsize ctsize) {
         String sql = "DELETE FROM CTSIZE WHERE ID = ?";
         helper.executeUpdate(sql, ctsize.getId());
         return true;
     }
 
     @Override
-    public List<chitietzise> getAll() {
+    public List<chitietsize> getAll() {
         return selectBySQL("SELECT * FROM CTSIZE");
     }
 
     @Override
-    public List<chitietzise> selectBySQL(String sql, Object... args) {
-        List<chitietzise> lstCTSize = new ArrayList<>();
+    public List<chitietsize> selectBySQL(String sql, Object... args) {
+        List<chitietsize> lstCTSize = new ArrayList<>();
         try {
             ResultSet rs = helper.executeQuery(sql, args);
             while (rs.next()) {
-                chitietzise ctsize = new chitietzise(0, 0, 0, true);
+                chitietsize ctsize = new chitietsize(0, 0, 0, true);
                 ctsize.setId(rs.getInt("ID"));
                 ctsize.setIdsp(rs.getInt("ID_SP"));
                 ctsize.setIdsize(rs.getInt("ID_SIZE"));
@@ -67,12 +69,12 @@ public class chiTietSizeDAO implements ICTSRepo {
     }
 
     @Override
-    public List<chitietzise> findByID(int id) {
+    public List<chitietsize> findByID(int id) {
         return selectBySQL("SELECT * FROM CTSIZE WHERE ID = ?", id);
     }
 
     @Override
-    public List<chitietzise> findByName(String name) {
+    public List<chitietsize> findByName(String name) {
                 return new ArrayList<>();
     }
 }

@@ -8,16 +8,16 @@ package entity;
  *
  * @author Admin
  */
-public class chitietzise {
+public class chitietsize {
     int id;
     int idsp;
     int idsize;
     boolean trangthai;
 
-    public chitietzise() {
+    public chitietsize() {
     }
 
-    public chitietzise(int id, int idsp, int idsize, boolean trangthai) {
+    public chitietsize(int id, int idsp, int idsize, boolean trangthai) {
         this.id = id;
         this.idsp = idsp;
         this.idsize = idsize;

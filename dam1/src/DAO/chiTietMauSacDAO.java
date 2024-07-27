@@ -20,7 +20,9 @@ public class chiTietMauSacDAO implements ICTMSRepo {
     public chiTietMauSacDAO() {
         helper = new JDBCHelper();
     }
-
+    public List<chitietmausac> findByID_SP(int idsp){
+        return selectBySQL("SELECT * FROM CTMAUSAC WHERE ID_SP = ?", idsp);
+    }
     @Override
     public boolean add(chitietmausac ctms) {
         String sql = "INSERT INTO CTMAUSAC (ID_MS, ID_SP, TrangThai) VALUES (?, ?, ?)";
