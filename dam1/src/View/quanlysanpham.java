@@ -1208,7 +1208,7 @@ public class quanlysanpham extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1094, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1094, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -1217,7 +1217,7 @@ public class quanlysanpham extends javax.swing.JPanel {
                 .addGap(48, 48, 48)
                 .addComponent(jLabel11)
                 .addGap(33, 33, 33)
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -1237,10 +1237,6 @@ public class quanlysanpham extends javax.swing.JPanel {
     private void txtGia_SanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGia_SanPhamActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtGia_SanPhamActionPerformed
-
-    private void txtSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSizeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSizeActionPerformed
 
     private void txtThuongHieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtThuongHieuActionPerformed
         // TODO add your handling code here:
@@ -1270,10 +1266,6 @@ public class quanlysanpham extends javax.swing.JPanel {
         // TODO add your handling code here:
         jfThuongHieu.setVisible(true);
     }//GEN-LAST:event_btnThem_ThuongHieuActionPerformed
-
-    private void btnThem_SizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThem_SizeMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnThem_SizeMouseClicked
 
     private void tbThuonHieuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbThuonHieuMouseReleased
         // TODO add your handling code here:
@@ -1311,11 +1303,6 @@ public class quanlysanpham extends javax.swing.JPanel {
         // TODO add your handling code here:
      
     }//GEN-LAST:event_btnTimKiem4ActionPerformed
-
-    private void btnThem_SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem_SizeActionPerformed
-        // TODO add your handling code here:
-        jfSize.setVisible(true);
-    }//GEN-LAST:event_btnThem_SizeActionPerformed
 
     private void btnThem_DanhMucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem_DanhMucActionPerformed
         // TODO add your handling code here:
@@ -1370,10 +1357,6 @@ public class quanlysanpham extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTimKiem6ActionPerformed
 
-    private void btnThem_MauSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem_MauSacActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnThem_MauSacActionPerformed
-
     private void tblMauSacMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMauSacMouseReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_tblMauSacMouseReleased
@@ -1401,6 +1384,23 @@ public class quanlysanpham extends javax.swing.JPanel {
     private void txtTen_MauSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTen_MauSacActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTen_MauSacActionPerformed
+
+    private void btnThem_SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem_SizeActionPerformed
+        // TODO add your handling code here:
+        jfSize.setVisible(true);
+    }//GEN-LAST:event_btnThem_SizeActionPerformed
+
+    private void btnThem_SizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThem_SizeMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnThem_SizeMouseClicked
+
+    private void txtSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSizeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSizeActionPerformed
+
+    private void btnThem_MauSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem_MauSacActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnThem_MauSacActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
