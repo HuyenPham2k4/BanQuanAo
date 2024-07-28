@@ -20,12 +20,12 @@ public class sanPhamDAO implements ISPDRepo {
     public sanPhamDAO() {
         helper = new JDBCHelper();
     }
-    public int newSP_ID(){
+    public int newestSP_ID(){
         int newID = -1;
         try {
             ResultSet rs = helper.executeQuery("SELECT MAX(ID) AS MaxID FROM SANPHAM");
             rs.next();
-            return rs.getInt("MaxID")+1;
+            return rs.getInt("MaxID");
         } catch (Exception e) {
         }
         return newID;

@@ -38,12 +38,16 @@ public class chiTietSizeDAO implements ICTSRepo {
     }
 
     @Override
-    public boolean delete(chitietsize ctsize) {
+    public boolean delete(int ID) {
         String sql = "DELETE FROM CTSIZE WHERE ID = ?";
-        helper.executeUpdate(sql, ctsize.getId());
+        helper.executeUpdate(sql, ID);
         return true;
     }
-
+    public boolean deleteByIDSP(int ID_SP) {
+        String sql = "DELETE FROM CTSIZE WHERE ID = ?";
+        helper.executeUpdate(sql, ID_SP);
+        return true;
+    }
     @Override
     public List<chitietsize> getAll() {
         return selectBySQL("SELECT * FROM CTSIZE");

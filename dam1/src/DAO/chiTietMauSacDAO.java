@@ -38,12 +38,16 @@ public class chiTietMauSacDAO implements ICTMSRepo {
     }
 
     @Override
-    public boolean delete(chitietmausac ctms) {
+    public boolean delete(int ID) {
         String sql = "DELETE FROM CTMAUSAC WHERE ID = ?";
-        helper.executeUpdate(sql, ctms.getId());
+        helper.executeUpdate(sql, ID);
         return true;
     }
-
+    public boolean deleteByIDSP(int IDSP) {
+        String sql = "DELETE FROM CTMAUSAC WHERE ID_SP = ?";
+        helper.executeUpdate(sql, IDSP);
+        return true;
+    }
     @Override
     public List<chitietmausac> getAll() {
         return selectBySQL("SELECT * FROM CTMAUSAC");
