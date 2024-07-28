@@ -330,7 +330,7 @@ System.out.println(java.time.Clock.systemUTC().instant());
 
     private void lblSanPhamMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSanPhamMouseReleased
         // TODO add your handling code here:
-        showFrom(new quanlysanpham());
+//        showFrom(new quanlysanpham());
     }//GEN-LAST:event_lblSanPhamMouseReleased
 
     private void lblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSanPhamMouseClicked
