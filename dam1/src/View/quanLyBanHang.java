@@ -8,6 +8,7 @@ import DAO.chiTietHoaDonDAO;
 import DAO.hoaDonDAO;
 import DAO.nhanhVienDAO;
 import DAO.sanPhamDAO;
+import entity.hoadon;
 import entity.sanpham;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +28,7 @@ public class quanLyBanHang extends javax.swing.JPanel {
      */
     public quanLyBanHang() {
         initComponents();
-        fillDataTableSanPham();
+//        fillDataTableSanPham();
 //        this.setExtendedState(MAXIMIZED_BOTH);
     }
     public void fillDataTableSanPham(){
@@ -48,6 +49,22 @@ public class quanLyBanHang extends javax.swing.JPanel {
             model.addRow(rowData);
         }
         
+    }
+    
+    public void fillDataTableHoaDon(){
+        model = (DefaultTableModel) tblHoaDon_HoaDon.getModel();
+        List<hoadon> lhd = hdDAO.getAll();
+        model.setRowCount(0);
+        for (hoadon hd : lhd) {
+            Object rowData[] = new Object[8];
+            rowData[0] = hd.getId();
+            rowData[0] = hd.getIdnv();
+            rowData[0] = hd.getId();
+            rowData[0] = hd.getId();
+            rowData[0] = hd.getId();
+            
+            
+        }
     }
 
     /**
@@ -131,7 +148,7 @@ public class quanLyBanHang extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Sản Phẩm ", "Tên Sản Phẩm", "Danh Mục Sản Phẩm", "Size", "Màu Sắc", "Thương Hiệu", "Giá", "Số Lượng", "Trạng Thái"
+                "Mã Sản Phẩm ", "Tên Sản Phẩm", "Danh Mục Sản Phẩm", "Thương Hiệu", "Size", "Màu Sắc", "Giá", "Số Lượng", "Trạng Thái"
             }
         ) {
             Class[] types = new Class [] {
@@ -538,11 +555,12 @@ public class quanLyBanHang extends javax.swing.JPanel {
                             .addComponent(lblTrangThai_HD))
                         .addGap(26, 26, 26)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jrDaThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jrDonCho, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jrDaThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jrDonCho, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(

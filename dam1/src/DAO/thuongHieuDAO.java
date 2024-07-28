@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
+
 import Helper.JDBCHelper;
 import entity.thuonghieu;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * @author huyen
  */
 public class thuongHieuDAO implements ITHRepo {
+
     JDBCHelper helper;
 
     public thuongHieuDAO() {

@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/BanQuanAo/dam1/src/View/quanlysanpham.java</file>
+            <file>file:/D:/BanQuanAo/dam1/src/DAO/hoaDonDAO.java</file>
             <file>file:/D:/BanQuanAo/dam1/src/View/quanLyBanHang.java</file>
-            <file>file:/D:/BanQuanAo/dam1/src/View/menu.java</file>
-            <file>file:/D:/BanQuanAo/dam1/src/View/quanlynhanvien.java</file>
-            <file>file:/D:/BanQuanAo/dam1/src/Helper/JDBCHelper.java</file>
-            <file>file:/D:/BanQuanAo/dam1/src/DAO/sanPhamDAO.java</file>
-            <file>file:/D:/BanQuanAo/dam1/src/Helper/Auth.java</file>
-            <file>file:/D:/BanQuanAo/dam1/src/View/dangnhap.java</file>
+            <file>file:/D:/BanQuanAo/dam1/src/View/Trangchu.java</file>
+            <file>file:/D:/BanQuanAo/dam1/src/View/Login.java</file>
         </group>
     </open-files>
 </project-private>

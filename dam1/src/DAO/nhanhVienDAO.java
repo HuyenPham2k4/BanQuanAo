@@ -80,4 +80,9 @@ public class nhanhVienDAO implements INVRepo {
     public List<nhanvien> findByName(String name) {
         return selectBySQL("SELECT * FROM NHANVIEN WHERE HoTen = ?", name);
     }
+    public boolean login(String username, String password) {
+        String LOGIN = "SELECT * FROM NhanVien WHERE TenDN = ? AND MatKhau=?";
+         ResultSet rs = helper.executeQuery(LOGIN, username, password);
+         return true;
+    }
 }
