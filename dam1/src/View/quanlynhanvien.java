@@ -34,7 +34,7 @@ public class quanlynhanvien extends javax.swing.JPanel {
         model.setRowCount(0);
         List<nhanvien> NhanVienList = nvDao.getAll();
         for (nhanvien nvDao : NhanVienList) {
-            Object[] row = {nvDao.getManv(), nvDao.getHoten(), nvDao.getEmail(), nvDao.getTendangnhap(), nvDao.getSdt(), nvDao.getMatkhau(), nvDao.getQuyenhan(), nvDao.isTrangthai()};
+            Object[] row = {nvDao.getManv(), nvDao.getHoten(), nvDao.getSdt(), nvDao.getEmail(), nvDao.getTendangnhap(), nvDao.getMatkhau(), nvDao.getQuyenhan(), nvDao.isTrangthai()};
             model.addRow(row);
         }
         tblNhanVien.setModel(model);
@@ -53,7 +53,6 @@ public class quanlynhanvien extends javax.swing.JPanel {
     }
 
     public void clearTable() {
-        txtID.setText("");
         txtMaNhanVien.setText("");
         txtTenNhanVien.setText("");
         txtEmail.setText("");
@@ -100,8 +99,6 @@ public class quanlynhanvien extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jrLam = new javax.swing.JRadioButton();
         jrNghi = new javax.swing.JRadioButton();
-        jLabel11 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblNhanVien = new javax.swing.JTable();
@@ -195,16 +192,6 @@ public class quanlynhanvien extends javax.swing.JPanel {
         jrNghi.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jrNghi.setText("Nghỉ việc");
 
-        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel11.setText("STT");
-
-        txtID.setEditable(false);
-        txtID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -236,15 +223,15 @@ public class quanlynhanvien extends javax.swing.JPanel {
                             .addComponent(jLabel1)
                             .addComponent(jLabel7)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                                        .addGap(4, 4, 4)))
-                                .addGap(40, 40, 40)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4))
+                                        .addGap(40, 40, 40))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(44, 44, 44)))
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -254,10 +241,7 @@ public class quanlynhanvien extends javax.swing.JPanel {
                                     .addComponent(txtEmail)
                                     .addComponent(txtSDT)
                                     .addComponent(txtTenNhanVien)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtMaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(txtMaNhanVien))))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(116, 116, 116)
@@ -274,9 +258,7 @@ public class quanlynhanvien extends javax.swing.JPanel {
                 .addContainerGap(49, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -561,10 +543,6 @@ public class quanlynhanvien extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaNhanVienActionPerformed
 
-    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIDActionPerformed
-
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTimKiemActionPerformed
@@ -580,7 +558,6 @@ public class quanlynhanvien extends javax.swing.JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -601,7 +578,6 @@ public class quanlynhanvien extends javax.swing.JPanel {
     private javax.swing.JRadioButton jrQuanLy;
     private javax.swing.JTable tblNhanVien;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtMaNhanVien;
     private javax.swing.JTextField txtMatKhau;
     private javax.swing.JTextField txtSDT;
