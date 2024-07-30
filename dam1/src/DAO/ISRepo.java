@@ -12,7 +12,7 @@ import java.util.List;
 public interface ISRepo {
    public boolean add(size S);
     public boolean update(size s);
-    public boolean delete(size s);
+    public boolean delete(int id);
     public List<size> getAll();
     public List<size> selectBySQL(String sql, Object... args);
     public size findByID(int id);

@@ -13,7 +13,7 @@ import java.util.List;
 public interface ITHRepo {
         public boolean add(thuonghieu th);
     public boolean update(thuonghieu th);
-    public boolean delete(thuonghieu th);
+    public boolean delete(int id);
     public List<thuonghieu> getAll();
     public List<thuonghieu> selectBySQL(String sql, Object... args);
     public thuonghieu findByID(int id);

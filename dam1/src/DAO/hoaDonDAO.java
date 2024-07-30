@@ -23,22 +23,22 @@ public class hoaDonDAO implements IHDRepo {
 
     @Override
     public boolean add(hoadon hd) {
-        String sql = "INSERT INTO HOADON (ID_NV, MaVocher, ThoiGian, GhiChu, TT_ThanhToan, TenKhachHang, SoDienThoaiKH, TongTien, TrangThai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        helper.executeUpdate(sql, hd.getIdnv(), hd.getMavocher(), hd.getThoigian(), hd.getGhichu(), hd.getTtthanhtoan(), hd.getTenkhachhang(), hd.getSodienthoaikhachhang(), hd.getTongtien(), hd.isTrangthai());
+        String sql = "INSERT INTO HOADON (ID_NV, MaVocher, ThoiGian, GhiChu, TT_ThanhToan, TongTien, TrangThai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        helper.executeUpdate(sql, hd.getIdnv(), hd.getMavocher(), hd.getThoigian(), hd.getGhichu(), hd.getTtthanhtoan(), hd.getTongtien(), hd.isTrangthai());
         return true;
     }
 
     @Override
     public boolean update(hoadon hd) {
-        String sql = "UPDATE HOADON SET ID_NV = ?, MaVocher = ?, ThoiGian = ?, GhiChu = ?, TT_ThanhToan = ?, TenKhachHang = ?, SoDienThoaiKH = ?, TongTien = ?, TrangThai = ? WHERE ID = ?";
-        helper.executeUpdate(sql, hd.getIdnv(), hd.getMavocher(), hd.getThoigian(), hd.getGhichu(), hd.getTtthanhtoan(), hd.getTenkhachhang(), hd.getSodienthoaikhachhang(), hd.getTongtien(), hd.isTrangthai(), hd.getId());
+        String sql = "UPDATE HOADON SET ID_NV = ?, MaVocher = ?, ThoiGian = ?, GhiChu = ?, TT_ThanhToan = ?, TongTien = ?, TrangThai = ? WHERE ID = ?";
+        helper.executeUpdate(sql, hd.getIdnv(), hd.getMavocher(), hd.getThoigian(), hd.getGhichu(), hd.getTtthanhtoan(), hd.getTongtien(), hd.isTrangthai(), hd.getId());
         return true;
     }
 
     @Override
-    public boolean delete(hoadon hd) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM HOADON WHERE ID = ?";
-        helper.executeUpdate(sql, hd.getId());
+        helper.executeUpdate(sql,  id);
         return true;
     }
 
@@ -53,15 +53,15 @@ public class hoaDonDAO implements IHDRepo {
         try {
             ResultSet rs = helper.executeQuery(sql, args);
             while (rs.next()) {
-                hoadon hd = new hoadon(0, 0, 0, sql, sql, 0, 0, 0, 0, true);
+                hoadon hd = new hoadon(0, 0, 0, sql, sql, 0, 0, true);
                 hd.setId(rs.getInt("ID"));
                 hd.setIdnv(rs.getInt("ID_NV"));
                 hd.setMavocher(rs.getInt("MaVocher"));
                 hd.setThoigian(rs.getString("ThoiGian"));
                 hd.setGhichu(rs.getString("GhiChu"));
                 hd.setTtthanhtoan(rs.getInt("TT_ThanhToan"));
-                hd.setTenkhachhang(rs.getInt("TenKhachHang"));
-                hd.setSodienthoaikhachhang(rs.getInt("SoDienThoaiKH"));
+//                hd.setTenkhachhang(rs.getInt("TenKhachHang"));
+//                hd.setSodienthoaikhachhang(rs.getInt("SoDienThoaiKH"));
                 hd.setTongtien(rs.getInt("TongTien"));
                 hd.setTrangthai(rs.getBoolean("TrangThai"));
                 lstHD.add(hd);

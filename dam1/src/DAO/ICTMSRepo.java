@@ -13,7 +13,7 @@ import java.util.List;
 public interface ICTMSRepo {
     public boolean add(chitietmausac op);
     public boolean update(chitietmausac op);
-    public boolean delete(chitietmausac op);
+    public boolean delete(int id);
     public List<chitietmausac> getAll();
     public List<chitietmausac> selectBySQL(String sql, Object... args);
     public List<chitietmausac> findByID(int id);

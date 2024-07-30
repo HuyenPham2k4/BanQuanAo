@@ -34,10 +34,9 @@ public class voucherDAO implements IVRepo {
         return true;
     }
 
-    @Override
-    public boolean delete(voucher v) {
+    public boolean delete(String maVoucher) {
         String sql = "DELETE FROM VOUCHER WHERE MaVocher = ?";
-        helper.executeUpdate(sql, v.getMavoucher());
+        helper.executeUpdate(sql, maVoucher);
         return true;
     }
 
@@ -54,8 +53,8 @@ public class voucherDAO implements IVRepo {
             while (rs.next()) {
                 voucher v = new voucher();
                 v.setMavoucher(rs.getString("MaVocher"));
-                v.setNgaybatdau(rs.getInt("NgayBatDau"));
-                v.setNgayketthuc(rs.getInt("NgayKetThuc"));
+                v.setNgaybatdau(rs.getString("NgayBatDau"));
+                v.setNgayketthuc(rs.getString("NgayKetThuc"));
                 v.setTrangthai(rs.getBoolean("TrangThai"));
                 lstVoucher.add(v);
             }
@@ -74,6 +73,11 @@ public class voucherDAO implements IVRepo {
     @Override
     public List<voucher> findByDateRange(int startDate, int endDate) {
         return selectBySQL("SELECT * FROM VOUCHER WHERE NgayBatDau >= ? AND NgayKetThuc <= ?", startDate, endDate);
+    }
+
+    @Override
+    public boolean delete(voucher v) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
 

@@ -36,9 +36,9 @@ public class sizeDAO implements ISRepo {
     }
 
     @Override
-    public boolean delete(size s) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM KICHTHUOC WHERE ID = ?";
-        helper.executeUpdate(sql, s.getId());
+        helper.executeUpdate(sql,  id);
         return true;
     }
 

@@ -14,7 +14,7 @@ import java.util.List;
 public interface IDMRepo {
     public boolean add(danhmuc op);
     public boolean update(danhmuc op);
-    public boolean delete(danhmuc op);
+    public boolean delete(int id);
     public List<danhmuc> getAll();
     public List<danhmuc> selectBySQL(String sql, Object... args);
     public List<danhmuc> findByID(int id);

@@ -38,9 +38,9 @@ public class thuongHieuDAO implements ITHRepo {
     }
 
     @Override
-    public boolean delete(thuonghieu th) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM THUONGHIEU WHERE ID = ?";
-        helper.executeUpdate(sql, th.getId());
+        helper.executeUpdate(sql,  id);
         return true;
     }
 

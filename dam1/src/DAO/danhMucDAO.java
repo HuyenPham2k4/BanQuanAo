@@ -23,22 +23,22 @@ public class danhMucDAO implements IDMRepo {
 
     @Override
     public boolean add(danhmuc dm) {
-        String sql = "INSERT INTO DANH_MUC (Ten, TrangThai) VALUES (?, ?)";
-        helper.executeUpdate(sql, dm.getTen(), dm.isTrangthai());
+        String sql = "INSERT INTO DANHMUC (Ten, TrangThai) VALUES (?, ?)";
+       helper.executeUpdate(sql, dm.getTen(), dm.isTrangthai());
         return true;
     }
 
     @Override
     public boolean update(danhmuc dm) {
-        String sql = "UPDATE DANH_MUC SET Ten = ?, TrangThai = ? WHERE ID = ?";
+        String sql = "UPDATE DANHMUC SET Ten = ?, TrangThai = ? WHERE ID = ?";
         helper.executeUpdate(sql, dm.getTen(), dm.isTrangthai(), dm.getId());
         return true;
     }
 
     @Override
-    public boolean delete(danhmuc dm) {
-        String sql = "DELETE FROM DANH_MUC WHERE ID = ?";
-        helper.executeUpdate(sql, dm.getId());
+    public boolean delete(int id) {
+        String sql = "DELETE FROM DANHMUC WHERE ID = ?";
+        helper.executeUpdate(sql, id);
         return true;
     }
 
@@ -67,11 +67,11 @@ public class danhMucDAO implements IDMRepo {
 
     @Override
     public List<danhmuc> findByID(int id) {
-        return selectBySQL("SELECT * FROM DANH_MUC WHERE ID = ?", id);
+        return selectBySQL("SELECT * FROM DANHMUC WHERE ID = ?", id);
     }
 
     @Override
     public List<danhmuc> findByName(String name) {
-        return selectBySQL("SELECT * FROM DANH_MUC WHERE Ten = ?", name);
+        return selectBySQL("SELECT * FROM DANHMUC WHERE Ten = ?", name);
     }
 }

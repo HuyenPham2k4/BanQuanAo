@@ -10,14 +10,14 @@ package entity;
  */
 public class voucher {
     String mavoucher;
-    int ngaybatdau;
-    int ngayketthuc;
+    String ngaybatdau;
+    String ngayketthuc;
     boolean trangthai;
 
     public voucher() {
     }
 
-    public voucher(String mavoucher, int ngaybatdau, int ngayketthuc, boolean trangthai) {
+    public voucher(String mavoucher, String ngaybatdau, String ngayketthuc, boolean trangthai) {
         this.mavoucher = mavoucher;
         this.ngaybatdau = ngaybatdau;
         this.ngayketthuc = ngayketthuc;
@@ -32,19 +32,19 @@ public class voucher {
         this.mavoucher = mavoucher;
     }
 
-    public int getNgaybatdau() {
+    public String getNgaybatdau() {
         return ngaybatdau;
     }
 
-    public void setNgaybatdau(int ngaybatdau) {
+    public void setNgaybatdau(String ngaybatdau) {
         this.ngaybatdau = ngaybatdau;
     }
 
-    public int getNgayketthuc() {
+    public String getNgayketthuc() {
         return ngayketthuc;
     }
 
-    public void setNgayketthuc(int ngayketthuc) {
+    public void setNgayketthuc(String ngayketthuc) {
         this.ngayketthuc = ngayketthuc;
     }
 

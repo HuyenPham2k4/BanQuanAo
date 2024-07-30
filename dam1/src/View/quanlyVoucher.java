@@ -4,17 +4,71 @@
  */
 package View;
 
+import DAO.voucherDAO;
+import entity.voucher;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author huyen
  */
 public class quanlyVoucher extends javax.swing.JPanel {
 
+    voucherDAO vDao = new voucherDAO();
+
     /**
-     * Creates new form voucher
+     * Creates new form quanLyVoucher
      */
     public quanlyVoucher() {
         initComponents();
+        fillTable();
+    }
+
+    public void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblThongTin.getModel();
+        model.setRowCount(0);
+        List<voucher> voucherList = vDao.getAll();
+        for (voucher vd : voucherList) {
+            Object[] row = {vd.getMavoucher(), vd.getNgaybatdau(), vd.getNgayketthuc(), vd.isTrangthai()};
+            model.addRow(row);
+        }
+        tblThongTin.setModel(model);
+    }
+
+    private voucher getData() {
+        String mavoucher = txtMaVoucher.getText();
+        String ngaybatdau = txtNgayBatDau.getText();
+        String ngayketthuc = txtNgayKetThuc.getText();
+        boolean trangthai = jrCon.isSelected();
+        return new voucher(mavoucher, ngaybatdau, ngayketthuc, trangthai);
+    }
+
+    private void fillFirstRowTable() {
+        if (tblThongTin.getRowCount() > 0) {
+            txtMaVoucher.setText(String.valueOf(tblThongTin.getValueAt(0, 0)));
+
+            Object ngayBatDauObj = tblThongTin.getValueAt(0, 1);
+            int ngayBatDau = ngayBatDauObj instanceof Number ? ((Number) ngayBatDauObj).intValue() : Integer.parseInt(ngayBatDauObj.toString());
+            txtNgayBatDau.setText(String.valueOf(ngayBatDau));
+
+            Object ngayKetThucObj = tblThongTin.getValueAt(0, 2);
+            int ngayKetThuc = ngayKetThucObj instanceof Number ? ((Number) ngayKetThucObj).intValue() : Integer.parseInt(ngayKetThucObj.toString());
+            txtNgayKetThuc.setText(String.valueOf(ngayKetThuc));
+
+            // Lấy giá trị boolean từ cột thứ tư và thiết lập radio button tương ứng
+            boolean trangthai = (boolean) tblThongTin.getValueAt(0, 3);
+            if (trangthai) {
+                jrCon.setSelected(true);
+                jrHet.setSelected(false);
+            } else {
+                jrCon.setSelected(false);
+                jrHet.setSelected(true);
+            }
+
+        }
+
     }
 
     /**
@@ -30,7 +84,7 @@ public class quanlyVoucher extends javax.swing.JPanel {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblThongTin = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
@@ -39,20 +93,20 @@ public class quanlyVoucher extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
+        btnThem = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jTextField5 = new javax.swing.JTextField();
+        txtMaVoucher = new javax.swing.JTextField();
+        txtNgayKetThuc = new javax.swing.JTextField();
+        jrCon = new javax.swing.JRadioButton();
+        jrHet = new javax.swing.JRadioButton();
+        txtNgayBatDau = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
 
         jLabel3.setText("QUẢN LÝ VOUCHER");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblThongTin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -63,7 +117,12 @@ public class quanlyVoucher extends javax.swing.JPanel {
                 "Mã Voucher", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblThongTin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblThongTinMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblThongTin);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -135,23 +194,38 @@ public class quanlyVoucher extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel2.setText("Ngày Kết Thúc");
 
-        jButton3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jButton3.setText("xóa");
+        btnXoa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnXoa.setText("xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jButton2.setText("sửa");
+        btnSua.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnSua.setText("sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
-        jButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jButton1.setText("Thêm");
+        btnThem.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel5.setText("Trạng Thái");
 
-        jRadioButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jRadioButton1.setText("Còn");
+        jrCon.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jrCon.setText("Còn");
 
-        jRadioButton2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jRadioButton2.setText("Hết");
+        jrHet.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jrHet.setText("Hết");
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel7.setText("Ngày Bắt Đầu");
@@ -164,19 +238,19 @@ public class quanlyVoucher extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addGap(85, 85, 85)
-                .addComponent(jRadioButton1)
+                .addComponent(jrCon)
                 .addGap(53, 53, 53)
-                .addComponent(jRadioButton2)
+                .addComponent(jrHet)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addComponent(jButton1)
+                        .addComponent(btnThem)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(btnSua)
                         .addGap(128, 128, 128)
-                        .addComponent(jButton3))
+                        .addComponent(btnXoa))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,9 +259,9 @@ public class quanlyVoucher extends javax.swing.JPanel {
                             .addComponent(jLabel1))
                         .addGap(54, 54, 54)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(txtNgayBatDau, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtNgayKetThuc)
+                            .addComponent(txtMaVoucher, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(26, 26, 26))
         );
         jPanel3Layout.setVerticalGroup(
@@ -195,26 +269,26 @@ public class quanlyVoucher extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMaVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(jrCon)
+                    .addComponent(jrHet))
                 .addGap(51, 51, 51)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnThem)
+                    .addComponent(btnSua)
+                    .addComponent(btnXoa))
                 .addGap(35, 35, 35))
         );
 
@@ -262,11 +336,160 @@ public class quanlyVoucher extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
 
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn thêm dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+
+        if (result == JOptionPane.YES_OPTION) {
+            try {
+                // Khởi tạo đối tượng voucherDAO
+                voucherDAO vDao = new voucherDAO();
+
+                // Lấy dữ liệu từ giao diện người dùng
+                voucher newVoucher = this.getData();
+
+                // Thêm dữ liệu vào cơ sở dữ liệu
+                boolean isAdded = vDao.add(newVoucher);
+
+                if (isAdded) {
+                    // Cập nhật giao diện bảng
+                    this.fillTable();
+
+                    // Thông báo thành công
+                    JOptionPane.showMessageDialog(this, "Thêm dữ liệu thành công!");
+                } else {
+                    // Thông báo lỗi nếu không thêm được dữ liệu
+                    JOptionPane.showMessageDialog(this, "Thêm dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                // Thông báo lỗi nếu có ngoại lệ
+                JOptionPane.showMessageDialog(this, "Có lỗi xảy ra: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here: 
+        int row = tblThongTin.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng để sửa.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Xác nhận hành động sửa
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            try {
+                // Lấy dữ liệu từ giao diện người dùng
+                String maVC = txtMaVoucher.getText();
+                String ngayBatDau = txtNgayBatDau.getText();
+                String ngayKetThuc = txtNgayKetThuc.getText();
+                boolean trangThai = jrCon.isSelected();
+
+                // Tạo đối tượng voucher mới
+                voucher updatedVoucher = new voucher(maVC, ngayBatDau, ngayKetThuc, trangThai);
+
+                // Cập nhật dữ liệu vào cơ sở dữ liệu
+                boolean isUpdated = vDao.update(updatedVoucher);
+
+                if (isUpdated) {
+                    // Cập nhật giao diện bảng
+                    this.fillTable();
+
+                    // Xóa dữ liệu trong các trường nhập liệu
+                    txtMaVoucher.setText("");
+                    txtNgayBatDau.setText("");
+                    txtNgayKetThuc.setText("");
+                    jrCon.setSelected(true); // Hoặc jrhet tùy thuộc vào trạng thái mặc định
+
+                    // Thông báo thành công
+                    JOptionPane.showMessageDialog(this, "Cập nhật dữ liệu thành công!");
+                } else {
+                    // Thông báo lỗi nếu không cập nhật được dữ liệu
+                    JOptionPane.showMessageDialog(this, "Cập nhật dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                // Thông báo lỗi định dạng số
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập số hợp lệ cho Ngày Bắt Đầu và Ngày Kết Thúc.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                // Thông báo lỗi nếu có ngoại lệ SQL
+                JOptionPane.showMessageDialog(this, "Có lỗi xảy ra: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+       int rowIndex = tblThongTin.getSelectedRow();
+    if (rowIndex >= 0) {
+        // Confirm the deletion
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn xóa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            String maVoucher = (String) tblThongTin.getValueAt(rowIndex, 0);
+            try {
+                // Initialize voucherDAO
+                voucherDAO vDao = new voucherDAO();
+
+                // Perform the deletion
+                boolean isDeleted = vDao.delete(maVoucher);
+
+                if (isDeleted) {
+                    // Refresh the table
+                    this.fillTable();
+                    // Clear form fields
+                    txtMaVoucher.setText("");
+                    txtNgayBatDau.setText("");
+                    txtNgayKetThuc.setText("");
+                    jrCon.setSelected(true); // Or jrHet, based on your default
+
+                    // Show success message
+                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thành công!");
+                } else {
+                    // Show failure message
+                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                // Show error message
+                JOptionPane.showMessageDialog(this, "Có lỗi xảy ra: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    } else {
+        // Inform user to select a row
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng để xóa.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+    }
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void tblThongTinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThongTinMouseClicked
+        int rowIndex = tblThongTin.getSelectedRow();
+        if (rowIndex >= 0) {
+            // Get data from the selected row
+            String maVoucher = (String) tblThongTin.getValueAt(rowIndex, 0);
+            String ngayBatDau = (String) tblThongTin.getValueAt(rowIndex, 1);
+            String ngayKetThuc = (String) tblThongTin.getValueAt(rowIndex, 2);
+            boolean trangThai = (boolean) tblThongTin.getValueAt(rowIndex, 3);
+
+            // Set data to form fields
+            txtMaVoucher.setText(maVoucher);
+            txtNgayBatDau.setText(ngayBatDau);
+            txtNgayKetThuc.setText(ngayKetThuc);
+            if (trangThai) {
+                jrCon.setSelected(true);
+                jrHet.setSelected(false);
+            } else {
+                jrCon.setSelected(false);
+                jrHet.setSelected(true);
+            }
+        }   // TODO add your handling code here:
+    }//GEN-LAST:event_tblThongTinMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnSua;
+    private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnXoa;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -278,14 +501,14 @@ public class quanlyVoucher extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JRadioButton jrCon;
+    private javax.swing.JRadioButton jrHet;
+    private javax.swing.JTable tblThongTin;
+    private javax.swing.JTextField txtMaVoucher;
+    private javax.swing.JTextField txtNgayBatDau;
+    private javax.swing.JTextField txtNgayKetThuc;
     // End of variables declaration//GEN-END:variables
 }

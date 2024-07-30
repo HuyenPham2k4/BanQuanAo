@@ -13,7 +13,7 @@ import java.util.List;
 public interface INVRepo {
     public boolean add(nhanvien op);
     public boolean update(nhanvien op);
-    public boolean delete(nhanvien op);
+    public boolean delete(int id);
     public List<nhanvien> getAll();
     public List<nhanvien> selectBySQL(String sql, Object... args);
     public List<nhanvien> findByID(int id);

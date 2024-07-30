@@ -36,9 +36,9 @@ public class nhanhVienDAO implements INVRepo {
     }
 
     @Override
-    public boolean delete(nhanvien nv) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM NHANVIEN WHERE ID = ?";
-        helper.executeUpdate(sql, nv.getId());
+        helper.executeUpdate(sql,  id);
         return true;
     }
 
@@ -80,9 +80,18 @@ public class nhanhVienDAO implements INVRepo {
     public List<nhanvien> findByName(String name) {
         return selectBySQL("SELECT * FROM NHANVIEN WHERE HoTen = ?", name);
     }
-    public boolean login(String username, String password) {
-        String LOGIN = "SELECT * FROM NhanVien WHERE TenDN = ? AND MatKhau=?";
-         ResultSet rs = helper.executeQuery(LOGIN, username, password);
-         return true;
+    public List<nhanvien> selectByUser(String username, String password) {
+        List<nhanvien> nv = selectBySQL("SELECT * FROM NhanVien WHERE TenDN = '"+username+"' AND MatKhau='"+password+"'");
+        
+        return nv;
+    }
+    
+    public boolean login(String username, String password){
+        List<nhanvien> nv = selectByUser(username, password);
+        if(nv.isEmpty()){
+            System.out.println("null");
+            return false;
+        }
+        return true;
     }
 }

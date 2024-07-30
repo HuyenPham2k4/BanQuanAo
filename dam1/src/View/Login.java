@@ -13,20 +13,17 @@ import javax.swing.JOptionPane;
  * @author huyen
  */
 public class Login extends javax.swing.JFrame {
-    
+
     private nhanhVienDAO vdao;
-    
-    
-    public boolean login(String user, String pasword){
-        return vdao.login(user, pasword);
-    }
+    Auth manager;
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        vdao = new nhanhVienDAO();
+        manager = new Auth();
     }
-
     public boolean validateForm() {
         if (txtUser.getText().isEmpty()) {
             JOptionPane.showMessageDialog(jPanel1, "Tài khoản trống");
@@ -38,21 +35,21 @@ public class Login extends javax.swing.JFrame {
         }
         return true;
     }
-    public String Login(String username, String password){
-        
-        if (validateForm()) {
-            if (login(username, password)) {
-                Trangchu main = new Trangchu();
-                main.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng.");
-            }
-        }else{
-            JOptionPane.showMessageDialog(this, "Chưa nhập đủ ");
-        }
-        return username;
-    }
 
+    public Boolean Login(String username, String password) {
+        if (validateForm()) {
+            if (vdao.login(username, password)) {
+                new Trangchu().setVisible(true);
+                this.dispose();
+                return true;
+            } else {
+               System.out.println("false");
+                return false;  // Login successful
+                
+            }
+        } 
+        return false;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -160,7 +157,12 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String user = txtUser.getText();
         String pass = txtPass.getText();
-        Login(user, pass);        // TODO add your handling code here:
+        if(Login(user, pass)){
+            System.out.println("true");
+            
+        }else{
+            System.out.println("false");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

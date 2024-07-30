@@ -322,6 +322,8 @@ System.out.println(java.time.Clock.systemUTC().instant());
     private void lblNhanVienMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNhanVienMouseReleased
         // TODO add your handling code here:
         showFrom(new quanlynhanvien());
+//new qlsanphams().setVisible(true);
+
     }//GEN-LAST:event_lblNhanVienMouseReleased
 
     private void lblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNhanVienMouseClicked
@@ -330,7 +332,7 @@ System.out.println(java.time.Clock.systemUTC().instant());
 
     private void lblSanPhamMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSanPhamMouseReleased
         // TODO add your handling code here:
-//        showFrom(new quanlysanpham());
+        showFrom(new qlsanphams());
     }//GEN-LAST:event_lblSanPhamMouseReleased
 
     private void lblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSanPhamMouseClicked

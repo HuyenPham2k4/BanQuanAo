@@ -13,7 +13,7 @@ public interface IMSRepo {
 
     public boolean add(mausac op);
     public boolean update(mausac op);
-    public boolean delete(mausac op);
+    public boolean delete(int id);
     public List<mausac> getAll();
     public List<mausac> selectBySQL(String sql, Object... args);
     public List<mausac> findByID(int id);

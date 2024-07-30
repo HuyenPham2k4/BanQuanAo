@@ -23,22 +23,22 @@ public class sanPhamDAO implements ISPDRepo {
 
     @Override
     public boolean add(sanpham sp) {
-        String sql = "INSERT INTO SANPHAM (TenSP, ID_DMSP, ID_TH, Mota, AnhSP, SoLuong, Gia, TrangThai) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO SANPHAM (TenSP, ID_DM, ID_TH, MoTa, AnhSP, SoLuong, Gia, TrangThai) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         helper.executeUpdate(sql, sp.getTenSP(), sp.getID_DMSP(), sp.getID_TH(), sp.getMota(), sp.getAnhSP(), sp.getSoLuong(), sp.getGia(), sp.isTrangThai());
         return true;
     }
 
     @Override
     public boolean update(sanpham sp) {
-        String sql = "UPDATE SANPHAM SET TenSP = ?, ID_DMSP = ?, ID_TH = ?, Mota = ?, AnhSP = ?, SoLuong = ?, Gia = ?, TrangThai = ? WHERE ID = ?";
+        String sql = "UPDATE SANPHAM SET TenSP = ?, ID_DM = ?, ID_TH = ?, MoTa = ?, AnhSP = ?, SoLuong = ?, Gia = ?, TrangThai = ? WHERE ID = ?";
         helper.executeUpdate(sql, sp.getTenSP(), sp.getID_DMSP(), sp.getID_TH(), sp.getMota(), sp.getAnhSP(), sp.getSoLuong(), sp.getGia(), sp.isTrangThai(), sp.getID());
         return true;
     }
 
     @Override
-    public boolean delete(sanpham sp) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM SANPHAM WHERE ID = ?";
-        helper.executeUpdate(sql, sp.getID());
+        helper.executeUpdate(sql, id);
         return true;
     }
 
@@ -56,9 +56,9 @@ public class sanPhamDAO implements ISPDRepo {
                 sanpham sp = new sanpham(0, "", 0, 0, "", "", 0, 0.0, true);
                 sp.setID(rs.getInt("ID"));
                 sp.setTenSP(rs.getString("TenSP"));
-                sp.setID_DMSP(rs.getInt("ID_DMSP"));
+                sp.setID_DMSP(rs.getInt("ID_DM"));
                 sp.setID_TH(rs.getInt("ID_TH"));
-                sp.setMota(rs.getString("Mota"));
+                sp.setMota(rs.getString("MoTa"));
                 sp.setAnhSP(rs.getString("AnhSP"));
                 sp.setSoLuong(rs.getInt("SoLuong"));
                 sp.setGia(rs.getDouble("Gia"));

@@ -36,9 +36,9 @@ public class chiTietSizeDAO implements ICTSRepo {
     }
 
     @Override
-    public boolean delete(chitietzise ctsize) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM CTSIZE WHERE ID = ?";
-        helper.executeUpdate(sql, ctsize.getId());
+        helper.executeUpdate(sql, id);
         return true;
     }
 

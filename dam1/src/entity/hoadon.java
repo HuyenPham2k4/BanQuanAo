@@ -9,29 +9,26 @@ package entity;
  * @author Admin
  */
 public class hoadon {
+
     int id;
     int idnv;
     int mavocher;
     String thoigian;
     String ghichu;
     int ttthanhtoan;
-    int tenkhachhang;
-    int sodienthoaikhachhang;
     int tongtien;
     boolean trangthai;
 
     public hoadon() {
     }
 
-    public hoadon(int id, int idnv, int mavocher, String thoigian, String ghichu, int ttthanhtoan, int tenkhachhang, int sodienthoaikhachhang, int tongtien, boolean trangthai) {
+    public hoadon(int id, int idnv, int mavocher, String thoigian, String ghichu, int ttthanhtoan, int tongtien, boolean trangthai) {
         this.id = id;
         this.idnv = idnv;
         this.mavocher = mavocher;
         this.thoigian = thoigian;
         this.ghichu = ghichu;
         this.ttthanhtoan = ttthanhtoan;
-        this.tenkhachhang = tenkhachhang;
-        this.sodienthoaikhachhang = sodienthoaikhachhang;
         this.tongtien = tongtien;
         this.trangthai = trangthai;
     }
@@ -84,22 +81,6 @@ public class hoadon {
         this.ttthanhtoan = ttthanhtoan;
     }
 
-    public int getTenkhachhang() {
-        return tenkhachhang;
-    }
-
-    public void setTenkhachhang(int tenkhachhang) {
-        this.tenkhachhang = tenkhachhang;
-    }
-
-    public int getSodienthoaikhachhang() {
-        return sodienthoaikhachhang;
-    }
-
-    public void setSodienthoaikhachhang(int sodienthoaikhachhang) {
-        this.sodienthoaikhachhang = sodienthoaikhachhang;
-    }
-
     public int getTongtien() {
         return tongtien;
     }
@@ -116,5 +97,4 @@ public class hoadon {
         this.trangthai = trangthai;
     }
 
-       
 }

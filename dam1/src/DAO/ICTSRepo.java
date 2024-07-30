@@ -16,7 +16,7 @@ import java.util.List;
 public interface ICTSRepo {
     public boolean add(chitietzise op);
     public boolean update(chitietzise op);
-    public boolean delete(chitietzise op);
+    public boolean delete(int id);
     public List<chitietzise> getAll();
     public List<chitietzise> selectBySQL(String sql, Object... args);
     public List<chitietzise> findByID(int id);

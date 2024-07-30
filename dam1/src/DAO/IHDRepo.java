@@ -15,7 +15,7 @@ public interface IHDRepo {
    
     public boolean add(hoadon op);
     public boolean update(hoadon op);
-    public boolean delete(hoadon op);
+    public boolean delete(int id);
     public List<hoadon> getAll();
     public List<hoadon> selectBySQL(String sql, Object... args);
     public List<hoadon> findByID(int id);

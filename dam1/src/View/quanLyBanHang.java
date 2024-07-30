@@ -8,6 +8,7 @@ import DAO.chiTietHoaDonDAO;
 import DAO.hoaDonDAO;
 import DAO.nhanhVienDAO;
 import DAO.sanPhamDAO;
+import entity.chitiethoadon;
 import entity.hoadon;
 import entity.sanpham;
 import java.util.List;
@@ -22,21 +23,28 @@ public class quanLyBanHang extends javax.swing.JPanel {
     private hoaDonDAO hdDAO;
     private nhanhVienDAO nvDAO;
     private chiTietHoaDonDAO cthDAO;
+    private List<sanpham> lsp;
+    private List<hoadon> lhd;
+    private List<chitiethoadon> lcthd;
     DefaultTableModel model;
     /**
      * Creates new form quanLyBanHang
      */
     public quanLyBanHang() {
         initComponents();
-//        fillDataTableSanPham();
+        lsp = new sanPhamDAO().getAll();
+        lhd = new hoaDonDAO().getAll();
+        lcthd = new chiTietHoaDonDAO().getAll();
+        fillDataTableSanPham();
+        fillDataTableHoaDon();
+        fillDataTableChiTietHoaDon();
 //        this.setExtendedState(MAXIMIZED_BOTH);
     }
     public void fillDataTableSanPham(){
-        model = (DefaultTableModel) tblCTSP.getModel();
-        List<sanpham> lsp = spDAO.getAll();
+        model = (DefaultTableModel) tblCTSP.getModel();       
         model.setRowCount(0);
         for (sanpham sp : lsp) {
-            Object rowData[] = new Object[9];
+            Object[] rowData = new Object[9];
             rowData[0] = sp.getID();
             rowData[1] = sp.getTenSP();
             rowData[2] = sp.getID_DMSP();
@@ -52,18 +60,32 @@ public class quanLyBanHang extends javax.swing.JPanel {
     }
     
     public void fillDataTableHoaDon(){
-        model = (DefaultTableModel) tblHoaDon_HoaDon.getModel();
-        List<hoadon> lhd = hdDAO.getAll();
+        model = (DefaultTableModel) tblHoaDon_HoaDon.getModel();        
         model.setRowCount(0);
         for (hoadon hd : lhd) {
-            Object rowData[] = new Object[8];
+            Object[] rowData = new Object[8];
             rowData[0] = hd.getId();
-            rowData[0] = hd.getIdnv();
-            rowData[0] = hd.getId();
-            rowData[0] = hd.getId();
-            rowData[0] = hd.getId();
-            
-            
+            rowData[1] = hd.getIdnv();
+            rowData[2] = hd.getMavocher();
+            rowData[3] = hd.getThoigian();
+            rowData[4] = hd.getGhichu();
+            rowData[5] = hd.getTtthanhtoan();
+            rowData[6] = hd.getTongtien();
+            rowData[7] = hd.isTrangthai();
+            model.addRow(rowData);
+        }
+    }
+    public void fillDataTableChiTietHoaDon(){
+        model = (DefaultTableModel) tblCTHoaDon_ChiTietHoaDon.getModel();        
+        model.setRowCount(0);
+        for (chitiethoadon cthd : lcthd ) {
+            Object[] rowData = new Object[5];
+            rowData[0] = cthd.getId();
+            rowData[1] = cthd.getIdctsp();
+            rowData[2] = cthd.getSoluong();
+            rowData[3] = cthd.getGia();
+            rowData[4] = cthd.isTrangthai();
+            model.addRow(rowData);
         }
     }
 

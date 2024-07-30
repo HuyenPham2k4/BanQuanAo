@@ -35,9 +35,9 @@ public class mauSacDAO implements IMSRepo {
     }
 
     @Override
-    public boolean delete(mausac ms) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM MAUSAC WHERE Id = ?";
-        helper.executeUpdate(sql, ms.getId());
+        helper.executeUpdate(sql, id);
         return true;
     }
 

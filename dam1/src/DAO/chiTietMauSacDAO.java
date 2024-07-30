@@ -35,10 +35,10 @@ public class chiTietMauSacDAO implements ICTMSRepo {
         return true;
     }
 
-    @Override
-    public boolean delete(chitietmausac ctms) {
+   @Override
+    public boolean delete(int id) {
         String sql = "DELETE FROM CTMAUSAC WHERE ID = ?";
-        helper.executeUpdate(sql, ctms.getId());
+        helper.executeUpdate(sql,id);
         return true;
     }
 
@@ -75,4 +75,7 @@ public class chiTietMauSacDAO implements ICTMSRepo {
     public List<chitietmausac> findByName(String name) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    
+    
 }

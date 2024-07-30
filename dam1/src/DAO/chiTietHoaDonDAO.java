@@ -42,15 +42,13 @@ public class chiTietHoaDonDAO implements ICTHDRepo {
 
     }
 
-    @Override
-    public boolean delete(chitiethoadon op) {
+    public boolean delete(int id) {
     String sql = "DELETE FROM CTHOADON WHERE ID = ?";
-        helper.executeUpdate(sql, op.getId());
+        helper.executeUpdate(sql, id);
         return true;
     }
 
-    @Override
-    public List<chitiethoadon> getAll(chitiethoadon op) {
+    public List<chitiethoadon> getAll() {
         return selectBySQL("SELECT * FROM CTHOADON");
     }
 
@@ -84,5 +82,15 @@ public class chiTietHoaDonDAO implements ICTHDRepo {
     @Override
     public List<chitiethoadon> findByName(String name) {// truyền bến name vào cây sql
         return selectBySQL("select * from chitiethoadon where ten = ?", name);
+    }
+
+    @Override
+    public List<chitiethoadon> getAll(chitiethoadon op) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean delete(chitiethoadon op) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
