@@ -1922,38 +1922,50 @@ public class qlsanphams extends javax.swing.JPanel {
 
     private void btnDelete_MauSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete_MauSacActionPerformed
         // TODO add your handling code here:
-        int rowIndex = tblMauSac.getSelectedRow();
-        if (rowIndex >= 0) {
-            int id = (int) model.getValueAt(rowIndex, 0);
-            new mauSacDAO().delete(id);
-            fillDataTableMauSac();
-            clearMauSacForm();
-            JOptionPane.showMessageDialog(this, "Xóa màu sắc thành công.");
-        } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xóa.");
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn Xóa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            int rowIndex = tblMauSac.getSelectedRow();
+            if (rowIndex >= 0) {
+                int id = (int) model.getValueAt(rowIndex, 0);
+                boolean isDeleteMS = new mauSacDAO().delete(id);
+                if (isDeleteMS) {
+                    fillDataTableMauSac();
+                    clearMauSacForm();
+                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thành công!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+
+                JOptionPane.showMessageDialog(this, "Xóa màu sắc thành công.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xóa.");
+            }
         }
     }//GEN-LAST:event_btnDelete_MauSacActionPerformed
 
     private void btnUpdate_MauSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate_MauSacActionPerformed
         // TODO add your handling code here:
-        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn thêm dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             int rowIndex = tblMauSac.getSelectedRow();
             if (rowIndex >= 0) {
                 mausac ms = setMauSacFormData();
                 if (ms != null) {
-                    boolean isUpdateMS =  new mauSacDAO().update(ms);
-                    fillDataTableMauSac();
-                    clearMauSacForm();
+                    boolean isUpdateMS = new mauSacDAO().update(ms);
+                    if (isUpdateMS) {
+                        fillDataTableMauSac();
+                        clearMauSacForm();
+                        JOptionPane.showMessageDialog(this, "sửa dữ liệu thành công!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "sửa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(this, "Vui lòng chọn màu sắc cần sửa.");
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để sửa.");
             }
-        }else {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để thêm.");
-            }
+        }
     }//GEN-LAST:event_btnUpdate_MauSacActionPerformed
 
     private void btnCreate_MauSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreate_MauSacActionPerformed
