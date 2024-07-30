@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class quanlynhanvien extends javax.swing.JPanel {
 
-    DefaultTableModel model;
+    private DefaultTableModel model;
     nhanhVienDAO nvDao = new nhanhVienDAO();
 
     /**
@@ -26,42 +26,21 @@ public class quanlynhanvien extends javax.swing.JPanel {
      */
     public quanlynhanvien() {
         initComponents();
-        DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
         fillTable();
     }
 
     public void fillTable() {
-        DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
+        model = (DefaultTableModel) tblNhanVien.getModel();
         model.setRowCount(0);
         List<nhanvien> NhanVienList = nvDao.getAll();
         for (nhanvien nvDao : NhanVienList) {
-            Object[] row = {nvDao.getId(),nvDao.getManv(), nvDao.getHoten(), nvDao.getEmail(), nvDao.getTendangnhap(), nvDao.getSdt(), nvDao.getMatkhau(), nvDao.getQuyenhan(), nvDao.isTrangthai()};
+            Object[] row = {nvDao.getManv(), nvDao.getHoten(), nvDao.getEmail(), nvDao.getTendangnhap(), nvDao.getSdt(), nvDao.getMatkhau(), nvDao.getQuyenhan(), nvDao.isTrangthai()};
             model.addRow(row);
         }
         tblNhanVien.setModel(model);
     }
 
     private nhanvien getDaTa() {
-        nhanvien nv = new nhanvien();
-        String manv = txtMaNhanVien.getText();
-        String tennv = txtTenNhanVien.getText();
-        int sdt = Integer.parseInt(txtSDT.getText());
-        String email = txtEmail.getText();
-        String tendangnhap = txtTenDN.getText();
-        String matkhau = txtMatKhau.getText();
-        boolean quyenhan = jrNhanVien.isSelected();
-        boolean trangThai = jrLam.isSelected();
-        nv.setHoten(tennv);
-        nv.setSdt(sdt);
-        nv.setEmail(email);
-        nv.setTendangnhap(tendangnhap);
-        nv.setMatkhau(matkhau);
-        nv.setQuyenhan(quyenhan);
-        nv.isTrangthai();
-        return nv;
-    }
-
-    private nhanvien setDaTa() {
         String manv = txtMaNhanVien.getText();
         String tennv = txtTenNhanVien.getText();
         int sdt = Integer.parseInt(txtSDT.getText());
@@ -128,8 +107,8 @@ public class quanlynhanvien extends javax.swing.JPanel {
         tblNhanVien = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        txtTimKiem = new javax.swing.JTextField();
+        btnTimKiem = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -355,13 +334,13 @@ public class quanlynhanvien extends javax.swing.JPanel {
 
         tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Mã nhân viên", "Tên nhân viên", "Số điện thoại", "Email", "Tên đăng nhập", "Mật khẩu", "Quyền hạn", "Trạng thái"
+                "Mã nhân viên", "Tên nhân viên", "Số điện thoại", "Email", "Tên đăng nhập", "Mật khẩu", "Quyền hạn", "Trạng thái"
             }
         ));
         tblNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -375,13 +354,18 @@ public class quanlynhanvien extends javax.swing.JPanel {
 
         jLabel8.setText("Tìm kiếm");
 
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                txtTimKiemActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Tìm kiếm");
+        btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -393,11 +377,11 @@ public class quanlynhanvien extends javax.swing.JPanel {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField6))
+                    .addComponent(txtTimKiem))
                 .addContainerGap())
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jButton5)
+                .addComponent(btnTimKiem)
                 .addContainerGap(137, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -406,9 +390,9 @@ public class quanlynhanvien extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(btnTimKiem)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -449,16 +433,16 @@ public class quanlynhanvien extends javax.swing.JPanel {
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(471, 471, 471)
+                .addGap(577, 577, 577)
                 .addComponent(jLabel6)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(37, 37, 37)
                 .addComponent(jLabel6)
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
         );
@@ -469,9 +453,9 @@ public class quanlynhanvien extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_txtTimKiemActionPerformed
 
     private void btnThem_NVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem_NVActionPerformed
         // TODO add your handling code here:
@@ -496,75 +480,76 @@ public class quanlynhanvien extends javax.swing.JPanel {
 
     private void btnSua_NVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSua_NVActionPerformed
         int rowIndex = tblNhanVien.getSelectedRow();
-        nhanvien nv = new nhanvien();
-        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-        if(result == JOptionPane.YES_OPTION){
         if (rowIndex >= 0) {
-            nv = setDaTa();
-            if (nv != null) {
-                boolean isUpdate =  new nhanhVienDAO().update(nv);
-                if (isUpdate) {
-                    fillTable();
-                    JOptionPane.showMessageDialog(this, "Sửa dữ liệu thành công!");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Sửa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            int result = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                try {
+                    nhanvien updatedNhanVien = getDaTa();
+                    boolean isUpdated = nvDao.update(updatedNhanVien);
+                    if (isUpdated) {
+                        fillTable();
+                        JOptionPane.showMessageDialog(this, "Sửa dữ liệu thành công!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Sửa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Có lỗi xảy ra: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
                 }
-                
-            } else {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên cần sửa.");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để sửa.");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên để sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
         }
         clearTable();
-        }
     }//GEN-LAST:event_btnSua_NVActionPerformed
 
     private void btnXoa_NVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoa_NVActionPerformed
         int rowIndex = tblNhanVien.getSelectedRow();
-        nhanvien nv = new nhanvien();
-          int result = JOptionPane.showConfirmDialog(this, "Bạn muốn xoá dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-        if(result == JOptionPane.YES_OPTION){
         if (rowIndex >= 0) {
-            int id = (int) model.getValueAt(rowIndex, 0);
-            boolean isDelete =   new nhanhVienDAO().delete(id);
-            if (isDelete) {
-                    fillTable();
-                    JOptionPane.showMessageDialog(this, "Xoá dữ liệu thành công!");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Xoá dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            int result = JOptionPane.showConfirmDialog(this, "Bạn muốn xóa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                try {
+                    int id = Integer.parseInt(tblNhanVien.getValueAt(rowIndex, 0).toString());
+                    boolean isDeleted = nvDao.delete(id);
+                    if (isDeleted) {
+                        fillTable();
+                        JOptionPane.showMessageDialog(this, "Xóa dữ liệu thành công!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Xóa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Có lỗi xảy ra: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
                 }
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xoá.");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên để xóa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
         }
-        }
+        clearTable();
     }//GEN-LAST:event_btnXoa_NVActionPerformed
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
         // TODO add your handling code here:
-        int row = tblNhanVien.getSelectedRow();
-        txtID.setText(tblNhanVien.getValueAt(row, 0).toString());
-        txtMaNhanVien.setText(tblNhanVien.getValueAt(row, 1).toString());
-        txtTenNhanVien.setText(tblNhanVien.getValueAt(row, 2).toString());
-        txtEmail.setText(tblNhanVien.getValueAt(row, 3).toString());
-        txtSDT.setText(tblNhanVien.getValueAt(row, 4).toString());
-        txtTenDN.setText(tblNhanVien.getValueAt(row, 5).toString());
-        txtMatKhau.setText(tblNhanVien.getValueAt(row, 6).toString());
-        String quyenHan = tblNhanVien.getValueAt(row, 7).toString();
-        String trangthai = tblNhanVien.getValueAt(row, 8).toString();
-        if (quyenHan.equals("true")) {
-            jrNhanVien.setSelected(true);
-            jrQuanLy.setSelected(false);
-        } else {
-            jrNhanVien.setSelected(false);
-            jrQuanLy.setSelected(true);
-        }
-        if (trangthai.equals("true")) {
-            jrLam.setSelected(true);
-            jrNghi.setSelected(false);
-        } else {
-            jrLam.setSelected(false);
-            jrNghi.setSelected(true);
+        int rowIndex = tblNhanVien.getSelectedRow();
+        if (rowIndex >= 0) {
+            txtMaNhanVien.setText(tblNhanVien.getValueAt(rowIndex, 0).toString());
+            txtTenNhanVien.setText(tblNhanVien.getValueAt(rowIndex, 1).toString());
+            txtSDT.setText(tblNhanVien.getValueAt(rowIndex, 2).toString());
+            txtEmail.setText(tblNhanVien.getValueAt(rowIndex, 3).toString());
+            txtTenDN.setText(tblNhanVien.getValueAt(rowIndex, 4).toString());
+            txtMatKhau.setText(tblNhanVien.getValueAt(rowIndex, 5).toString());
+            String quyenhan = tblNhanVien.getValueAt(rowIndex, 6).toString();
+            if (quyenhan.equals("true")) {
+                jrNhanVien.setSelected(true);
+            } else {
+                jrQuanLy.setSelected(true);
+            }
+            String trangThai = tblNhanVien.getValueAt(rowIndex, 7).toString();
+            if (trangThai.equals("true")) {
+                jrLam.setSelected(true);
+            } else {
+                jrNghi.setSelected(true);
+            }
         }
     }//GEN-LAST:event_tblNhanVienMouseClicked
 
@@ -580,15 +565,19 @@ public class quanlynhanvien extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDActionPerformed
 
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSua_NV;
     private javax.swing.JButton btnThem_NV;
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnXoa_NV;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -606,7 +595,6 @@ public class quanlynhanvien extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JRadioButton jrLam;
     private javax.swing.JRadioButton jrNghi;
     private javax.swing.JRadioButton jrNhanVien;
@@ -619,5 +607,6 @@ public class quanlynhanvien extends javax.swing.JPanel {
     private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtTenDN;
     private javax.swing.JTextField txtTenNhanVien;
+    private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

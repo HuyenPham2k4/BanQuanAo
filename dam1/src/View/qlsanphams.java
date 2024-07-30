@@ -1763,42 +1763,67 @@ public class qlsanphams extends javax.swing.JPanel {
 
     private void btnDeleteThuongHieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteThuongHieuActionPerformed
         // TODO add your handling code here:
-        int rowIndex = tbThuonHieu.getSelectedRow();
-        if (rowIndex >= 0) {
-            int id = (int) model.getValueAt(rowIndex, 0);
-            new thuongHieuDAO().delete(id);
-            fillDataTableThuongHieu();
-            clearThuongHieuForm();
-            JOptionPane.showMessageDialog(this, "Xóa thương hiệu thành công.");
-        } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xóa.");
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn Xóa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            int rowIndex = tbThuonHieu.getSelectedRow();
+            if (rowIndex >= 0) {
+                int id = (int) model.getValueAt(rowIndex, 0);
+                boolean isDeleteTH = new thuongHieuDAO().delete(id);
+                if (isDeleteTH) {
+                    fillDataTableThuongHieu();
+                    clearThuongHieuForm();
+                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thành công!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xóa.");
+            }
         }
     }//GEN-LAST:event_btnDeleteThuongHieuActionPerformed
 
     private void btnUpdateThuongHieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateThuongHieuActionPerformed
         // TODO add your handling code here:
-        int rowIndex = tbThuonHieu.getSelectedRow();
-        if (rowIndex >= 0) {
-            thuonghieu th = setThuongHieuFormData();
-            if (th != null) {
-                new thuongHieuDAO().update(th);
-                fillDataTableThuongHieu();
-                clearThuongHieuForm();
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            int rowIndex = tbThuonHieu.getSelectedRow();
+            if (rowIndex >= 0) {
+                thuonghieu th = setThuongHieuFormData();
+                if (th != null) {
+                    boolean isUpdateTH = new thuongHieuDAO().update(th);
+                    if (isUpdateTH) {
+                        fillDataTableThuongHieu();
+                        clearThuongHieuForm();
+                        JOptionPane.showMessageDialog(this, "sửa dữ liệu thành công!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "sửaf dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn thương hiệu cần sửa.");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn thương hiệu cần sửa.");
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để sửa.");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để sửa.");
         }
     }//GEN-LAST:event_btnUpdateThuongHieuActionPerformed
 
     private void btnCreate_ThuongHieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreate_ThuongHieuActionPerformed
         // TODO add your handling code here:
-        if (validateThuongHieuForm()) {
-            thuonghieu th = getThuongHieuFormData();
-            new thuongHieuDAO().add(th);
-            fillDataTableThuongHieu();
-            clearThuongHieuForm();
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn Xóa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            if (validateThuongHieuForm()) {
+                thuonghieu th = getThuongHieuFormData();
+                boolean isCraeteTH = new thuongHieuDAO().add(th);
+                if (isCraeteTH) {
+                    fillDataTableThuongHieu();
+                    clearThuongHieuForm();
+                    JOptionPane.showMessageDialog(this, "Thêm dữ liệu thành công!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Thêm dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin.");
+            }
         }
     }//GEN-LAST:event_btnCreate_ThuongHieuActionPerformed
 
@@ -1816,42 +1841,67 @@ public class qlsanphams extends javax.swing.JPanel {
 
     private void btnDelete_DanhMucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete_DanhMucActionPerformed
         // TODO add your handling code here:
-        int rowIndex = tblDanhMuc.getSelectedRow();
-        if (rowIndex >= 0) {
-            int id = (int) model.getValueAt(rowIndex, 0);
-            new danhMucDAO().delete(id);
-            fillDataTableDanhMuc();
-            clearDanhMucForm();
-            JOptionPane.showMessageDialog(this, "Xóa danh mục thành công.");
-        } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xóa.");
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn Xóa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            int rowIndex = tblDanhMuc.getSelectedRow();
+            if (rowIndex >= 0) {
+                int id = (int) model.getValueAt(rowIndex, 0);
+                boolean isDeleteDM = new danhMucDAO().delete(id);
+                if (isDeleteDM) {
+                    fillDataTableDanhMuc();
+                    clearDanhMucForm();
+                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thành công!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xóa.");
+            }
         }
     }//GEN-LAST:event_btnDelete_DanhMucActionPerformed
 
     private void btnUpdate_DanhMucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate_DanhMucActionPerformed
         // TODO add your handling code here:
-        int rowIndex = tblDanhMuc.getSelectedRow();
-        if (rowIndex >= 0) {
-            danhmuc dm = setDanhMucFormData();
-            if (dm != null) {
-                new danhMucDAO().update(dm);
-                fillDataTableDanhMuc();
-                clearDanhMucForm();
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            int rowIndex = tblDanhMuc.getSelectedRow();
+            if (rowIndex >= 0) {
+                danhmuc dm = setDanhMucFormData();
+                if (dm != null) {
+                    boolean isUpdateDM = new danhMucDAO().update(dm);
+                    if (isUpdateDM) {
+                        fillDataTableDanhMuc();
+                        clearDanhMucForm();
+                        JOptionPane.showMessageDialog(this, "sửa dữ liệu thành công!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "sửa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn danh mục cần sửa.");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn danh mục cần sửa.");
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để sửa.");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để sửa.");
         }
     }//GEN-LAST:event_btnUpdate_DanhMucActionPerformed
 
     private void btnCreate_DanhMucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreate_DanhMucActionPerformed
         // TODO add your handling code here:
-        if (validateDanhMucForm()) {
-            danhmuc dm = getDanhMucFormData();
-            new danhMucDAO().add(dm);
-            fillDataTableDanhMuc();
-            clearDanhMucForm();
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn Thêm dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            if (validateDanhMucForm()) {
+                danhmuc dm = getDanhMucFormData();
+                boolean isCreateDM = new danhMucDAO().add(dm);
+                if (isCreateDM) {
+                    fillDataTableDanhMuc();
+                    clearDanhMucForm();
+                    JOptionPane.showMessageDialog(this, "Thêm dữ liệu thành công!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Thêm dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin.");
+            }
         }
     }//GEN-LAST:event_btnCreate_DanhMucActionPerformed
 
@@ -1869,42 +1919,67 @@ public class qlsanphams extends javax.swing.JPanel {
 
     private void btnDelete_SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete_SizeActionPerformed
         // TODO add your handling code here:
-        int rowIndex = tblSize.getSelectedRow();
-        if (rowIndex >= 0) {
-            int id = (int) model.getValueAt(rowIndex, 0);
-            new sizeDAO().delete(id);
-            fillDataTableSize();
-            clearSizeForm();
-            JOptionPane.showMessageDialog(this, "Xóa size thành công.");
-        } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xóa.");
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn Xóa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            int rowIndex = tblSize.getSelectedRow();
+            if (rowIndex >= 0) {
+                int id = (int) model.getValueAt(rowIndex, 0);
+                boolean isDeleteSize = new sizeDAO().delete(id);
+                if (isDeleteSize) {
+                    fillDataTableSize();
+                    clearSizeForm();
+                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thành công!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xóa.");
+            }
         }
     }//GEN-LAST:event_btnDelete_SizeActionPerformed
 
     private void btnUpdate_SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate_SizeActionPerformed
         // TODO add your handling code here:
-        int rowIndex = tblSize.getSelectedRow();
-        if (rowIndex >= 0) {
-            size s = setSizeFormData();
-            if (s != null) {
-                new sizeDAO().update(s);
-                fillDataTableSize();
-                clearSizeForm();
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            int rowIndex = tblSize.getSelectedRow();
+            if (rowIndex >= 0) {
+                size s = setSizeFormData();
+                if (s != null) {
+                    boolean isUpdateSize = new sizeDAO().update(s);
+                    if (isUpdateSize) {
+                        fillDataTableSize();
+                        clearSizeForm();
+                        JOptionPane.showMessageDialog(this, "sửa dữ liệu thành công!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "sửa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn size cần sửa.");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn size cần sửa.");
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để sửa.");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để sửa.");
         }
     }//GEN-LAST:event_btnUpdate_SizeActionPerformed
 
     private void btnCreate_SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreate_SizeActionPerformed
         // TODO add your handling code here:
-        if (validateSizeForm()) {
-            size s = getSizeFormData();
-            new sizeDAO().add(s);
-            fillDataTableSize();
-            clearSizeForm();
+        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn Thêm dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            if (validateSizeForm()) {
+                size s = getSizeFormData();
+                boolean isCreateSize = new sizeDAO().add(s);
+                if (isCreateSize) {
+                    fillDataTableSize();
+                    clearSizeForm();
+                    JOptionPane.showMessageDialog(this, "Thêm dữ liệu thành công!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Thêm dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin.");
+            }
         }
     }//GEN-LAST:event_btnCreate_SizeActionPerformed
 
@@ -1983,7 +2058,7 @@ public class qlsanphams extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "thêm dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để thêm.");
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin.");
             }
         }
     }//GEN-LAST:event_btnCreate_MauSacActionPerformed

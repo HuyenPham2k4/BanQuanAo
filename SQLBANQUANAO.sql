@@ -216,3 +216,6 @@ SELECT * FROM NhanVien WHERE TenDN = 'nguyevana' AND MatKhau='password123'
 
 INSERT INTO "VOUCHER" ("MaVocher", "NgayBatDau", "NgayKetThuc", "TrangThai") VALUES
 ('1234567', '2024-08-01', '2024-12-31', '1');
+
+INSERT INTO DANHMUC ( "NgayBatDau", "TrangThai") VALUES
+('aasd',1);
