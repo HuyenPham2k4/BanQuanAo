@@ -78,7 +78,7 @@ public class nhanhVienDAO implements INVRepo {
 
     @Override
     public List<nhanvien> findByName(String name) {
-        return selectBySQL("SELECT * FROM NHANVIEN WHERE HoTen = ?", name);
+        return selectBySQL("SELECT * FROM NHANVIEN WHERE HoTen LIKE N'%" + name + "%'");
     }
     public List<nhanvien> selectByUser(String username, String password) {
         List<nhanvien> nv = selectBySQL("SELECT * FROM NhanVien WHERE TenDN = '"+username+"' AND MatKhau='"+password+"'");

@@ -222,16 +222,19 @@ INSERT INTO DANHMUC ( "NgayBatDau", "TrangThai") VALUES
 
 
 
-CREATE VIEW ProductDetails AS
-    sp.ID AS MaSP,
-    sp.TenSP,
-    sp.SoLuong,
-    sp.Gia,
-    sp.MoTa,
-    ms.MauSac AS MauSacSP,
-    s.Ten AS SizeSP,
-    dm.Ten AS DanhMuc,
-    th.Ten AS ThuongHieu
+CREATE VIEW ProductView AS
+SELECT 
+    sp.ID AS ProductID,
+    sp.TenSP AS ProductName,
+    sp.MoTa AS ProductDescription,
+    sp.AnhSP AS ProductImage,
+    sp.SoLuong AS Quantity,
+    sp.Gia AS Price,
+    sp.TrangThai AS ProductStatus,
+    dm.Ten AS CategoryName,
+    th.Ten AS BrandName,
+    s.Ten AS SizeNames,
+    ms.MauSac AS ColorNames
 FROM 
     SANPHAM sp
     LEFT JOIN CTSIZE cts ON sp.ID = cts.ID_SP
@@ -243,7 +246,10 @@ FROM
 WHERE 
     sp.TrangThai = 1
     AND (cts.TrangThai = 1 OR cts.TrangThai IS NULL)
-    AND (ctm.TrangThai = 1 OR ctm.TrangThai IS NULL);
+    AND (ctm.TrangThai = 1 OR ctm.TrangThai IS NULL)
+GROUP BY 
+    sp.ID, sp.TenSP, sp.MoTa, sp.SoLuong, sp.Gia, sp.TrangThai, dm.Ten, th.Ten;
+
 
 
 

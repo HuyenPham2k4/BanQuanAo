@@ -588,20 +588,27 @@ public class quanlynhanvien extends javax.swing.JPanel {
 
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
         // TODO add your handling code here:
-        model = (DefaultTableModel) tblNhanVien.getModel();
-        model.setRowCount(0);
-        String timKiem = txtTimKiem.getText().trim();
-        List<nhanvien> NhanVienList;
-        if (timKiem.isEmpty()) {
-            NhanVienList = nvDao.getAll();
-        } else {
-            NhanVienList = nvDao.findByName(timKiem);
-        }
-        for (nhanvien nvDao : NhanVienList) {
-            Object[] row = {nvDao.getId(), nvDao.getManv(), nvDao.getHoten(), nvDao.getSdt(), nvDao.getEmail(), nvDao.getTendangnhap(), nvDao.getMatkhau(), nvDao.getQuyenhan(), nvDao.isTrangthai()};
-            model.addRow(row);
-        }
-//tblNhanVien.setModel(model);
+String timKiem = txtTimKiem.getText().trim();
+List<nhanvien> NhanVienList = nvDao.findByName(timKiem);
+model = (DefaultTableModel) tblNhanVien.getModel();
+model.setRowCount(0);
+
+for (nhanvien nv : NhanVienList) {
+    Object[] row = {
+        nv.getId(), 
+        nv.getManv(), 
+        nv.getHoten(), 
+        nv.getSdt(), 
+        nv.getEmail(), 
+        nv.getTendangnhap(), 
+        nv.getMatkhau(), 
+        nv.getQuyenhan(), 
+        nv.isTrangthai()
+    };
+    model.addRow(row);
+}
+
+
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
 
