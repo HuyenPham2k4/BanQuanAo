@@ -219,3 +219,31 @@ INSERT INTO "VOUCHER" ("MaVocher", "NgayBatDau", "NgayKetThuc", "TrangThai") VAL
 
 INSERT INTO DANHMUC ( "NgayBatDau", "TrangThai") VALUES
 ('aasd',1);
+
+
+
+CREATE VIEW ProductDetails AS
+    sp.ID AS MaSP,
+    sp.TenSP,
+    sp.SoLuong,
+    sp.Gia,
+    sp.MoTa,
+    ms.MauSac AS MauSacSP,
+    s.Ten AS SizeSP,
+    dm.Ten AS DanhMuc,
+    th.Ten AS ThuongHieu
+FROM 
+    SANPHAM sp
+    LEFT JOIN CTSIZE cts ON sp.ID = cts.ID_SP
+    LEFT JOIN SIZE s ON cts.ID_SIZE = s.ID
+    LEFT JOIN CTMAUSAC ctm ON sp.ID = ctm.ID_SP
+    LEFT JOIN MAUSAC ms ON ctm.ID_MS = ms.ID
+    INNER JOIN DANHMUC dm ON sp.ID_DM = dm.ID
+    INNER JOIN THUONGHIEU th ON sp.ID_TH = th.ID
+WHERE 
+    sp.TrangThai = 1
+    AND (cts.TrangThai = 1 OR cts.TrangThai IS NULL)
+    AND (ctm.TrangThai = 1 OR ctm.TrangThai IS NULL);
+
+
+

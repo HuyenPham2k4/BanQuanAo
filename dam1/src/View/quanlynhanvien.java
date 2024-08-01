@@ -34,7 +34,7 @@ public class quanlynhanvien extends javax.swing.JPanel {
         model.setRowCount(0);
         List<nhanvien> NhanVienList = nvDao.getAll();
         for (nhanvien nvDao : NhanVienList) {
-            Object[] row = {nvDao.getManv(), nvDao.getHoten(), nvDao.getSdt(), nvDao.getEmail(), nvDao.getTendangnhap(), nvDao.getMatkhau(), nvDao.getQuyenhan(), nvDao.isTrangthai()};
+            Object[] row = {nvDao.getId(), nvDao.getManv(), nvDao.getHoten(), nvDao.getSdt(), nvDao.getEmail(), nvDao.getTendangnhap(), nvDao.getMatkhau(), nvDao.getQuyenhan(), nvDao.isTrangthai()};
             model.addRow(row);
         }
         tblNhanVien.setModel(model);
@@ -52,7 +52,21 @@ public class quanlynhanvien extends javax.swing.JPanel {
         return new nhanvien(0, manv, tennv, sdt, email, tendangnhap, matkhau, quyenhan, trangThai);
     }
 
+    private nhanvien setDaTa() {
+        int ID = Integer.parseInt(txtID.getText());
+        String manv = txtMaNhanVien.getText();
+        String tennv = txtTenNhanVien.getText();
+        int sdt = Integer.parseInt(txtSDT.getText());
+        String email = txtEmail.getText();
+        String tendangnhap = txtTenDN.getText();
+        String matkhau = txtMatKhau.getText();
+        boolean quyenhan = jrNhanVien.isSelected();
+        boolean trangThai = jrLam.isSelected();
+        return new nhanvien(ID, manv, tennv, sdt, email, tendangnhap, matkhau, quyenhan, trangThai);
+    }
+
     public void clearTable() {
+        txtID.setText("");
         txtMaNhanVien.setText("");
         txtTenNhanVien.setText("");
         txtEmail.setText("");
@@ -95,10 +109,12 @@ public class quanlynhanvien extends javax.swing.JPanel {
         txtSDT = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        txtMaNhanVien = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jrLam = new javax.swing.JRadioButton();
         jrNghi = new javax.swing.JRadioButton();
+        jLabel11 = new javax.swing.JLabel();
+        txtID = new javax.swing.JTextField();
+        txtMaNhanVien = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblNhanVien = new javax.swing.JTable();
@@ -175,12 +191,6 @@ public class quanlynhanvien extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel9.setText("Mã nhân viên");
 
-        txtMaNhanVien.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaNhanVienActionPerformed(evt);
-            }
-        });
-
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel10.setText("Trạng thái");
 
@@ -191,6 +201,21 @@ public class quanlynhanvien extends javax.swing.JPanel {
         buttonGroup2.add(jrNghi);
         jrNghi.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jrNghi.setText("Nghỉ việc");
+
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel11.setText("ID");
+
+        txtID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDActionPerformed(evt);
+            }
+        });
+
+        txtMaNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaNhanVienActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -220,18 +245,17 @@ public class quanlynhanvien extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addComponent(jLabel7)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4))
-                                        .addGap(40, 40, 40))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addGap(44, 44, 44)))
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtID)
+                                        .addGap(4, 4, 4)))
+                                .addGap(40, 40, 40)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,7 +265,11 @@ public class quanlynhanvien extends javax.swing.JPanel {
                                     .addComponent(txtEmail)
                                     .addComponent(txtSDT)
                                     .addComponent(txtTenNhanVien)
-                                    .addComponent(txtMaNhanVien))))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtMaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel1))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(116, 116, 116)
@@ -258,6 +286,8 @@ public class quanlynhanvien extends javax.swing.JPanel {
                 .addContainerGap(49, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -316,13 +346,13 @@ public class quanlynhanvien extends javax.swing.JPanel {
 
         tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã nhân viên", "Tên nhân viên", "Số điện thoại", "Email", "Tên đăng nhập", "Mật khẩu", "Quyền hạn", "Trạng thái"
+                "ID", "Mã nhân viên", "Tên nhân viên", "Số điện thoại", "Email", "Tên đăng nhập", "Mật khẩu", "Quyền hạn", "Trạng thái"
             }
         ));
         tblNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -339,6 +369,11 @@ public class quanlynhanvien extends javax.swing.JPanel {
         txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTimKiemActionPerformed(evt);
+            }
+        });
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
             }
         });
 
@@ -430,14 +465,51 @@ public class quanlynhanvien extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTimKiemActionPerformed
+
+    private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
+        // TODO add your handling code here:
+        int rowIndex = tblNhanVien.getSelectedRow();
+        if (rowIndex >= 0) {
+            txtID.setText(tblNhanVien.getValueAt(rowIndex, 0).toString());
+            txtMaNhanVien.setText(tblNhanVien.getValueAt(rowIndex, 1).toString());
+            txtTenNhanVien.setText(tblNhanVien.getValueAt(rowIndex, 2).toString());
+            txtSDT.setText(tblNhanVien.getValueAt(rowIndex, 3).toString());
+            txtEmail.setText(tblNhanVien.getValueAt(rowIndex, 4).toString());
+            txtTenDN.setText(tblNhanVien.getValueAt(rowIndex, 5).toString());
+            txtMatKhau.setText(tblNhanVien.getValueAt(rowIndex, 6).toString());
+            String quyenhan = tblNhanVien.getValueAt(rowIndex, 7).toString();
+            if (quyenhan.equals("true")) {
+                jrNhanVien.setSelected(true);
+            } else {
+                jrQuanLy.setSelected(true);
+            }
+            String trangThai = tblNhanVien.getValueAt(rowIndex, 8).toString();
+            if (trangThai.equals("true")) {
+                jrLam.setSelected(true);
+            } else {
+                jrNghi.setSelected(true);
+            }
+        }
+    }//GEN-LAST:event_tblNhanVienMouseClicked
+
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIDActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtTenNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenNhanVienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTenNhanVienActionPerformed
 
     private void btnThem_NVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem_NVActionPerformed
         // TODO add your handling code here:
@@ -466,7 +538,7 @@ public class quanlynhanvien extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 try {
-                    nhanvien updatedNhanVien = getDaTa();
+                    nhanvien updatedNhanVien = setDaTa();
                     boolean isUpdated = nvDao.update(updatedNhanVien);
                     if (isUpdated) {
                         fillTable();
@@ -510,42 +582,27 @@ public class quanlynhanvien extends javax.swing.JPanel {
         clearTable();
     }//GEN-LAST:event_btnXoa_NVActionPerformed
 
-    private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
-        // TODO add your handling code here:
-        int rowIndex = tblNhanVien.getSelectedRow();
-        if (rowIndex >= 0) {
-            txtMaNhanVien.setText(tblNhanVien.getValueAt(rowIndex, 0).toString());
-            txtTenNhanVien.setText(tblNhanVien.getValueAt(rowIndex, 1).toString());
-            txtSDT.setText(tblNhanVien.getValueAt(rowIndex, 2).toString());
-            txtEmail.setText(tblNhanVien.getValueAt(rowIndex, 3).toString());
-            txtTenDN.setText(tblNhanVien.getValueAt(rowIndex, 4).toString());
-            txtMatKhau.setText(tblNhanVien.getValueAt(rowIndex, 5).toString());
-            String quyenhan = tblNhanVien.getValueAt(rowIndex, 6).toString();
-            if (quyenhan.equals("true")) {
-                jrNhanVien.setSelected(true);
-            } else {
-                jrQuanLy.setSelected(true);
-            }
-            String trangThai = tblNhanVien.getValueAt(rowIndex, 7).toString();
-            if (trangThai.equals("true")) {
-                jrLam.setSelected(true);
-            } else {
-                jrNghi.setSelected(true);
-            }
-        }
-    }//GEN-LAST:event_tblNhanVienMouseClicked
-
-    private void txtTenNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenNhanVienActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTenNhanVienActionPerformed
-
     private void txtMaNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaNhanVienActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaNhanVienActionPerformed
 
-    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnTimKiemActionPerformed
+        model = (DefaultTableModel) tblNhanVien.getModel();
+        model.setRowCount(0);
+        String timKiem = txtTimKiem.getText().trim();
+        List<nhanvien> NhanVienList;
+        if (timKiem.isEmpty()) {
+            NhanVienList = nvDao.getAll();
+        } else {
+            NhanVienList = nvDao.findByName(timKiem);
+        }
+        for (nhanvien nvDao : NhanVienList) {
+            Object[] row = {nvDao.getId(), nvDao.getManv(), nvDao.getHoten(), nvDao.getSdt(), nvDao.getEmail(), nvDao.getTendangnhap(), nvDao.getMatkhau(), nvDao.getQuyenhan(), nvDao.isTrangthai()};
+            model.addRow(row);
+        }
+//tblNhanVien.setModel(model);
+    }//GEN-LAST:event_txtTimKiemKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -558,6 +615,7 @@ public class quanlynhanvien extends javax.swing.JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -578,6 +636,7 @@ public class quanlynhanvien extends javax.swing.JPanel {
     private javax.swing.JRadioButton jrQuanLy;
     private javax.swing.JTable tblNhanVien;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtMaNhanVien;
     private javax.swing.JTextField txtMatKhau;
     private javax.swing.JTextField txtSDT;

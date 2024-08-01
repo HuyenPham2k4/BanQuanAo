@@ -82,7 +82,6 @@ public class nhanhVienDAO implements INVRepo {
     }
     public List<nhanvien> selectByUser(String username, String password) {
         List<nhanvien> nv = selectBySQL("SELECT * FROM NhanVien WHERE TenDN = '"+username+"' AND MatKhau='"+password+"'");
-        
         return nv;
     }
     
