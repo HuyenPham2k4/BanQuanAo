@@ -593,19 +593,20 @@ List<nhanvien> NhanVienList = nvDao.findByName(timKiem);
 model = (DefaultTableModel) tblNhanVien.getModel();
 model.setRowCount(0);
 
-for (nhanvien nv : NhanVienList) {
-    Object[] row = {
-        nv.getId(), 
-        nv.getManv(), 
-        nv.getHoten(), 
-        nv.getSdt(), 
-        nv.getEmail(), 
-        nv.getTendangnhap(), 
-        nv.getMatkhau(), 
-        nv.getQuyenhan(), 
-        nv.isTrangthai()
-    };
-    model.addRow(row);
+     for (nhanvien nv : NhanVienList) {
+            Object[] rowData = new Object[9];
+            rowData[0] =  nv.getId();
+            rowData[1] = nv.getManv();
+            rowData[2] =  nv.getHoten();
+            rowData[3] = nv.getSdt();
+            rowData[4] =  nv.getEmail();
+            rowData[5] =  nv.getTendangnhap();
+            rowData[6] = nv.getMatkhau();
+            rowData[7] = nv.getQuyenhan();
+            if (nv.isTrangthai() == true) {
+                rowData[8] = "Đi làm";
+            }
+    model.addRow(rowData);
 }
 
 

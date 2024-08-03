@@ -244,6 +244,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtTimkiemThuongHieu">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimkiemThuongHieuKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnTimKiem4">
               <Properties>
@@ -498,6 +501,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtTimkiemDanhMuc">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimkiemDanhMucKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnTimKiem5">
               <Properties>
@@ -735,6 +741,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtTimkiemSize">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimkiemSizeKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnTimKiem6">
               <Properties>
@@ -963,6 +972,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtTimkiemMauSac">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimkiemMauSacKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnTimKiem7">
               <Properties>
@@ -996,20 +1008,20 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="472" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="159" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="372" max="-2" attributes="0"/>
-          </Group>
           <Component id="jTabbedPane1" alignment="0" min="-2" pref="1271" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="159" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="544" max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace pref="25" max="32767" attributes="0"/>
+              <EmptySpace pref="31" max="32767" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jTabbedPane1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -1516,6 +1528,7 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTimKiemActionPerformed"/>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemKeyReleased"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnTimKiem">

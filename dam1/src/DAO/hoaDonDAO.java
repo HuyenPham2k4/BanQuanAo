@@ -4,6 +4,7 @@
  */
 package DAO;
 import Helper.JDBCHelper;
+import View.viewModel.ProductDetail;
 import entity.hoadon;
 
 import java.sql.ResultSet;
@@ -53,10 +54,10 @@ public class hoaDonDAO implements IHDRepo {
         try {
             ResultSet rs = helper.executeQuery(sql, args);
             while (rs.next()) {
-                hoadon hd = new hoadon(0, 0, 0, sql, sql, 0, 0, true);
+                hoadon hd = new hoadon(0, 0, sql, sql, sql, 0, 0, true);
                 hd.setId(rs.getInt("ID"));
                 hd.setIdnv(rs.getInt("ID_NV"));
-                hd.setMavocher(rs.getInt("MaVocher"));
+                hd.setMavocher(rs.getString("MaVocher"));
                 hd.setThoigian(rs.getString("ThoiGian"));
                 hd.setGhichu(rs.getString("GhiChu"));
                 hd.setTtthanhtoan(rs.getInt("TT_ThanhToan"));
@@ -81,5 +82,64 @@ public class hoaDonDAO implements IHDRepo {
     public List<hoadon> findByName(String name) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
+    public List<ProductDetail> selectAllByProduct(String sql, Object... args) {
+        List<ProductDetail> lst = new ArrayList<>();
+        try {
+            ResultSet rs = helper.executeQuery(sql, args);
+            while (rs.next()) {
+                ProductDetail prd = new ProductDetail();
+                prd.setProductID(rs.getInt("ProductID"));
+                prd.setProductName(rs.getString("ProductName"));
+                prd.setProductDescription(rs.getString("ProductDescription"));
+                prd.setProductImage(rs.getString("ProductImage"));
+                prd.setQuantity(rs.getInt("Quantity"));
+                prd.setPrice(rs.getDouble("Price"));
+                prd.setProductStatus(rs.getBoolean("ProductStatus"));
+                prd.setCategoryName(rs.getString("CategoryName"));
+                prd.setBrandName(rs.getString("BrandName"));
+                prd.setSizeNames(rs.getString("SizeNames"));
+                prd.setColorNames(rs.getString("ColorNames"));
+                lst.add(prd);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lst;
+    }
+
+    public ProductDetail fillSLvsGiaProduct(int id) {
+        List<ProductDetail> detail = selectAllByProduct("select * from ProductView where ProductID = " + id + " AND ProductStatus = 1");
+        if (detail.isEmpty()) {
+            return null;
+        }
+        return detail.get(0);
+    }
+
+    public List<ProductDetail> fillAllProduct() {
+        return selectAllByProduct("select * from ProductView where ProductStatus = 1");
+    }
+
+    public List<ProductDetail> findByNameProduct(String name) {
+        return selectAllByProduct("select * from ProductView where ProductName LIKE N'%" + name + "%'");
+    }
+
+    public List<ProductDetail> findByCategory(String name) {
+        return selectAllByProduct("select * from ProductView where CategoryName = '" + name + "'");
+    }
+
+    public List<ProductDetail> findByColorProduct(String name) {
+        return selectAllByProduct("select * from ProductView where ColorNames = '" + name + "'");
+    }
+
+    public List<ProductDetail> findBySizeProduct(String name) {
+        return selectAllByProduct("select * from ProductView where SizeNames = '" + name + "'");
+    }
+
+    public List<ProductDetail> findByBrandProduct(String name) {
+        return selectAllByProduct("select * from ProductView where BrandName = '" + name + "'");
+    }
 }
+
+
 

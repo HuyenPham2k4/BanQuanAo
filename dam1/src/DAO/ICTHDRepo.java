@@ -12,7 +12,9 @@ public interface ICTHDRepo {
     public boolean add(chitiethoadon op);
     public boolean update(chitiethoadon op);
     public boolean delete(chitiethoadon op);
-    public List<chitiethoadon> getAll( chitiethoadon op);
+    public List<chitiethoadon> getAllCTHD();
+    public List<chitiethoadon> getAll(int id);
+    public List<chitiethoadon> findByIDHD(int id);
     public List<chitiethoadon> selectBySQL(String sql, Object... args);
     public List<chitiethoadon> findByID(int id );
     public List<chitiethoadon> findByName(String name );

@@ -70,8 +70,8 @@ public class danhMucDAO implements IDMRepo {
         return selectBySQL("SELECT * FROM DANHMUC WHERE ID = ?", id);
     }
 
-    @Override
+    @Override//hàm tìm kiếm thay thế =? thành LIKE N'%"+name+"%'
     public List<danhmuc> findByName(String name) {
-        return selectBySQL("SELECT * FROM DANHMUC WHERE Ten = ?", name);
+        return selectBySQL("SELECT * FROM DANHMUC WHERE Ten LIKE N'%"+name+"%'");
     }
 }

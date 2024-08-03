@@ -7,11 +7,15 @@ package View;
 import DAO.chitietsanphamDAO;
 import DAO.danhMucDAO;
 import DAO.mauSacDAO;
+import DAO.sanPhamDAO;
 import DAO.sizeDAO;
 import DAO.thuongHieuDAO;
+import View.viewModel.ProductDetail;
 import entity.chitietsanpham;
 import entity.danhmuc;
 import entity.mausac;
+import entity.nhanvien;
+import entity.sanpham;
 import entity.size;
 import entity.thuonghieu;
 import java.util.ArrayList;
@@ -416,6 +420,12 @@ public class qlsanphams extends javax.swing.JPanel {
 
         jLabel22.setText("Tìm kiếm");
 
+        txtTimkiemThuongHieu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimkiemThuongHieuKeyReleased(evt);
+            }
+        });
+
         btnTimKiem4.setText("Tìm kiếm");
         btnTimKiem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -597,6 +607,12 @@ public class qlsanphams extends javax.swing.JPanel {
 
         jLabel23.setText("Tìm kiếm");
 
+        txtTimkiemDanhMuc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimkiemDanhMucKeyReleased(evt);
+            }
+        });
+
         btnTimKiem5.setText("Tìm kiếm");
         btnTimKiem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -755,6 +771,12 @@ public class qlsanphams extends javax.swing.JPanel {
 
         jLabel25.setText("Tìm kiếm");
 
+        txtTimkiemSize.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimkiemSizeKeyReleased(evt);
+            }
+        });
+
         btnTimKiem6.setText("Tìm kiếm");
         btnTimKiem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -911,6 +933,12 @@ public class qlsanphams extends javax.swing.JPanel {
         jLabel26.setText("Màu Sắc");
 
         jLabel27.setText("Tìm kiếm");
+
+        txtTimkiemMauSac.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimkiemMauSacKeyReleased(evt);
+            }
+        });
 
         btnTimKiem7.setText("Tìm kiếm");
         btnTimKiem7.addActionListener(new java.awt.event.ActionListener() {
@@ -1222,6 +1250,11 @@ public class qlsanphams extends javax.swing.JPanel {
         txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTimKiemActionPerformed(evt);
+            }
+        });
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
             }
         });
 
@@ -1662,18 +1695,18 @@ public class qlsanphams extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(472, 472, 472)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(372, 372, 372))
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1271, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(544, 544, 544))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -2157,6 +2190,76 @@ public class qlsanphams extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTimKiemActionPerformed
 
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
+    private void txtTimkiemThuongHieuKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimkiemThuongHieuKeyReleased
+        // TODO add your handling code here:
+        thuongHieuDAO thDAO = new thuongHieuDAO();
+        String timKiem = txtTimkiemThuongHieu.getText();
+        List<thuonghieu> ths = thDAO.findByName(timKiem);
+        model = (DefaultTableModel) tbThuonHieu.getModel();
+        model.setRowCount(0);
+        for (thuonghieu th : ths) {
+            Object[] rowData = new Object[4];
+            rowData[0] = th.getId();
+            rowData[1] = th.getTen();
+            rowData[2] = th.getMota();
+            rowData[3] = th.isTrangthai();
+            model.addRow(rowData);
+        }
+    }//GEN-LAST:event_txtTimkiemThuongHieuKeyReleased
+    //gọi hàm fill datatable nó sẽ gọi hàm có getall thì đương nhiên phần trên sẽ k có tác dụng, nên phải như này
+    private void txtTimkiemDanhMucKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimkiemDanhMucKeyReleased
+        // TODO add your handling code here:
+        danhMucDAO dmDAO = new danhMucDAO();
+        String timKiem = txtTimkiemDanhMuc.getText();
+        List<danhmuc> dms = dmDAO.findByName(timKiem);
+        System.out.println("danhmuc");
+        model = (DefaultTableModel) tblDanhMuc.getModel();
+        model.setRowCount(0);
+        for (danhmuc th : dms) {
+            Object[] rowData = new Object[3];
+            rowData[0] = th.getId();
+            rowData[1] = th.getTen();
+            rowData[2] = th.isTrangthai();
+            model.addRow(rowData);
+        }
+    }//GEN-LAST:event_txtTimkiemDanhMucKeyReleased
+
+    private void txtTimkiemSizeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimkiemSizeKeyReleased
+        // TODO add your handling code here:
+        sizeDAO sDAO = new sizeDAO();
+        String timKiem = txtTimkiemSize.getText();
+        List<size> ss = sDAO.findByName(timKiem);
+        model = (DefaultTableModel) tblSize.getModel();
+        model.setRowCount(0);
+        for (size s : ss) {
+            Object[] rowData = new Object[3];
+            rowData[0] = s.getId();
+            rowData[1] = s.getTen();
+            rowData[2] = s.getMota();
+            model.addRow(rowData);
+        }
+    }//GEN-LAST:event_txtTimkiemSizeKeyReleased
+
+    private void txtTimkiemMauSacKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimkiemMauSacKeyReleased
+        // TODO add your handling code here:
+        mauSacDAO msDAO = new mauSacDAO();
+        String timKiem = txtTimkiemMauSac.getText();
+        List<mausac> mss = msDAO.findByName(timKiem);
+        model = (DefaultTableModel) tblMauSac.getModel();
+        model.setRowCount(0);
+        for (mausac ms : mss) {
+            Object[] rowData = new Object[2];
+            rowData[0] = ms.getId();
+            rowData[1] = ms.getMacsac();
+            model.addRow(rowData);
+        }
+    }//GEN-LAST:event_txtTimkiemMauSacKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBW;
@@ -2331,9 +2434,9 @@ public class qlsanphams extends javax.swing.JPanel {
     }
 
     public void fillDataTableMauSac() {
+        List<mausac> msl = new mauSacDAO().getAll();
         model = (DefaultTableModel) tblMauSac.getModel();
         model.setRowCount(0);
-        List<mausac> msl = new mauSacDAO().getAll();
         for (mausac ms : msl) {
             Object[] rowData = new Object[2];
             rowData[0] = ms.getId();

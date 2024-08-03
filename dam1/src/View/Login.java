@@ -6,6 +6,8 @@ package View;
 
 import DAO.nhanhVienDAO;
 import Helper.Auth;
+import Helper.MsgBox;
+import entity.nhanvien;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,6 +23,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        setLocationRelativeTo(this);
         vdao = new nhanhVienDAO();
         manager = new Auth();
     }
@@ -36,19 +39,17 @@ public class Login extends javax.swing.JFrame {
         return true;
     }
 
-    public Boolean Login(String username, String password) {
+    public void Login(String username, String password) {
+        nhanvien nv = vdao.login(username, password);
         if (validateForm()) {
-            if (vdao.login(username, password)) {
+            if (nv == null) {
+                MsgBox.alert(this, "Error username or password");
+            } else {
+                Auth.user = nv;
                 new Trangchu().setVisible(true);
                 this.dispose();
-                return true;
-            } else {
-               System.out.println("false");
-                return false;  // Login successful
-                
             }
         } 
-        return false;
     }
 
     /**
@@ -83,6 +84,20 @@ public class Login extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        txtUser.setText("nguyenvana");
+        txtUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserActionPerformed(evt);
+            }
+        });
+
+        txtPass.setText("password123");
+        txtPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassActionPerformed(evt);
             }
         });
 
@@ -157,13 +172,16 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String user = txtUser.getText();
         String pass = txtPass.getText();
-        if(Login(user, pass)){
-            System.out.println("true");
-            
-        }else{
-            System.out.println("false");
-        }
+        Login(user, pass);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUserActionPerformed
+
+    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPassActionPerformed
 
     /**
      * @param args the command line arguments

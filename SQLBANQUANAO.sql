@@ -221,7 +221,6 @@ INSERT INTO DANHMUC ( "NgayBatDau", "TrangThai") VALUES
 ('aasd',1);
 
 
-
 CREATE VIEW ProductView AS
 SELECT 
     sp.ID AS ProductID,
@@ -233,8 +232,8 @@ SELECT
     sp.TrangThai AS ProductStatus,
     dm.Ten AS CategoryName,
     th.Ten AS BrandName,
-    s.Ten AS SizeNames,
-    ms.MauSac AS ColorNames
+    STRING_AGG(s.Ten, ', ') AS SizeNames,  -- Use STRING_AGG in SQL Server
+    STRING_AGG(ms.MauSac, ', ') AS ColorNames  -- Use STRING_AGG in SQL Server
 FROM 
     SANPHAM sp
     LEFT JOIN CTSIZE cts ON sp.ID = cts.ID_SP
@@ -249,7 +248,3 @@ WHERE
     AND (ctm.TrangThai = 1 OR ctm.TrangThai IS NULL)
 GROUP BY 
     sp.ID, sp.TenSP, sp.MoTa, sp.SoLuong, sp.Gia, sp.TrangThai, dm.Ten, th.Ten;
-
-
-
-

@@ -11,7 +11,7 @@ import entity.nhanvien;
  * @author huyen
  */
     public class Auth {
-    public static nhanvien user = null;
+   public static nhanvien user = null;
     public static void clear(){
         System.out.println("Clean thanh cong");
         Auth.user = null;

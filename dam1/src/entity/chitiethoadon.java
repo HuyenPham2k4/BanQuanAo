@@ -9,20 +9,22 @@ package entity;
  * @author Admin
  */
 public class chitiethoadon {
-    int id;
+ int id;
     int idhd;
     int idctsp;
+    String tenSP;
     int soluong;
-    int gia;
+    double gia;
     boolean trangthai;
 
     public chitiethoadon() {
     }
 
-    public chitiethoadon(int id, int idhd, int idctsp, int soluong, int gia, boolean trangthai) {
+    public chitiethoadon(int id, int idhd, int idctsp, String tenSP, int soluong, double gia, boolean trangthai) {
         this.id = id;
         this.idhd = idhd;
         this.idctsp = idctsp;
+        this.tenSP = tenSP;
         this.soluong = soluong;
         this.gia = gia;
         this.trangthai = trangthai;
@@ -52,6 +54,14 @@ public class chitiethoadon {
         this.idctsp = idctsp;
     }
 
+    public String getTenSP() {
+        return tenSP;
+    }
+
+    public void setTenSP(String tenSP) {
+        this.tenSP = tenSP;
+    }
+
     public int getSoluong() {
         return soluong;
     }
@@ -60,11 +70,11 @@ public class chitiethoadon {
         this.soluong = soluong;
     }
 
-    public int getGia() {
+    public double getGia() {
         return gia;
     }
 
-    public void setGia(int gia) {
+    public void setGia(double gia) {
         this.gia = gia;
     }
 

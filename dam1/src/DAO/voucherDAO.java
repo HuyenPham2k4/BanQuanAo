@@ -3,17 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
+
 import Helper.JDBCHelper;
 import entity.voucher;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author huyen
  */
 public class voucherDAO implements IVRepo {
+
     JDBCHelper helper;
 
     public voucherDAO() {
@@ -66,10 +69,15 @@ public class voucherDAO implements IVRepo {
 
     @Override
     public voucher findByID(String mavoucher) {
-        List<voucher> list = selectBySQL("SELECT * FROM VOUCHER WHERE MaVocher = ?", mavoucher);
+        List<voucher> list = selectBySQL("SELECT * FROM VOUCHER WHERE MaVocher LIKE N'%"+mavoucher+"%'");
         return list.isEmpty() ? null : list.get(0);
     }
-
+    // tim kiem theo ma voucher
+    public List<voucher> findByMa(String mavoucher) {
+        List<voucher> list = selectBySQL("SELECT * FROM VOUCHER WHERE MaVocher LIKE N'%"+mavoucher+"%'");
+        return list;
+    }
+    // tim kiem ngay bat dau voucher va het han
     @Override
     public List<voucher> findByDateRange(int startDate, int endDate) {
         return selectBySQL("SELECT * FROM VOUCHER WHERE NgayBatDau >= ? AND NgayKetThuc <= ?", startDate, endDate);
@@ -79,7 +87,5 @@ public class voucherDAO implements IVRepo {
     public boolean delete(voucher v) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 }
-
-
-  

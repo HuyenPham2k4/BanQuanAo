@@ -12,7 +12,7 @@ public class hoadon {
 
     int id;
     int idnv;
-    int mavocher;
+    String mavocher;
     String thoigian;
     String ghichu;
     int ttthanhtoan;
@@ -22,7 +22,7 @@ public class hoadon {
     public hoadon() {
     }
 
-    public hoadon(int id, int idnv, int mavocher, String thoigian, String ghichu, int ttthanhtoan, int tongtien, boolean trangthai) {
+    public hoadon(int id, int idnv, String mavocher, String thoigian, String ghichu, int ttthanhtoan, int tongtien, boolean trangthai) {
         this.id = id;
         this.idnv = idnv;
         this.mavocher = mavocher;
@@ -49,11 +49,11 @@ public class hoadon {
         this.idnv = idnv;
     }
 
-    public int getMavocher() {
+    public String getMavocher() {
         return mavocher;
     }
 
-    public void setMavocher(int mavocher) {
+    public void setMavocher(String mavocher) {
         this.mavocher = mavocher;
     }
 

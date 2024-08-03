@@ -6,7 +6,7 @@ package View;
 
 import DAO.voucherDAO;
 import entity.voucher;
-import java.util.List;
+import java.util.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +16,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class quanlyVoucher extends javax.swing.JPanel {
 
-    voucherDAO vDao = new voucherDAO();
+    private DefaultTableModel model;
+    private voucherDAO vDao = new voucherDAO();
 
     /**
      * Creates new form quanLyVoucher
@@ -87,7 +88,7 @@ public class quanlyVoucher extends javax.swing.JPanel {
         tblThongTin = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtTimKiem = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -128,9 +129,14 @@ public class quanlyVoucher extends javax.swing.JPanel {
 
         jLabel8.setText("Tìm kiếm");
 
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                txtTimKiemActionPerformed(evt);
+            }
+        });
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
             }
         });
 
@@ -146,7 +152,7 @@ public class quanlyVoucher extends javax.swing.JPanel {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField6))
+                    .addComponent(txtTimKiem))
                 .addContainerGap())
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
@@ -159,7 +165,7 @@ public class quanlyVoucher extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jButton5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -332,9 +338,9 @@ public class quanlyVoucher extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_txtTimKiemActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
@@ -422,44 +428,44 @@ public class quanlyVoucher extends javax.swing.JPanel {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
-       int rowIndex = tblThongTin.getSelectedRow();
-    if (rowIndex >= 0) {
-        // Confirm the deletion
-        int result = JOptionPane.showConfirmDialog(this, "Bạn muốn xóa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION) {
-            String maVoucher = (String) tblThongTin.getValueAt(rowIndex, 0);
-            try {
-                // Initialize voucherDAO
-                voucherDAO vDao = new voucherDAO();
+        int rowIndex = tblThongTin.getSelectedRow();
+        if (rowIndex >= 0) {
+            // Confirm the deletion
+            int result = JOptionPane.showConfirmDialog(this, "Bạn muốn xóa dữ liệu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                String maVoucher = (String) tblThongTin.getValueAt(rowIndex, 0);
+                try {
+                    // Initialize voucherDAO
+                    voucherDAO vDao = new voucherDAO();
 
-                // Perform the deletion
-                boolean isDeleted = vDao.delete(maVoucher);
+                    // Perform the deletion
+                    boolean isDeleted = vDao.delete(maVoucher);
 
-                if (isDeleted) {
-                    // Refresh the table
-                    this.fillTable();
-                    // Clear form fields
-                    txtMaVoucher.setText("");
-                    txtNgayBatDau.setText("");
-                    txtNgayKetThuc.setText("");
-                    jrCon.setSelected(true); // Or jrHet, based on your default
+                    if (isDeleted) {
+                        // Refresh the table
+                        this.fillTable();
+                        // Clear form fields
+                        txtMaVoucher.setText("");
+                        txtNgayBatDau.setText("");
+                        txtNgayKetThuc.setText("");
+                        jrCon.setSelected(true); // Or jrHet, based on your default
 
-                    // Show success message
-                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thành công!");
-                } else {
-                    // Show failure message
-                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        // Show success message
+                        JOptionPane.showMessageDialog(this, "Xóa dữ liệu thành công!");
+                    } else {
+                        // Show failure message
+                        JOptionPane.showMessageDialog(this, "Xóa dữ liệu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception e) {
+                    // Show error message
+                    JOptionPane.showMessageDialog(this, "Có lỗi xảy ra: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                // Show error message
-                JOptionPane.showMessageDialog(this, "Có lỗi xảy ra: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-                e.printStackTrace();
             }
+        } else {
+            // Inform user to select a row
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng để xóa.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
         }
-    } else {
-        // Inform user to select a row
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng để xóa.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-    }
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void tblThongTinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThongTinMouseClicked
@@ -485,6 +491,27 @@ public class quanlyVoucher extends javax.swing.JPanel {
         }   // TODO add your handling code here:
     }//GEN-LAST:event_tblThongTinMouseClicked
 
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        
+        voucherDAO vDAO = new voucherDAO();
+        List<voucher> vList = vDAO.getAll();
+        String timKiem = txtTimKiem.getText();
+        vList = vDAO.findByMa(timKiem);
+        model = (DefaultTableModel) tblThongTin.getModel();
+        model.setRowCount(0);
+
+        for (voucher nv : vList) {
+            Object[] rowData = new Object[4];
+            rowData[0] = nv.getMavoucher();
+            rowData[1] = nv.getNgaybatdau();
+            rowData[2] = nv.getNgayketthuc();
+            if (nv.isTrangthai()== true) {
+                rowData[3] = "còn";
+            }
+            model.addRow(rowData);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSua;
@@ -503,12 +530,12 @@ public class quanlyVoucher extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JRadioButton jrCon;
     private javax.swing.JRadioButton jrHet;
     private javax.swing.JTable tblThongTin;
     private javax.swing.JTextField txtMaVoucher;
     private javax.swing.JTextField txtNgayBatDau;
     private javax.swing.JTextField txtNgayKetThuc;
+    private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

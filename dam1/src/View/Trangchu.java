@@ -7,9 +7,12 @@ package View;
 import Helper.Auth;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.util.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author huyen
@@ -22,22 +25,25 @@ public class Trangchu extends javax.swing.JFrame {
     public Trangchu() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
-        
+        startNgayGio();
     }
+
     public void showFrom(Component com) {
         pnl_Body.removeAll();
         pnl_Body.add(com);
         pnl_Body.revalidate();
         pnl_Body.repaint();
     }
-    
-//    public void startNgayGio(){
-//        Formatter fmt = new Formatter();
-//      Calendar cal = Calendar.getInstance();
-//      fmt = new Formatter();
-//      fmt.format("%tc", cal);
-//      System.out.println(fmt);
-//    }
+
+    void startNgayGio() {
+        lblNhanVien1.setText(Auth.user.getHoten());
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy | [HH:mm:ss]");
+        new javax.swing.Timer(1000, (ActionEvent e) -> {
+            lblDongHo.setText(formater.format(new Date()));
+
+        }).start();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,6 +72,7 @@ public class Trangchu extends javax.swing.JFrame {
         jSeparator8 = new javax.swing.JSeparator();
         lblVoucher = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
+        lblNhanVien1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -256,29 +263,40 @@ public class Trangchu extends javax.swing.JFrame {
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
+        lblNhanVien1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNhanVien1.setText("lblNhanvien");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDongHo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDongHo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(lblNhanVien1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(pnl_Body, javax.swing.GroupLayout.DEFAULT_SIZE, 1281, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNhanVien1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pnl_Body, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -303,7 +321,7 @@ public class Trangchu extends javax.swing.JFrame {
 
     private void lblDongHoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblDongHoAncestorAdded
 //        startNgayGio();
-System.out.println(java.time.Clock.systemUTC().instant());  
+        System.out.println(java.time.Clock.systemUTC().instant());
     }//GEN-LAST:event_lblDongHoAncestorAdded
 
     private void lblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHoaDonMouseClicked
@@ -324,7 +342,7 @@ System.out.println(java.time.Clock.systemUTC().instant());
 
     private void lblNhanVienMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNhanVienMouseReleased
         // TODO add your handling code here:
-        
+
         showFrom(new quanlynhanvien());
 //new qlsanphams().setVisible(true);
 
@@ -345,7 +363,7 @@ System.out.println(java.time.Clock.systemUTC().instant());
 
     private void lblBHMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBHMouseReleased
         // TODO add your handling code here:
-        showFrom(new quanLyBanHang());
+        showFrom(new quanLyBanHangs());
     }//GEN-LAST:event_lblBHMouseReleased
 
     private void lblBHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBHMouseClicked
@@ -409,6 +427,7 @@ System.out.println(java.time.Clock.systemUTC().instant());
     public static javax.swing.JLabel lblDongHo;
     private javax.swing.JLabel lblHoaDon;
     private javax.swing.JLabel lblNhanVien;
+    private javax.swing.JLabel lblNhanVien1;
     private javax.swing.JLabel lblSanPham;
     private javax.swing.JLabel lblThongKe;
     private javax.swing.JLabel lblVoucher;

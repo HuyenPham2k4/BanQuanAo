@@ -85,12 +85,13 @@ public class nhanhVienDAO implements INVRepo {
         return nv;
     }
     
-    public boolean login(String username, String password){
-        List<nhanvien> nv = selectByUser(username, password);
+    public nhanvien login(String username, String password){
+        List<nhanvien> nv = selectBySQL("SELECT * FROM NhanVien WHERE TenDN = '"+username+"' AND MatKhau='"+password+"'");
         if(nv.isEmpty()){
             System.out.println("null");
-            return false;
+            return null;
+            
         }
-        return true;
+        return nv.get(0);
     }
 }
