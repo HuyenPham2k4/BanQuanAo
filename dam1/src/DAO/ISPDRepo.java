@@ -12,7 +12,7 @@ import java.util.List;
 public interface ISPDRepo {
     public boolean add(sanpham sp);
     public boolean update(sanpham sp);
-    public boolean delete(sanpham sp);
+    public boolean delete(int sp);
     public List<sanpham> getAll();
     public List<sanpham> selectBySQL(String sql, Object... args);
     public sanpham findByID(int id);

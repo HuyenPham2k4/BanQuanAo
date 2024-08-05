@@ -34,6 +34,8 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
@@ -56,6 +58,7 @@ public class QLSanPham extends javax.swing.JDialog {
     public QLSanPham(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        timKiemListenDoc();
         trangThaiSP = 0;
         sizes = new sizeDAO().getAll();
         mausacs = new mauSacDAO().getAll();
@@ -72,9 +75,34 @@ public class QLSanPham extends javax.swing.JDialog {
         reNewlblSize();
         refreshSPForm();
     }
+    
     void timKiemByKeyword(String keyword){
         ctsanphams = new chitietsanphamDAO().FindByKeyword(keyword, trangThaiSP);
         resetTableBW();
+    }
+    void timKiemListenDoc(){
+                txtTimKiem.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                performSearch();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                performSearch();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                performSearch();
+            }
+
+            private void performSearch() {
+                // Perform your search operation
+                timKiemByKeyword(txtTimKiem.getText());
+                resetTableBW();
+            }
+        });
     }
     sanpham getSanPhamfromForm(){
         return new sanpham(
@@ -137,6 +165,7 @@ public class QLSanPham extends javax.swing.JDialog {
         reNewlblSize();
     }
     void resetTableBW(){
+        reLoadCTSanPhams();
         modelBW = new DefaultTableModel( new Object[]{
             "Mã SP", "Tên SP", "Số lượng SP", "Giá SP", "Mô tả"  
         }, 0);
@@ -207,8 +236,8 @@ public class QLSanPham extends javax.swing.JDialog {
         jrMoiGia.setSelected(true);
         jrTatCa.setSelected(true);
         ctsanphams = new chitietsanphamDAO().getAll(trangThaiSP);
-        resetTableBW();
         txtTimKiem.setText("");
+        resetTableBW();
         
     }
     String getLoc(){
@@ -243,9 +272,9 @@ public class QLSanPham extends javax.swing.JDialog {
         }
         lblSize.setText(sz.equals("") ? "Chưa có size...": sz);
     }
-    int selectedSanPham;
+    int selectedSanPhamIndex;
     void fillFromSanpham(){
-        sanpham sp = new sanPhamDAO().findByID(selectedSanPham);
+        sanpham sp = new sanPhamDAO().findByID(selectedSanPhamIndex);
         
         lblMaSP.setText(String.valueOf(sp.getID()));
         txtTenSP.setText(sp.getTenSP());
@@ -262,14 +291,14 @@ public class QLSanPham extends javax.swing.JDialog {
         tab.setSelectedIndex(1);
     }
     void getSelectedSPMauSac(){
-        List<chitietmausac> spMauSacs = new chiTietMauSacDAO().findByID_SP(selectedSanPham);
+        List<chitietmausac> spMauSacs = new chiTietMauSacDAO().findByID_SP(selectedSanPhamIndex);
         for(chitietmausac x : spMauSacs){
             selectedMS.put(x.getIdms()-1, true);
         }
         reNewlblMauSac();
     }
     void getSelectedSPSize(){
-        List<chitietsize> spSizes = new chiTietSizeDAO().findByID_SP(selectedSanPham);
+        List<chitietsize> spSizes = new chiTietSizeDAO().findByID_SP(selectedSanPhamIndex);
         for(chitietsize x : spSizes){
             selectedSize.put(x.getIdsize()-1, true);
         }
@@ -280,6 +309,7 @@ public class QLSanPham extends javax.swing.JDialog {
         initSelectedMS();
         initSelectedSize();
         spnGiaSP.setValue(0);
+        spnSoLuong.setValue(0);
         txtTenSP.setText("");
         cbbCTDanhMuc.setSelectedIndex(0);
         cbbCTThuongHieu.setSelectedIndex(0);
@@ -608,6 +638,11 @@ public class QLSanPham extends javax.swing.JDialog {
         txtTimKiem.setBackground(new java.awt.Color(255, 255, 255));
         txtTimKiem.setText("jTextField3");
         txtTimKiem.setBorder(javax.swing.BorderFactory.createTitledBorder("TÌM KIẾM"));
+        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemActionPerformed(evt);
+            }
+        });
 
         btnTimKiem.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btnTimKiem.setText("TÌM KIẾM");
@@ -981,6 +1016,11 @@ public class QLSanPham extends javax.swing.JDialog {
 
         jButton12.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jButton12.setText("XOÁ");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
 
         lblAnh.setBorder(javax.swing.BorderFactory.createTitledBorder("Ảnh sản phẩm"));
 
@@ -1071,7 +1111,6 @@ public class QLSanPham extends javax.swing.JDialog {
         // TODO add your handling code here:
         if(jrTatCa.isSelected()){
             trangThaiSP = 0;
-            reLoadCTSanPhams();
             resetTableBW();
         }
     }//GEN-LAST:event_jrTatCaActionPerformed
@@ -1089,7 +1128,16 @@ public class QLSanPham extends javax.swing.JDialog {
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
         // TODO add your handling code here:
         ctsanphams = new chitietsanphamDAO().getLocSanpham(getLoc());
-        resetTableBW();
+        modelBW = new DefaultTableModel( new Object[]{
+            "Mã SP", "Tên SP", "Số lượng SP", "Giá SP", "Mô tả"  
+        }, 0);
+        for (chitietsanpham x: ctsanphams){
+            modelBW.addRow(new Object[]{
+                x.getMasp(), x.getTensp(), x.getSoLuong(), x.getGia(), x.getMoTa()
+            }); 
+        }
+        tblDSSanPham.setModel(modelBW); 
+        
     }//GEN-LAST:event_btnLocActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
@@ -1102,7 +1150,6 @@ public class QLSanPham extends javax.swing.JDialog {
         
         if(jrHetHang.isSelected()){
             trangThaiSP = -1;
-            reLoadCTSanPhams();
             resetTableBW();
         }
     }//GEN-LAST:event_jrHetHangActionPerformed
@@ -1137,7 +1184,7 @@ public class QLSanPham extends javax.swing.JDialog {
 
     private void tblDSSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDSSanPhamMouseClicked
         // TODO add your handling code here:
-        selectedSanPham = Integer.parseInt(tblDSSanPham.getValueAt(tblDSSanPham.getSelectedRow(), 0).toString());
+        selectedSanPhamIndex = Integer.parseInt(tblDSSanPham.getValueAt(tblDSSanPham.getSelectedRow(), 0).toString());
         fillFromSanpham();
     }//GEN-LAST:event_tblDSSanPhamMouseClicked
 
@@ -1157,31 +1204,47 @@ public class QLSanPham extends javax.swing.JDialog {
             fileImg = fileChooserImg.getSelectedFile();
             lblFileName.setText(fileImg.getName());
             lblAnh.setIcon(new ImageIcon(fileImg.toString()));
-            taeMoTa.setText(fileImg.toString());
+//            taeMoTa.setText(fileImg.toString());
         }
         
     }//GEN-LAST:event_btnThemAnhActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
-        if(fileImg == null){
-            JOptionPane.showMessageDialog(this, "Hãy chọn ảnh trước khi thêm !", "Cảnh báo",0);
+        try {
+            if(fileImg == null){
+                JOptionPane.showMessageDialog(this, "Hãy chọn ảnh trước khi thêm !", "Cảnh báo",0);
+            }
+            else{
+                copyImgToDB(fileImg);
+                sanpham newsp = getSanPhamfromForm();
+                new sanPhamDAO().add(newsp);
+                int newIDSP = new sanPhamDAO().newestSP_ID();
+                updateMauSacSP(newIDSP);
+                updateSizeSP(newIDSP);
+                JOptionPane.showMessageDialog(this, "Bạn đã thêm sản phẩm "+newsp.getTenSP()+" !");
+                resetTableBW();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi "+e+" !");
         }
-        else{
-            copyImgToDB(fileImg);
-            new sanPhamDAO().add(getSanPhamfromForm());
-            int newIDSP = new sanPhamDAO().newestSP_ID();
-            updateMauSacSP(newIDSP);
-            updateSizeSP(newIDSP);
-        }
+
+        
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-        sanpham sp = getSanPhamfromForm();
-        new sanPhamDAO().update(sp);
-        updateMauSacSP(sp.getID());
-        updateSizeSP(sp.getID());
+        try {
+            sanpham sp = getSanPhamfromForm();
+            new sanPhamDAO().update(sp);
+            updateMauSacSP(sp.getID());
+            updateSizeSP(sp.getID());
+            JOptionPane.showMessageDialog(this, "Bạn đã thay đổi thông thin sản phẩm thành công !");
+            resetTableBW();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi "+e+" !");
+        }
+
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jrConHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrConHangActionPerformed
@@ -1189,7 +1252,6 @@ public class QLSanPham extends javax.swing.JDialog {
         
         if(jrConHang.isSelected()){
             trangThaiSP = 1;
-            reLoadCTSanPhams();
             resetTableBW();
         }
     }//GEN-LAST:event_jrConHangActionPerformed
@@ -1199,6 +1261,27 @@ public class QLSanPham extends javax.swing.JDialog {
         timKiemByKeyword(txtTimKiem.getText());
         resetTableBW();
     }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // TODO add your handling code here:
+        try {
+            int response = JOptionPane.showConfirmDialog(this, "Bạn có muốn xoá sản phẩm này không ?", "Xoá", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response ==JOptionPane.YES_OPTION){
+                new chiTietMauSacDAO().deleteByIDSP(selectedSanPhamIndex);
+                new chiTietSizeDAO().deleteByIDSP(selectedSanPhamIndex);
+                new sanPhamDAO().delete(selectedSanPhamIndex);
+            }
+            resetTableBW();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi "+e+" !");
+        }
+
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txtTimKiemActionPerformed
 
     /**
      * @param args the command line arguments

@@ -45,9 +45,9 @@ public class sanPhamDAO implements ISPDRepo {
     }
 
     @Override
-    public boolean delete(sanpham sp) {
+    public boolean delete(int ID) {
         String sql = "DELETE FROM SANPHAM WHERE ID = ?";
-        helper.executeUpdate(sql, sp.getID());
+        helper.executeUpdate(sql, ID);
         return true;
     }
 
