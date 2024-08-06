@@ -1,5 +1,5 @@
-CREATE DATABASE QL_BAN_QUAN_AO;
-USE QL_BAN_QUAN_AO;
+CREATE DATABASE QL_BAN_QUAN_AO3;
+USE QL_BAN_QUAN_AO3;
 
 
 CREATE TABLE "THUONGHIEU" (
@@ -80,6 +80,7 @@ CREATE TABLE "NHANVIEN" (
 
 CREATE TABLE "VOUCHER" (
     "MaVocher" CHAR(255) NOT NULL,
+    "PhanTramGiam" int NOT null,
     "NgayBatDau" DATE NOT NULL,
     "NgayKetThuc" DATE NOT NULL,
     "TrangThai" BIT NOT NULL DEFAULT 1,
@@ -96,7 +97,7 @@ CREATE TABLE "HOADON" (
     -- "TenKhachHang" NVARCHAR(255) NOT NULL,
     -- "SoDienThoaiKH" CHAR(15) NOT NULL,
     "TongTien" DECIMAL(10, 2) NOT NULL,
-    "TrangThai" BIT NOT NULL DEFAULT 1,
+    "TrangThai" INT NOT NULL DEFAULT 1,
     PRIMARY KEY ("ID"),
     FOREIGN KEY ("ID_NV") REFERENCES "NHANVIEN"("ID"),
     FOREIGN KEY ("MaVocher") REFERENCES "VOUCHER"("MaVocher")
@@ -214,13 +215,8 @@ INSERT INTO "NHANVIEN" ("MaNV", "HoTen", "SDT", "Email", "TenDN", "MatKhau", "Qu
 
 SELECT * FROM NhanVien WHERE TenDN = 'nguyevana' AND MatKhau='password123'
 
-INSERT INTO "VOUCHER" ("MaVocher", "NgayBatDau", "NgayKetThuc", "TrangThai") VALUES
-('1234567', '2024-08-01', '2024-12-31', '1');
 
-INSERT INTO DANHMUC ( "NgayBatDau", "TrangThai") VALUES
-('aasd',1);
-
-
+GO;
 CREATE VIEW ProductView AS
 SELECT 
     sp.ID AS ProductID,
@@ -247,4 +243,93 @@ WHERE
     AND (cts.TrangThai = 1 OR cts.TrangThai IS NULL)
     AND (ctm.TrangThai = 1 OR ctm.TrangThai IS NULL)
 GROUP BY 
-    sp.ID, sp.TenSP, sp.MoTa, sp.SoLuong, sp.Gia, sp.TrangThai, dm.Ten, th.Ten;
+    sp.ID, sp.TenSP, sp.MoTa, sp.SoLuong, sp.Gia, sp.TrangThai,sp.AnhSP, dm.Ten, th.Ten;
+
+
+GO;
+    INSERT INTO VOUCHER (MaVocher, PhanTramGiam, NgayBatDau, NgayKetThuc, TrangThai) VALUES
+('V000', 10, '2024-08-01', '2024-08-15', 1),
+('VCH001', 10, '2024-08-01', '2024-08-15', 1),
+('VCH002', 15, '2024-08-05', '2024-08-20', 1),
+('VCH003', 20, '2024-08-10', '2024-08-25', 1),
+('VCH004', 25, '2024-08-15', '2024-09-01', 1),
+('VCH005', 30, '2024-08-20', '2024-09-05', 1),
+('VCH006', 5, '2024-08-25', '2024-09-10', 1),
+('VCH007', 12, '2024-08-30', '2024-09-15', 1),
+('VCH008', 18, '2024-09-01', '2024-09-20', 1),
+('VCH009', 22, '2024-09-05', '2024-09-25', 1),
+('VCH010', 8, '2024-09-10', '2024-09-30', 1);
+
+INSERT INTO CTSIZE (ID_SP, ID_SIZE, TrangThai) VALUES 
+(6, 1, 1),
+(7, 2, 1),
+(8, 3, 1),
+(9, 4, 1),
+(10, 5, 1),
+(11, 1, 1),
+(12, 2, 1),
+(13, 3, 1),
+(14, 4, 1),
+(15, 5, 1),
+(16, 1, 1),
+(17, 2, 1),
+(18, 3, 1),
+(19, 4, 1),
+(20, 5, 1),
+(21, 1, 1),
+(22, 2, 1),
+(23, 3, 1),
+(24, 4, 1),
+(25, 5, 1),
+(26, 1, 1),
+(27, 2, 1),
+(28, 3, 1),
+(29, 4, 1),
+(30, 5, 1);
+
+INSERT INTO CTMAUSAC (ID_SP, ID_MS, TrangThai) VALUES 
+(6, 1, 1),
+(7, 2, 1),
+(8, 3, 1),
+(9, 4, 1),
+(10, 5, 1),
+(11, 1, 1),
+(12, 2, 1),
+(13, 3, 1),
+(14, 4, 1),
+(15, 5, 1),
+(16, 1, 1),
+(17, 2, 1),
+(18, 3, 1),
+(19, 4, 1),
+(20, 5, 1),
+(21, 1, 1),
+(22, 2, 1),
+(23, 3, 1),
+(24, 4, 1),
+(25, 5, 1),
+(26, 1, 1),
+(27, 2, 1),
+(28, 3, 1),
+(29, 4, 1),
+(30, 5, 1);
+
+
+-- Insert rows into HOADON
+INSERT INTO HOADON (ID_NV, MaVocher, ThoiGian, GhiChu, TT_ThanhToan, TongTien, TrangThai) VALUES 
+(1, 'V000', '2023-07-01 10:00:00', N'Đã thanh toán đủ', 1,  1100000, 1),
+(2, 'V000', '2023-07-02 11:30:00', N'Đã thanh toán đủ', 1,  4800000, 1),
+(3, 'V000', '2023-07-03 14:45:00', N'Đã thanh toán đủ', 1, 500000, 1),
+(1, 'V000', '2023-07-04 09:15:00', N'Đã thanh toán đủ', 1,  900000, 1),
+(2, 'V000', '2023-07-05 16:00:00', N'Đã thanh toán đủ', 1, 700000, 1),
+(3, 'V000', '2023-07-06 10:30:00', N'Đã thanh toán đủ', 1,  1200000, 1),
+(1, 'V000', '2023-07-07 13:00:00', N'Đã thanh toán đủ', 1,  650000, 1),
+(2, 'V000', '2023-07-08 15:30:00', N'Đã thanh toán đủ', 1,  850000, 1),
+(3, 'V000', '2023-07-09 11:00:00', N'Đã thanh toán đủ', 1, 400000, 1),
+(1, 'V000', '2023-07-10 14:30:00', N'Đã thanh toán đủ', 1,  1100000, 1);
+ 
+--  Insert rows into CTHOADON
+
+
+SELECT * FROM HOADON;
+

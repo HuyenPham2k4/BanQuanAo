@@ -7,8 +7,12 @@ package DAO;
 import Helper.JDBCHelper;
 import entity.size;
 import java.sql.ResultSet;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *
@@ -33,7 +37,7 @@ public class thongkeDAO {
                 + "LEFT JOIN CTHOADON ct ON sp.ID = ct.ID_SP\n"
                 + "JOIN HOADON hd ON ct.ID_HD = hd.ID\n"
                 + "JOIN DANHMUC dm ON sp.ID_DM = dm.ID\n"
-                + "WHERE MONTH(hd.ThoiGian) = ? AND YEAR(hd.ThoiGian) = ?\n"
+                + "WHERE hd.TrangThai = '1'AND MONTH(hd.ThoiGian) = ? AND YEAR(hd.ThoiGian) = ?\n"
                 + "GROUP BY sp.ID, sp.TenSP, sp.Gia, dm.Ten\n"
                 + "ORDER BY SoLuongDaBan DESC;", month, year);
     }
@@ -49,7 +53,7 @@ public class thongkeDAO {
                 + "LEFT JOIN CTHOADON ct ON sp.ID = ct.ID_SP\n"
                 + "JOIN HOADON hd ON ct.ID_HD = hd.ID\n"
                 + "JOIN DANHMUC dm ON sp.ID_DM = dm.ID\n"
-                + "WHERE dm.ID = ? AND MONTH(hd.ThoiGian) = ? AND YEAR(hd.ThoiGian) = ?\n"
+                + "WHERE hd.TrangThai = '1'AND dm.ID = ? AND MONTH(hd.ThoiGian) = ? AND YEAR(hd.ThoiGian) = ?\n"
                 + "GROUP BY sp.ID, sp.TenSP, sp.Gia, dm.Ten\n"
                 + "ORDER BY SoLuongDaBan DESC;", ID_DM, month, year);
     }
@@ -65,7 +69,7 @@ public class thongkeDAO {
                 + "LEFT JOIN CTHOADON ct ON sp.ID = ct.ID_SP\n"
                 + "JOIN HOADON hd ON ct.ID_HD = hd.ID\n"
                 + "JOIN THUONGHIEU th ON sp.ID_TH = th.ID\n"
-                + "WHERE MONTH(hd.ThoiGian) = ? AND YEAR(hd.ThoiGian) = ?\n"
+                + "WHERE hd.TrangThai = '1' AND MONTH(hd.ThoiGian) = ? AND YEAR(hd.ThoiGian) = ?\n"
                 + "GROUP BY sp.ID, sp.TenSP, sp.Gia, th.Ten\n"
                 + "ORDER BY SoLuongDaBan DESC;", month, year);
     }
@@ -81,7 +85,7 @@ public class thongkeDAO {
                 + "LEFT JOIN CTHOADON ct ON sp.ID = ct.ID_SP\n"
                 + "JOIN HOADON hd ON ct.ID_HD = hd.ID\n"
                 + "JOIN THUONGHIEU th ON sp.ID_TH = th.ID\n"
-                + "WHERE th.ID = ? AND MONTH(hd.ThoiGian) = ? AND YEAR(hd.ThoiGian) = ? -- Filter for January 2024\n"
+                + "WHERE hd.TrangThai = '1' AND th.ID = ? AND MONTH(hd.ThoiGian) = ? AND YEAR(hd.ThoiGian) = ? -- Filter for January 2024\n"
                 + "GROUP BY sp.ID, sp.TenSP, sp.Gia, th.Ten\n"
                 + "ORDER BY SoLuongDaBan DESC;", ID_DM, month, year);
     }
@@ -124,6 +128,7 @@ public class thongkeDAO {
                 + "FROM HOADON hd\n"
                 + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
                 + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
+                + "WHERE hd.TrangThai = '1'\n"
                 + "GROUP BY CONVERT(DATE, hd.ThoiGian)\n"
                 + "ORDER BY CONVERT(DATE, hd.ThoiGian);");
     }
@@ -136,6 +141,7 @@ public class thongkeDAO {
                 + "FROM HOADON hd\n"
                 + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
                 + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
+                + "WHERE hd.TrangThai = '1'"
                 + "GROUP BY CONVERT(DATE, hd.ThoiGian)\n"
                 + "HAVING CONVERT(DATE, hd.ThoiGian) BETWEEN ? AND ?"
                 + "ORDER BY CONVERT(DATE, hd.ThoiGian);", dateFrom, dateTo);
@@ -149,7 +155,7 @@ public class thongkeDAO {
                 + "FROM HOADON hd\n"
                 + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
                 + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE CONVERT(DATE, hd.ThoiGian) BETWEEN ? AND ?\n"
+                + "WHERE hd.TrangThai = '1' AND CONVERT(DATE, hd.ThoiGian) BETWEEN ? AND ?\n"
                 + "GROUP BY YEAR(hd.ThoiGian)\n"
                 + "ORDER BY YEAR(hd.ThoiGian);", dateFrom, dateTo);
     }
@@ -162,7 +168,7 @@ public class thongkeDAO {
                 + "FROM HOADON hd\n"
                 + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
                 + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE CONVERT(DATE, hd.ThoiGian) BETWEEN ? AND ?\n"
+                + "WHERE hd.TrangThai = '1' AND CONVERT(DATE, hd.ThoiGian) BETWEEN ? AND ?\n"
                 + "GROUP BY FORMAT(hd.ThoiGian, 'MM/yyyy')\n"
                 + "ORDER BY MIN(hd.ThoiGian);", dateFrom, dateTo);
     }
@@ -175,7 +181,7 @@ public class thongkeDAO {
                 + "FROM HOADON hd\n"
                 + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
                 + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE CONVERT(DATE, hd.ThoiGian) = CONVERT(DATE, GETDATE());");
+                + "WHERE hd.TrangThai = '1' AND CONVERT(DATE, hd.ThoiGian) = CONVERT(DATE, GETDATE());");
     }
 
     public Object[] getThangNayDT() {
@@ -186,7 +192,7 @@ public class thongkeDAO {
                 + "FROM HOADON hd\n"
                 + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
                 + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE YEAR(hd.ThoiGian) = YEAR(GETDATE()) \n"
+                + "WHERE hd.TrangThai = '1' AND YEAR(hd.ThoiGian) = YEAR(GETDATE()) \n"
                 + "  AND MONTH(hd.ThoiGian) = MONTH(GETDATE());");
     }
 
@@ -198,35 +204,25 @@ public class thongkeDAO {
                 + "FROM HOADON hd\n"
                 + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
                 + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE YEAR(hd.ThoiGian) = YEAR(GETDATE());");
+                + "WHERE hd.TrangThai = '1' AND YEAR(hd.ThoiGian) = YEAR(GETDATE());");
     }
 
     public Object[] getNgayDTCaoNhat() {
-        return selectDTNewsBySQL("WITH RevenuePerDay AS (\n"
-                + "    SELECT \n"
-                + "        CONVERT(DATE, hd.ThoiGian) AS Ngay,\n"
-                + "        SUM(CASE WHEN hd.TrangThai = '1' THEN ct.SoLuong * sp.Gia ELSE 0 END) AS TongDT\n"
+        return selectDTNewsBySQL("    SELECT TOP 1 \n"
+                + "        COALESCE(FORMAT(SUM(CASE WHEN hd.TrangThai = '1' THEN ct.SoLuong * sp.Gia ELSE 0 END), 'N0'), '0') AS TongDT,\n"
+                + "        COUNT(CASE WHEN hd.TrangThai = '1' THEN 1 END) AS SoDonTC,\n"
+                + "        COUNT(CASE WHEN hd.TrangThai = '0' THEN 1 END) AS SoDonBH,\n"
+                + "        CONVERT(DATE, hd.ThoiGian) AS Ngay\n"
                 + "    FROM HOADON hd\n"
                 + "    JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
                 + "    JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
                 + "    GROUP BY CONVERT(DATE, hd.ThoiGian)\n"
-                + ")\n"
-                + "SELECT \n"
-                + "    COALESCE(FORMAT(SUM(CASE WHEN hd.TrangThai = '1' THEN ct.SoLuong * sp.Gia ELSE 0 END), 'N0'), '0') AS TongDT,\n"
-                + "    COUNT(CASE WHEN hd.TrangThai = '1' THEN 1 END) AS SoDonTC,\n"
-                + "    COUNT(CASE WHEN hd.TrangThai = '0' THEN 1 END) AS SoDonBH\n"
-                + "FROM HOADON hd\n"
-                + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
-                + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE CONVERT(DATE, hd.ThoiGian) = (\n"
-                + "    SELECT TOP 1 Ngay\n"
-                + "    FROM RevenuePerDay\n"
-                + "    ORDER BY TongDT DESC\n"
-                + ");");
+                + "    ORDER BY TongDT DESC");
     }
 
     public List<Object[]> selectSPBySQL(String sql, Object... args) {
         List<Object[]> lstSP = new ArrayList<>();
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         try {
             ResultSet rs = helper.executeQuery(sql, args);
             while (rs.next()) {
@@ -236,9 +232,9 @@ public class thongkeDAO {
                 Object[] obj = {
                     rs.getString("ID_SP"),
                     rs.getString("TenSP"),
-                    gia,
+                    currencyFormat.format(gia),
                     soLuong,
-                    soLuong * gia,
+                    currencyFormat.format(soLuong * gia),
                     rs.getString("DacDiem")
                 };
                 lstSP.add(obj);
@@ -284,6 +280,38 @@ public class thongkeDAO {
             e.printStackTrace();
         }
         return obj;
+    }
+
+    public Date getMaxHDDate() {
+        Date maxDate = new Date();
+        try {
+            String sql = "SELECT CAST(MAX(ThoiGian) AS DATE) AS MaxDate\n"
+                    + "FROM HOADON;";
+            ResultSet rs = helper.executeQuery(sql);
+            rs.next();
+            String maxDateString = rs.getString("MaxDate");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            maxDate = format.parse(maxDateString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return maxDate;
+    }
+
+    public Date getMinHDDate() {
+        Date minDate = new Date();
+        try {
+            String sql = "SELECT CAST(Min(ThoiGian) AS DATE) AS MinDate\n"
+                    + "FROM HOADON;";
+            ResultSet rs = helper.executeQuery(sql);
+            rs.next();
+            String minDateString = rs.getString("MinDate");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            minDate = format.parse(minDateString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return minDate;
     }
 
     public static void main(String[] args) {

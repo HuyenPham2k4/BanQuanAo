@@ -21,7 +21,7 @@ public class chitiethoadon {
     public chitiethoadon() {
     }
 
-    public chitiethoadon(int id, int idhd, int idctsp, String tenSP, int soluong, double don_gia, double gia, boolean trangthai) {
+    public chitiethoadon(int id, int idhd, int idctsp , String tenSP, int soluong, double don_gia, double gia, boolean trangthai) {
         this.id = id;
         this.idhd = idhd;
         this.idctsp = idctsp;
