@@ -10,13 +10,22 @@ import DAO.danhMucDAO;
 import DAO.thuongHieuDAO;
 import DAO.sizeDAO;
 import DAO.thongkeDAO;
-
+import org.jfree.data.general.DefaultPieDataset;
 import entity.chitiethoadon;
 import entity.mausac;
 import entity.danhmuc;
 import entity.thuonghieu;
 import entity.size;
 import javax.swing.table.DefaultTableModel;
+import Helper.PieChart;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.apache.commons.collections4.ListUtils;
 /**
  *
  * @author letnp
@@ -26,6 +35,7 @@ public class ThongKe1 extends javax.swing.JDialog {
     /**
      * Creates new form ThongKe1
      */
+    
     DefaultTableModel model;
     DefaultTableModel model2;
     List<chitiethoadon> cthoadons;
@@ -39,8 +49,13 @@ public class ThongKe1 extends javax.swing.JDialog {
     public ThongKe1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        showPieChartDM();
         years = new thongkeDAO().getYearFromHD();
-        sanphams = new thongkeDAO().getAllSP_DM(1, years.getFirst());
+            years = new thongkeDAO().getYearFromHD(); 
+    if (years != null && !years.isEmpty()) {
+        sanphams = new thongkeDAO().getAllSP_DM(1, years.get(0));
+    }
+
         ctdoanhthus = new thongkeDAO().getAllCTDT();
         resetComboBox();
         resetTable();
@@ -49,6 +64,23 @@ public class ThongKe1 extends javax.swing.JDialog {
         mainTest();
     }
     void mainTest(){
+    }
+    void showPieChartDM(){
+            DefaultPieDataset pieDataSet;
+    JFreeChart pieChart;
+    PiePlot piePlot;
+    ChartPanel chartPanel;
+    String title;
+        pieDataSet = new DefaultPieDataset();
+        pieChart = ChartFactory.createPieChart("gdgdfg", pieDataSet,true,true,false);
+        piePlot = (PiePlot) pieChart.getPlot();
+        chartPanel = new ChartPanel(pieChart);
+        chartPanel.setPreferredSize(new Dimension(600, 500)); // Set preferred size
+        pnlPieChartDM.removeAll();
+        pnlPieChartDM.setLayout(new BorderLayout());
+        pnlPieChartDM.add(chartPanel, BorderLayout.CENTER);
+        pnlPieChartDM.validate();
+        pnlPieChartDM.repaint();
     }
     void refresh(){
         Object[] dtHomNay = new thongkeDAO().getHomNayDT();
@@ -132,6 +164,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        pnlPieChartDM = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
@@ -266,7 +299,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         );
 
         jPanel2.add(jPanel4);
-        jPanel4.setBounds(0, 0, 251, 225);
+        jPanel4.setBounds(0, 0, 269, 270);
 
         tblThongKe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -282,7 +315,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblThongKe);
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(0, 340, 880, 390);
+        jScrollPane1.setBounds(0, 340, 900, 404);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("SẢN PHẨM BÁN CHẠY NHẤT"));
 
@@ -298,7 +331,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         );
 
         jPanel2.add(jPanel5);
-        jPanel5.setBounds(301, 0, 280, 293);
+        jPanel5.setBounds(301, 0, 298, 312);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("SẢN PHẨM BÁN KÉM NHẤT"));
 
@@ -314,7 +347,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         );
 
         jPanel2.add(jPanel6);
-        jPanel6.setBounds(605, 0, 280, 293);
+        jPanel6.setBounds(605, 0, 298, 312);
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel1.setText("jLabel1");
@@ -328,19 +361,36 @@ public class ThongKe1 extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        pnlPieChartDM.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout pnlPieChartDMLayout = new javax.swing.GroupLayout(pnlPieChartDM);
+        pnlPieChartDM.setLayout(pnlPieChartDMLayout);
+        pnlPieChartDMLayout.setHorizontalGroup(
+            pnlPieChartDMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 564, Short.MAX_VALUE)
+        );
+        pnlPieChartDMLayout.setVerticalGroup(
+            pnlPieChartDMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 350, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 350, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(pnlPieChartDM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 730, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(pnlPieChartDM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 390, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel1);
-        jPanel1.setBounds(910, 0, 350, 730);
+        jPanel1.setBounds(920, 0, 570, 740);
 
         jTabbedPane4.addTab("SẢN PHẨM", jPanel2);
 
@@ -721,7 +771,7 @@ public class ThongKe1 extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 864, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -757,7 +807,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 370, Short.MAX_VALUE)
+            .addGap(0, 580, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -771,7 +821,7 @@ public class ThongKe1 extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 878, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -829,7 +879,9 @@ public class ThongKe1 extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -1130,7 +1182,9 @@ public class ThongKe1 extends javax.swing.JDialog {
     private javax.swing.JLabel lblDonTCThang;
     private javax.swing.JLabel lblNamNayDT;
     private javax.swing.JLabel lblThangNayDT;
+    private javax.swing.JPanel pnlPieChartDM;
     private javax.swing.JTable tblDoanhThu;
     private javax.swing.JTable tblThongKe;
     // End of variables declaration//GEN-END:variables
 }
+

@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package DAO;
+
 import entity.chitietmausac;
 import java.util.List;
 
@@ -12,12 +13,16 @@ import java.util.List;
  */
 public interface ICTMSRepo {
     public boolean add(chitietmausac op);
+
     public boolean update(chitietmausac op);
-    public boolean delete(int id);
+
+    public boolean delete(int op);
+
     public List<chitietmausac> getAll();
+
     public List<chitietmausac> selectBySQL(String sql, Object... args);
+
     public List<chitietmausac> findByID(int id);
+
     public List<chitietmausac> findByName(String name);
 }
-
-

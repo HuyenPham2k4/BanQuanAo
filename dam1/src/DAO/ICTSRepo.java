@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package DAO;
-import entity.chitietzise;
+import entity.chitietsize;
 
 
 import java.util.List;
@@ -14,12 +14,12 @@ import java.util.List;
  * @author hauvv
  */
 public interface ICTSRepo {
-    public boolean add(chitietzise op);
-    public boolean update(chitietzise op);
-    public boolean delete(int id);
-    public List<chitietzise> getAll();
-    public List<chitietzise> selectBySQL(String sql, Object... args);
-    public List<chitietzise> findByID(int id);
-    public List<chitietzise> findByName(String name);
+    public boolean add(chitietsize op);
+    public boolean update(chitietsize op);
+    public boolean delete(int op);
+    public List<chitietsize> getAll();
+    public List<chitietsize> selectBySQL(String sql, Object... args);
+    public List<chitietsize> findByID(int id);
+    public List<chitietsize> findByName(String name);
 }
 

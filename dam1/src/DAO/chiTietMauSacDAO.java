@@ -20,7 +20,9 @@ public class chiTietMauSacDAO implements ICTMSRepo {
     public chiTietMauSacDAO() {
         helper = new JDBCHelper();
     }
-
+    public List<chitietmausac> findByID_SP(int idsp){
+        return selectBySQL("SELECT * FROM CTMAUSAC WHERE ID_SP = ?", idsp);
+    }
     @Override
     public boolean add(chitietmausac ctms) {
         String sql = "INSERT INTO CTMAUSAC (ID_MS, ID_SP, TrangThai) VALUES (?, ?, ?)";
@@ -35,13 +37,17 @@ public class chiTietMauSacDAO implements ICTMSRepo {
         return true;
     }
 
-   @Override
-    public boolean delete(int id) {
+    @Override
+    public boolean delete(int ID) {
         String sql = "DELETE FROM CTMAUSAC WHERE ID = ?";
-        helper.executeUpdate(sql,id);
+        helper.executeUpdate(sql, ID);
         return true;
     }
-
+    public boolean deleteByIDSP(int IDSP) {
+        String sql = "DELETE FROM CTMAUSAC WHERE ID_SP = ?";
+        helper.executeUpdate(sql, IDSP);
+        return true;
+    }
     @Override
     public List<chitietmausac> getAll() {
         return selectBySQL("SELECT * FROM CTMAUSAC");

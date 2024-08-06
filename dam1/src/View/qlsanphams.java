@@ -53,7 +53,7 @@ public class qlsanphams extends javax.swing.JPanel {
         jfThuongHieu.setSize(625, 700);
         sizes = new sizeDAO().getAll();
         mausacs = new mauSacDAO().getAll();
-        ctsanphams = new chitietsanphamDAO().getAll();
+        ctsanphams = new chitietsanphamDAO().getAll(1);
         initSelectedMS();
         initSelectedSize();
         LamMoiForm();
@@ -156,7 +156,7 @@ public class qlsanphams extends javax.swing.JPanel {
         spnMinPrice.setValue(0);
         jrMoiGia.setSelected(true);
         jrTatCa.setSelected(true);
-        ctsanphams = new chitietsanphamDAO().getAll();
+        ctsanphams = new chitietsanphamDAO().getAll(1);
         resetTableBW();
         txtTimKiem.setText("");
 

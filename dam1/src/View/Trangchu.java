@@ -68,7 +68,6 @@ public class Trangchu extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JSeparator();
         lblThongKe = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
-        lblHoaDon = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
         lblVoucher = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
@@ -160,16 +159,6 @@ public class Trangchu extends javax.swing.JFrame {
             }
         });
 
-        lblHoaDon.setBackground(new java.awt.Color(255, 255, 255));
-        lblHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblHoaDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblHoaDon.setText("Hoá đơn");
-        lblHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblHoaDonMouseClicked(evt);
-            }
-        });
-
         lblVoucher.setBackground(new java.awt.Color(255, 255, 255));
         lblVoucher.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblVoucher.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -218,9 +207,6 @@ public class Trangchu extends javax.swing.JFrame {
                         .addComponent(lblThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(lblVoucher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
@@ -250,17 +236,15 @@ public class Trangchu extends javax.swing.JFrame {
                 .addComponent(lblThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         lblNhanVien1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -323,11 +307,6 @@ public class Trangchu extends javax.swing.JFrame {
 //        startNgayGio();
         System.out.println(java.time.Clock.systemUTC().instant());
     }//GEN-LAST:event_lblDongHoAncestorAdded
-
-    private void lblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHoaDonMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_lblHoaDonMouseClicked
 
     private void lblThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThongKeMouseClicked
         new ThongKe1(this, rootPaneCheckingEnabled).setVisible(true);;
@@ -425,7 +404,6 @@ public class Trangchu extends javax.swing.JFrame {
     private javax.swing.JLabel lblBH;
     private javax.swing.JLabel lblDangXuat;
     public static javax.swing.JLabel lblDongHo;
-    private javax.swing.JLabel lblHoaDon;
     private javax.swing.JLabel lblNhanVien;
     private javax.swing.JLabel lblNhanVien1;
     private javax.swing.JLabel lblSanPham;
