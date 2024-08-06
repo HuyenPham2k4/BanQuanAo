@@ -9,7 +9,8 @@ package entity;
  * @author Admin
  */
 public class voucher {
-    String mavoucher;
+   String mavoucher;
+    int PhanTramGiam;
     String ngaybatdau;
     String ngayketthuc;
     boolean trangthai;
@@ -17,8 +18,9 @@ public class voucher {
     public voucher() {
     }
 
-    public voucher(String mavoucher, String ngaybatdau, String ngayketthuc, boolean trangthai) {
+    public voucher(String mavoucher, int PhanTramGiam, String ngaybatdau, String ngayketthuc, boolean trangthai) {
         this.mavoucher = mavoucher;
+        this.PhanTramGiam = PhanTramGiam;
         this.ngaybatdau = ngaybatdau;
         this.ngayketthuc = ngayketthuc;
         this.trangthai = trangthai;
@@ -30,6 +32,14 @@ public class voucher {
 
     public void setMavoucher(String mavoucher) {
         this.mavoucher = mavoucher;
+    }
+
+    public int getPhanTramGiam() {
+        return PhanTramGiam;
+    }
+
+    public void setPhanTramGiam(int PhanTramGiam) {
+        this.PhanTramGiam = PhanTramGiam;
     }
 
     public String getNgaybatdau() {
@@ -55,6 +65,5 @@ public class voucher {
     public void setTrangthai(boolean trangthai) {
         this.trangthai = trangthai;
     }
-    
     
 }

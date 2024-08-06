@@ -16,7 +16,7 @@ public interface IVRepo {
     boolean delete(voucher v);
     List<voucher> getAll();
     List<voucher> selectBySQL(String sql, Object... args);
-    voucher findByID(String mavoucher);
+    voucher findByMaVoucher(String mavoucher);
     List<voucher> findByDateRange(int startDate, int endDate);
 }
 

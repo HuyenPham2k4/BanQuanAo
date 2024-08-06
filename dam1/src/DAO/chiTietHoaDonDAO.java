@@ -6,6 +6,7 @@ package DAO;
 
 import Helper.JDBCHelper;
 import entity.chitiethoadon;
+import entity.chitietsanpham;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -20,17 +21,17 @@ import java.util.List;
     // t đang dùng intellji
     // đầu tiên tạo cho t 1 cái interface
     // h thì implement interface vào đây
-public abstract class chiTietHoaDonDAO implements ICTHDRepo {
+public class chiTietHoaDonDAO implements ICTHDRepo {
     // sau khi đã implement interface thì triển khai code
     // đầu tiên t sẽ khai báo jdbchelper và tạo cho nó cái biến
     JDBCHelper helper;
     public chiTietHoaDonDAO(){
         helper = new JDBCHelper();
     }
-  @Override
+    @Override
     public boolean add(chitiethoadon op) {// cái việc trong excute queryupdate nó có cái j thì phụ thuộc vào thứ tự cột của cau lệnh sql, gọi nó theo thứ tự
-        String sql ="INSERT INTO CTHOADON (ID_HD, ID_SP,TenSP, SoLuong, Gia, TrangThai) VALUES (?, ?, ?, ?, ?, 1)";
-        helper.executeUpdate(sql, op.getIdhd(),op.getIdctsp(),op.getTenSP(),op.getSoluong(),op.getGia());
+        String sql ="INSERT INTO CTHOADON (ID_HD, ID_SP,TenSP, SoLuong, Don_gia, Gia, TrangThai) VALUES (?, ?, ?, ?, ?, ?, 1)";
+        helper.executeUpdate(sql, op.getIdhd(),op.getIdctsp(),op.getTenSP(),op.getSoluong(),op.getDon_gia(),op.getGia());
         return true;
     }
 
@@ -65,6 +66,7 @@ public abstract class chiTietHoaDonDAO implements ICTHDRepo {
                 cthd.setIdctsp(rs.getInt("ID_SP"));
                 cthd.setTenSP(rs.getString("TenSP"));
                 cthd.setSoluong(rs.getInt("SoLuong"));
+                cthd.setDon_gia(rs.getInt("Don_gia"));
                 cthd.setGia(rs.getInt("Gia"));
                 cthd.setTrangthai(rs.getBoolean("TrangThai"));
                 lstCTHD.add(cthd);
@@ -99,5 +101,12 @@ public abstract class chiTietHoaDonDAO implements ICTHDRepo {
     public List<chitiethoadon> getAll(int id) {
         return selectBySQL("SELECT * FROM CTHOADON WHERE ID_HD = "+id);
     }
+    
+    @Override
+    public boolean delete(int id) {
+    String sql = "DELETE FROM CTHOADON WHERE ID = ?";
+        helper.executeUpdate(sql, id);
+        return true;
+    }
+    
 }
-

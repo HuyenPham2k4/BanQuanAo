@@ -330,7 +330,7 @@ public class Trangchu extends javax.swing.JFrame {
     }//GEN-LAST:event_lblHoaDonMouseClicked
 
     private void lblThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThongKeMouseClicked
-        //               new ThongKe1(this, rootPaneCheckingEnabled).setVisible(true);
+        new ThongKe1(this, rootPaneCheckingEnabled).setVisible(true);;
     }//GEN-LAST:event_lblThongKeMouseClicked
 
     private void lblDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseClicked
@@ -363,7 +363,7 @@ public class Trangchu extends javax.swing.JFrame {
 
     private void lblBHMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBHMouseReleased
         // TODO add your handling code here:
-        showFrom(new quanLyBanHangs());
+        showFrom(new quanLyBanHang());
     }//GEN-LAST:event_lblBHMouseReleased
 
     private void lblBHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBHMouseClicked

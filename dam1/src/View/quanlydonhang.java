@@ -286,13 +286,13 @@ public class quanlydonhang extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tblCTHoaDon_ChiTietHoaDonMouseReleased
 
-    private void tblCTHoaDon_ChiTietHoaDon1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCTHoaDon_ChiTietHoaDon1MouseClicked
-
-    }//GEN-LAST:event_tblCTHoaDon_ChiTietHoaDon1MouseClicked
-
     private void tblCTHoaDon_ChiTietHoaDon1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCTHoaDon_ChiTietHoaDon1MouseReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_tblCTHoaDon_ChiTietHoaDon1MouseReleased
+
+    private void tblCTHoaDon_ChiTietHoaDon1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCTHoaDon_ChiTietHoaDon1MouseClicked
+
+    }//GEN-LAST:event_tblCTHoaDon_ChiTietHoaDon1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -303,9 +303,9 @@ public class quanlydonhang extends javax.swing.JPanel {
     public static javax.swing.JScrollPane jScrollPane10;
     public static javax.swing.JScrollPane jScrollPane11;
     public static javax.swing.JScrollPane jScrollPane15;
-    public static javax.swing.JScrollPane jScrollPane16;
+    private javax.swing.JScrollPane jScrollPane16;
     public static javax.swing.JTable tblCTHoaDon_ChiTietHoaDon;
-    public static javax.swing.JTable tblCTHoaDon_ChiTietHoaDon1;
+    private javax.swing.JTable tblCTHoaDon_ChiTietHoaDon1;
     public static javax.swing.JTable tblHoaDon_HoaDon;
     public static javax.swing.JTable tblHoaDon_HoaDon1;
     // End of variables declaration//GEN-END:variables
