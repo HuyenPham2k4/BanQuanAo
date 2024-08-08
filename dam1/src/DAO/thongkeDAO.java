@@ -93,7 +93,7 @@ public class thongkeDAO {
     public List<Integer> getYearFromHD() {
         List<Integer> years = new ArrayList<>();
         try {
-            ResultSet rs = helper.executeQuery("SELECT DISTINCT YEAR(ThoiGian) AS year FROM HOADON ORDER BY year;");
+            ResultSet rs = helper.executeQuery("SELECT DISTINCT YEAR(ThoiGian) AS year FROM HOADON ORDER BY year DESC;");
             while (rs.next()) {
                 System.out.println(rs.getRow());
                 years.add(rs.getInt("year"));
@@ -103,23 +103,6 @@ public class thongkeDAO {
         }
         return years;
     }
-//    public List<Object[]> getAllSP_MS() {
-//        return selectSPBySQL("SELECT sp.ID AS ID_SP,sp.TenSP,sp.SoLuong,sp.Gia,ms.MauSac AS DacDiem FROM SANPHAM sp\n" +
-//"JOIN CTMAUSAC ctm ON sp.ID = ctm.ID_SP JOIN MAUSAC ms ON ctm.ID_MS = ms.ID;");
-//    }
-//    public List<Object[]> getSP_MS(int ID_MS) {
-//        return selectSPBySQL("SELECT sp.ID AS ID_SP,sp.TenSP,sp.SoLuong,sp.Gia,ms.MauSac AS DacDiem FROM SANPHAM sp\n" +
-//"JOIN CTMAUSAC ctm ON sp.ID = ctm.ID_SP JOIN MAUSAC ms ON ctm.ID_MS = ms.ID Where ms.ID = ?;", ID_MS);
-//    }
-//    public List<Object[]> getAllSP_Size() {
-//        return selectSPBySQL("SELECT sp.ID AS ID_SP,sp.TenSP,sp.SoLuong,sp.Gia,sz.Ten AS DacDiem FROM SANPHAM sp\n" +
-//"JOIN CTSIZE cts ON sp.ID = cts.ID_SP JOIN SIZE sz ON cts.ID_SIZE = sz.ID;");
-//    }
-//    public List<Object[]> getSP_Size(int ID_Size) {
-//        return selectSPBySQL("SELECT sp.ID AS ID_SP,sp.TenSP,sp.SoLuong,sp.Gia,sz.Ten AS DacDiem FROM SANPHAM sp\n" +
-//"JOIN CTSIZE cts ON sp.ID = cts.ID_SP JOIN SIZE sz ON cts.ID_SIZE = sz.ID Where sz.ID = ?;", ID_Size);
-//    }
-
     public List<Object[]> getAllCTDT() {
         return selectCTDTBySQL("SELECT \n"
                 + "    FORMAT(CONVERT(DATE, hd.ThoiGian), 'dd/MM/yyyy') AS Time,\n"
@@ -219,7 +202,48 @@ public class thongkeDAO {
                 + "    GROUP BY CONVERT(DATE, hd.ThoiGian)\n"
                 + "    ORDER BY TongDT DESC");
     }
-
+    public List<Object[]> getThuongHieuChart(int month, int year) {
+        return selectDataChartBySQL("SELECT  TH.Ten AS chartColumn, SUM(CTHD.SoLuong * CTHD.Gia) AS dataValue\n" +
+"FROM THUONGHIEU TH\n" +
+"JOIN SANPHAM SP ON TH.ID = SP.ID_TH\n" +
+"JOIN CTHOADON CTHD ON SP.ID = CTHD.ID_SP\n" +
+"JOIN HOADON HD ON CTHD.ID_HD = HD.ID\n" +
+"WHERE HD.TrangThai = 1 AND MONTH(HD.ThoiGian) = ? AND YEAR(HD.ThoiGian) = ?\n" +
+"GROUP BY TH.Ten;", month, year);
+    }
+    public List<Object[]> getDanhMucChart(int month, int year) {
+        return selectDataChartBySQL("SELECT DM.Ten AS chartColumn,SUM(CTHD.SoLuong * CTHD.Gia) AS dataValue\n" +
+"FROM DANHMUC DM\n" +
+"JOIN SANPHAM SP ON DM.ID = SP.ID_DM\n" +
+"JOIN CTHOADON CTHD ON SP.ID = CTHD.ID_SP\n" +
+"JOIN HOADON HD ON CTHD.ID_HD = HD.ID\n" +
+"WHERE HD.TrangThai = 1 AND MONTH(HD.ThoiGian) = ? AND YEAR(HD.ThoiGian) = ?\n" +
+"GROUP BY DM.Ten;", month, year);
+    }
+    public List<Object[]> getDTWeekChart(int thang, int nam){
+        return selectDataChartBySQL("SELECT DATEPART(WEEK, HD.ThoiGian) AS chartColumn,"+ 
+"SUM(CTHD.SoLuong * CTHD.Gia) AS dataValue\n" +
+"FROM HOADON HD JOIN CTHOADON CTHD ON HD.ID = CTHD.ID_HD\n" +
+"WHERE MONTH(HD.ThoiGian) = ? AND YEAR(HD.ThoiGian) = ? AND HD.TrangThai = 1\n" +
+"GROUP BY DATEPART(WEEK, HD.ThoiGian)\n" +
+"ORDER BY chartColumn;", thang, nam);
+    }
+    public List<Object[]> getDTYearChart(int nam){
+        return selectDataChartBySQL("SELECT FORMAT(HD.ThoiGian, 'MM/yyyy') AS chartColumn,"+ 
+                "SUM(CTHD.SoLuong * CTHD.Gia) AS dataValue\n" +
+"FROM HOADON HD JOIN CTHOADON CTHD ON HD.ID = CTHD.ID_HD\n" +
+"WHERE YEAR(HD.ThoiGian) = ? AND HD.TrangThai = 1 \n" +
+"GROUP BY FORMAT(HD.ThoiGian, 'MM/yyyy') ORDER BY chartColumn;", nam);
+    }
+    public List<Object[]> getDT10daysChart(){
+        return selectDataChartBySQL("DECLARE @maxHDday DATE;\n" +
+"SELECT @maxHDday = MAX(ThoiGian) FROM HOADON;\n" +
+"SELECT FORMAT(CAST(HD.ThoiGian AS DATE), 'dd/MM') AS chartColumn,\n" +
+"SUM(CTHD.SoLuong * CTHD.Gia) AS dataValue FROM HOADON HD\n" +
+"JOIN CTHOADON CTHD ON HD.ID = CTHD.ID_HD\n" +
+"WHERE HD.ThoiGian >= DATEADD(DAY, -10, @maxHDday) AND HD.TrangThai = 1 \n" +
+"GROUP BY CAST(HD.ThoiGian AS DATE)  ORDER BY CAST(HD.ThoiGian AS DATE);");
+    }
     public List<Object[]> selectSPBySQL(String sql, Object... args) {
         List<Object[]> lstSP = new ArrayList<>();
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
@@ -268,52 +292,87 @@ public class thongkeDAO {
         Object[] obj = new Object[]{};
         try {
             ResultSet rs = helper.executeQuery(sql, args);
-            while (rs.next()) {
-                System.out.println(rs.getRow());
-                obj = new Object[]{
-                    rs.getString("TongDT"),
-                    rs.getInt("SoDonTC"),
-                    rs.getInt("SoDonBH")
-                };
-            }
+            rs.next();
+            System.out.println(rs.getRow());
+            obj = new Object[]{
+                rs.getString("TongDT"),
+                rs.getInt("SoDonTC"),
+                rs.getInt("SoDonBH")
+            };
         } catch (Exception e) {
             e.printStackTrace();
         }
         return obj;
     }
-
-    public Date getMaxHDDate() {
-        Date maxDate = new Date();
+    public Object[] selectExtremeBySQL(String sql, Object... args) {
+        Object[] obj = new Object[]{};
         try {
-            String sql = "SELECT CAST(MAX(ThoiGian) AS DATE) AS MaxDate\n"
-                    + "FROM HOADON;";
-            ResultSet rs = helper.executeQuery(sql);
+            ResultSet rs = helper.executeQuery(sql, args);
             rs.next();
-            String maxDateString = rs.getString("MaxDate");
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            maxDate = format.parse(maxDateString);
+            System.out.println(rs.getRow());
+            obj = new Object[]{
+                rs.getString("name"),
+                rs.getString("value"),
+            };
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return obj;
+    }
+    public List<Object[]> selectDataChartBySQL(String sql, Object... args) {
+        List<Object[]> lstDT = new ArrayList<>();
+        try {
+            ResultSet rs = helper.executeQuery(sql, args);
+            while (rs.next()) {
+                int dtK = rs.getInt("dataValue")/1000;
+                System.out.println(rs.getRow());
+                Object[] obj = {
+                    rs.getString("chartColumn"),
+                    dtK,
+                };
+                lstDT.add(obj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstDT;
+    }
+    public Date getMaxHDDate() {
+        Date maxDate = new Date();
+            Object[] maxDateString = selectExtremeBySQL("SELECT '1' as name, CAST(MAX(ThoiGian) AS DATE) AS value FROM HOADON;");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+            maxDate = format.parse(maxDateString[1].toString());
+        } catch (Exception e) {
+        } 
         return maxDate;
     }
 
     public Date getMinHDDate() {
         Date minDate = new Date();
-        try {
-            String sql = "SELECT CAST(Min(ThoiGian) AS DATE) AS MinDate\n"
-                    + "FROM HOADON;";
-            ResultSet rs = helper.executeQuery(sql);
-            rs.next();
-            String minDateString = rs.getString("MinDate");
+            Object[] minDateString = selectExtremeBySQL("SELECT '1' as name , CAST(Min(ThoiGian) AS DATE) AS value FROM HOADON;");
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            minDate = format.parse(minDateString);
+            try {
+            minDate = format.parse(minDateString[1].toString());
         } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } 
         return minDate;
     }
-
+    public Object[] getSPTrending() {
+        return selectExtremeBySQL("SELECT TOP 1 SP.TenSP as name, SP.AnhSP AS value\n" +
+"FROM SANPHAM SP JOIN CTHOADON CTHD ON SP.ID = CTHD.ID_SP\n" +
+"JOIN HOADON HD ON CTHD.ID_HD = HD.ID\n" +
+"WHERE HD.ThoiGian >= DATEADD(DAY, -60, GETDATE()) AND HD.TrangThai = 1\n" +
+"GROUP BY SP.TenSP, SP.AnhSP  ORDER BY SUM(CTHD.SoLuong * CTHD.Gia) DESC;\n");
+    }
+    public Object[] getSPBanKem() {
+        return selectExtremeBySQL("SELECT TOP 1 SP.TenSP as name, SP.AnhSP AS value\n" +
+"FROM SANPHAM SP JOIN CTHOADON CTHD ON SP.ID = CTHD.ID_SP\n" +
+"JOIN HOADON HD ON CTHD.ID_HD = HD.ID\n" +
+"WHERE HD.ThoiGian >= DATEADD(DAY, -60, GETDATE()) AND HD.TrangThai = 1\n" +
+"GROUP BY SP.TenSP, SP.AnhSP  ORDER BY SUM(CTHD.SoLuong * CTHD.Gia) ASC;\n");
+    }
     public static void main(String[] args) {
+        new thongkeDAO().getDTYearChart(2024);
     }
 }
