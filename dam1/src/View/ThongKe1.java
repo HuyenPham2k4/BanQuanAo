@@ -4,14 +4,9 @@
  */
 package View;
 import java.util.*;
-import DAO.chiTietHoaDonDAO;
-import DAO.mauSacDAO;
 import DAO.danhMucDAO;
 import DAO.thuongHieuDAO;
-import DAO.sizeDAO;
 import DAO.thongkeDAO;
-import Helper.ColumnChart;
-import org.jfree.data.general.DefaultPieDataset;
 import entity.chitiethoadon;
 import entity.mausac;
 import entity.danhmuc;
@@ -19,33 +14,8 @@ import entity.thuonghieu;
 import entity.size;
 import javax.swing.table.DefaultTableModel;
 import Helper.PieChart;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.OrientationRequested;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PiePlot;
+import Helper.ColumnChart;
+import Helper.ThongKeWidget;
 /**
  *
  * @author letnp
@@ -90,20 +60,18 @@ public class ThongKe1 extends javax.swing.JDialog {
         Object[] banChay = new thongkeDAO().getSPTrending();
         Object[] banKem = new thongkeDAO().getSPBanKem();
         lblNameBanChay.setText(banChay[0].toString());
-        lblIMGBanChay.setIcon(new ImageIcon(System.getProperty("user.dir")+"\\src\\ANH_CSDL_270x270px\\"+banChay[1]));
+        ThongKeWidget.ImgIcon(lblIMGBanChay, banChay[1].toString());
         lblNameBanKem.setText(banKem[0].toString());
-        lblIMGBanKem.setIcon(new ImageIcon(System.getProperty("user.dir")+"\\src\\ANH_CSDL_270x270px\\"+banKem[1]));
-//        lblAnh.setIcon(new ImageIcon(System.getProperty("user.dir")+"\\src\\ANH_CSDL_270x270px\\"+imageName));
+        ThongKeWidget.ImgIcon(lblIMGBanKem, banKem[1].toString());
     }
     void pnlDTLColumnChartDraw(){
-        LocalDateTime date = LocalDateTime.now();
         String category = "";
         List<Object[]> dts;
-        int month = date.getMonthValue();
-        int year = date.getYear();
+        int month = ThongKeWidget.getTodayMonth();
+        int year = ThongKeWidget.getTodayYear();
         switch (cbbDTChart.getSelectedIndex()) {
             case 0:
-                dts = new thongkeDAO().getDT10daysChart();
+                dts = new thongkeDAO().getDT10daysChart(ThongKeWidget.getToDaySQL());
                 category = "Ngày";
                 break;
             case 1:
@@ -170,26 +138,9 @@ public class ThongKe1 extends javax.swing.JDialog {
         cbbLocDate.addItem("Lọc theo năm");
     }
     void reNewDateChooser(){
-        // biến dcsto này ở đâu?
         thongkeDAO tkd = new thongkeDAO();
         dcsTo.setDate(tkd.getMaxHDDate());
         dcsFrom.setDate(tkd.getMinHDDate());
-    }
-    String pathSaveFile(){
-        String pathName = "";
-        JFileChooser folderPath = new JFileChooser();
-        folderPath.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        folderPath.setDialogTitle("Select a Folder");
-
-        int x = folderPath.showDialog(null, "Save");
-        if (x == JFileChooser.APPROVE_OPTION){
-            pathName = folderPath.getSelectedFile().toString();
-            JOptionPane.showMessageDialog(rootPane, "Đã xuất file Excel thành công! ");
-        }
-        if (!pathName.toLowerCase().endsWith(".xlsx")) {
-            pathName += ".xlsx";
-        }
-        return  pathName;
     }
     void getYear(){
         cbbYear.removeAllItems();
@@ -205,64 +156,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         }
         cbbMonths.setSelectedIndex(0);
     }
-    void xuatFileExcel(JTable tbl, String pathname){
-    try {
-        XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet("danhsach");
-        XSSFRow row = null;
-        Cell cell = null;
 
-        row = sheet.createRow(0); 
-        int columnCount = tbl.getColumnCount();
-        for (int i = 0; i < columnCount; i++) {
-            cell = row.createCell(i, CellType.STRING);
-            cell.setCellValue(tbl.getColumnName(i));
-        }
-
-        int rowCount = tbl.getRowCount();
-        for (int i = 0; i < rowCount; i++) {
-            row = sheet.createRow(i + 1);
-            for (int j = 0; j < columnCount; j++) {
-                cell = row.createCell(j, CellType.STRING);
-                Object value = tbl.getValueAt(i, j);
-                if (value != null) {
-                    cell.setCellValue(value.toString());
-                }
-            }
-        }
-        File f = new File(pathname);
-        try {
-            FileOutputStream fos = new FileOutputStream(f);
-            workbook.write(fos);
-            fos.close();
-            workbook.close(); 
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(rootPane, "Lỗi "+ e);
-        }
-    } catch (Exception e) {
-        e.printStackTrace(); 
-    }
-        
-    }
-    void showPieChartDM(){
-    DefaultPieDataset pieDataSet;
-    JFreeChart pieChart;
-    PiePlot piePlot;
-    ChartPanel chartPanel;
-    String title;
-        pieDataSet = new DefaultPieDataset();
-        
-        pieChart = ChartFactory.createPieChart("gdgdfg", pieDataSet,true,true,false);
-        piePlot = (PiePlot) pieChart.getPlot();
-        chartPanel = new ChartPanel(pieChart);
-        chartPanel.setPreferredSize(new Dimension(500, 400)); // Set preferred size
-        pnlPieChartSP.removeAll();
-        pnlPieChartSP.setLayout(new BorderLayout());
-        pnlPieChartSP.add(chartPanel, BorderLayout.CENTER);
-        pnlPieChartSP.validate();
-        pnlPieChartSP.repaint();
-    }
     void refresh(){
         Object[] dtHomNay = new thongkeDAO().getHomNayDT();
         Object[] dtThang = new thongkeDAO().getThangNayDT();
@@ -1074,14 +968,6 @@ public class ThongKe1 extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-//    void getDay(){
-//        cbbFromDay.removeAllItems();
-//        cbbToDay.removeAllItems();
-//        for(int i = 1; i< 32; i++){
-//        cbbFromDay.addItem("Ngày "+i);
-//        cbbToDay.addItem("Ngày "+i);
-//    }
-//    }
     void getDanhMuc(){
         danhmucs = new danhMucDAO().getAll();
         cbbChild.removeAllItems();
@@ -1098,23 +984,6 @@ public class ThongKe1 extends javax.swing.JDialog {
             cbbChild.addItem(x.getTen());
         }
     }
-//    void get_Size(){
-//        sizes = new sizeDAO().getAll();
-//        cbbChild.removeAllItems();
-//        cbbChild.addItem("Tất cả");
-//        for(size x: sizes){
-//            cbbChild.addItem(x.getTen());
-//        }
-//    }
-//    void getMauSac(){
-//        mausacs = new mauSacDAO().getAll();
-//        cbbChild.removeAllItems();
-//        cbbChild.addItem("Tất cả");
-//        for(mausac x: mausacs){
-//            cbbChild.addItem(x.getMacsac());
-//        }
-//    }
-
     void getSanPham(){
         int choice = cbbParent.getSelectedIndex();
         int id = cbbChild.getSelectedIndex();
@@ -1144,14 +1013,10 @@ public class ThongKe1 extends javax.swing.JDialog {
         resetTable();
     }
     String getDayFrom(){
-        Date selectedDate = dcsFrom.getDate();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(selectedDate);
+        return ThongKeWidget.convertToDateSQL(dcsFrom.getDate());
     }
     String getDayTo(){
-        Date selectedDate = dcsTo.getDate();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(selectedDate);
+        return ThongKeWidget.convertToDateSQL(dcsTo.getDate());
     }
     private void cbbParentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbParentActionPerformed
         // TODO add your handling code here:
@@ -1175,7 +1040,6 @@ public class ThongKe1 extends javax.swing.JDialog {
 
     private void cbbYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbYearActionPerformed
         // TODO add your handling code here:
-//        int year = Integer.parseInt(cbbYear.getSelectedItem().toString());
         int year = cbbYear.getSelectedItem() == null ? 2023 : years.get(cbbYear.getSelectedIndex());
     }//GEN-LAST:event_cbbYearActionPerformed
 
@@ -1189,7 +1053,6 @@ public class ThongKe1 extends javax.swing.JDialog {
     String jrTimeColumnName = "Ngày";
     private void btnDTFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTFilterActionPerformed
         // TODO add your handling code here:
-//        ctdoanhthus = new thongkeDAO().getCTDTByDay(dateFrom, dateTo);
         if(cbbLocDate.getSelectedIndex()==0){
             jrTimeColumnName = "Ngày";
             ctdoanhthus = new thongkeDAO().getCTDTByDay(getDayFrom(), getDayTo());
@@ -1220,12 +1083,14 @@ public class ThongKe1 extends javax.swing.JDialog {
 
     private void xuatExcelSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xuatExcelSPActionPerformed
         // TODO add your handling code here:
-        xuatFileExcel(tblThongKe, pathSaveFile());
+//        xuatFileExcel(tblThongKe, pathSaveFile());
+        ThongKeWidget.xuatFileExcel(rootPane, tblThongKe);
     }//GEN-LAST:event_xuatExcelSPActionPerformed
 
     private void btnXuatEXcelDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatEXcelDTActionPerformed
         // TODO add your handling code here:
-        xuatFileExcel(tblDoanhThu, pathSaveFile());
+//        xuatFileExcel(tblDoanhThu, pathSaveFile());
+        ThongKeWidget.xuatFileExcel(rootPane, tblDoanhThu);
     }//GEN-LAST:event_btnXuatEXcelDTActionPerformed
 
     private void cbbDTChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbDTChartActionPerformed
