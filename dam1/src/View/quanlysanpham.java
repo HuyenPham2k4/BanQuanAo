@@ -398,9 +398,12 @@ public class quanlysanpham extends javax.swing.JPanel {
         lblAnh = new javax.swing.JLabel();
         jButton13 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jLabel1.setText("QUẢN LÝ SẢN PHẨM");
 
+        jPanel30.setBackground(new java.awt.Color(255, 255, 255));
         jPanel30.setBorder(null);
 
         jPanel29.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -694,6 +697,8 @@ public class quanlysanpham extends javax.swing.JPanel {
         );
 
         tab.addTab("DANH SÁCH", jPanel30);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
