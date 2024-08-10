@@ -333,7 +333,7 @@ public class Trangchu extends javax.swing.JFrame {
 
     private void lblSanPhamMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSanPhamMouseReleased
         // TODO add your handling code here:
-        showFrom(new qlsanphams());
+        showFrom(new quanlysanpham());
     }//GEN-LAST:event_lblSanPhamMouseReleased
 
     private void lblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSanPhamMouseClicked

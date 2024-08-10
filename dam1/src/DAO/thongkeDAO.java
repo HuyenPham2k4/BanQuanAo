@@ -210,6 +210,6 @@ public class thongkeDAO {
         return minDate;
     }
     public static void main(String[] args) {
-        new thongkeDAO().getDTYearChart(2024);
+        new thongkeDAO().getAllCTDT();
     }
 }
