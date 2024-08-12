@@ -266,9 +266,10 @@ public class quanlysanpham extends javax.swing.JPanel {
         String sz = "";
         for (Map.Entry<Integer, Boolean> entry : selectedSize.entrySet()) {
             if (entry.getValue()) {
-                sz += sizes.get(entry.getKey()).getTen()+", ";
+                sz += sizes.get(entry.getKey()).getTen().strip()+", ";
             }
         }
+        taeMoTa.setText(sz.equals("") ? "Chưa có size...": sz);
         lblSize.setText(sz.equals("") ? "Chưa có size...": sz);
     }
     int selectedSanPhamIndex;
