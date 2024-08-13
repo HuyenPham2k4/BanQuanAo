@@ -317,7 +317,7 @@ public class Trangchu extends javax.swing.JFrame {
     }//GEN-LAST:event_lblDongHoAncestorAdded
 
     private void lblThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThongKeMouseClicked
-        new ThongKe1(this, rootPaneCheckingEnabled).setVisible(true);;
+        new ThongKe1(this, rootPaneCheckingEnabled).setVisible(true);
     }//GEN-LAST:event_lblThongKeMouseClicked
 
     private void lblDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseClicked
@@ -341,7 +341,7 @@ public class Trangchu extends javax.swing.JFrame {
 
     private void lblSanPhamMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSanPhamMouseReleased
         // TODO add your handling code here:
-        showFrom(new qlsanphams());
+        showFrom(new quanlysanpham());
     }//GEN-LAST:event_lblSanPhamMouseReleased
 
     private void lblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSanPhamMouseClicked
@@ -359,7 +359,7 @@ public class Trangchu extends javax.swing.JFrame {
 
     private void lblVoucherMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblVoucherMouseClicked
         // TODO add your handling code here:
-        lblVoucher.setForeground(Color.red);
+        
         showFrom(new quanlyVoucher());
     }//GEN-LAST:event_lblVoucherMouseClicked
 

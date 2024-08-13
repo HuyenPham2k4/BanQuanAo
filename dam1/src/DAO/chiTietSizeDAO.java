@@ -26,7 +26,7 @@ public class chiTietSizeDAO implements ICTSRepo {
     @Override
     public boolean add(chitietsize ctsize) {
         String sql = "INSERT INTO CTSIZE (ID_SP, ID_SIZE, TrangThai) VALUES (?, ?, ?)";
-        helper.executeUpdate(sql, ctsize.getIdsp(), ctsize.getIdsize(), ctsize.isTrangthai());
+        helper.executeUpdate(sql, ctsize.getIdsp(), ctsize.getIdsize(), ctsize.isTrangthai()?1:0);
         return true;
     }
 
@@ -43,7 +43,7 @@ public class chiTietSizeDAO implements ICTSRepo {
         return true;
     }
     public boolean deleteByIDSP(int ID_SP) {
-        String sql = "DELETE FROM CTSIZE WHERE ID = ?";
+        String sql = "DELETE FROM CTSIZE WHERE ID_SP = ?";
         helper.executeUpdate(sql, ID_SP);
         return true;
     }

@@ -27,73 +27,21 @@ public class thongkeDAO {
     }
 
     public List<Object[]> getAllSP_DM(int month, int year) {
-        return selectSPBySQL("SELECT \n"
-                + "    sp.ID AS ID_SP,\n"
-                + "    sp.TenSP AS TenSP,\n"
-                + "    sp.Gia AS Gia,\n"
-                + "    COALESCE(SUM(ct.SoLuong), 0) AS SoLuongDaBan,\n"
-                + "    dm.Ten AS DacDiem\n"
-                + "FROM SANPHAM sp\n"
-                + "LEFT JOIN CTHOADON ct ON sp.ID = ct.ID_SP\n"
-                + "JOIN HOADON hd ON ct.ID_HD = hd.ID\n"
-                + "JOIN DANHMUC dm ON sp.ID_DM = dm.ID\n"
-                + "WHERE hd.TrangThai = '1'AND MONTH(hd.ThoiGian) = ? AND YEAR(hd.ThoiGian) = ?\n"
-                + "GROUP BY sp.ID, sp.TenSP, sp.Gia, dm.Ten\n"
-                + "ORDER BY SoLuongDaBan DESC;", month, year);
+        return selectSPBySQL("EXEC getAllSP_DM @month = ?, @year = ?;", month, year);
     }
-
     public List<Object[]> getSP_DM(int ID_DM, int month, int year) {
-        return selectSPBySQL("SELECT \n"
-                + "    sp.ID AS ID_SP,\n"
-                + "    sp.TenSP AS TenSP,\n"
-                + "    sp.Gia AS Gia,\n"
-                + "    COALESCE(SUM(ct.SoLuong), 0) AS SoLuongDaBan,\n"
-                + "    dm.Ten AS DacDiem\n"
-                + "FROM SANPHAM sp\n"
-                + "LEFT JOIN CTHOADON ct ON sp.ID = ct.ID_SP\n"
-                + "JOIN HOADON hd ON ct.ID_HD = hd.ID\n"
-                + "JOIN DANHMUC dm ON sp.ID_DM = dm.ID\n"
-                + "WHERE hd.TrangThai = '1'AND dm.ID = ? AND MONTH(hd.ThoiGian) = ? AND YEAR(hd.ThoiGian) = ?\n"
-                + "GROUP BY sp.ID, sp.TenSP, sp.Gia, dm.Ten\n"
-                + "ORDER BY SoLuongDaBan DESC;", ID_DM, month, year);
+        return selectSPBySQL("EXEC getSP_DM @ID_DM = 1, @month = ?, @year = ?;", ID_DM, month, year);
     }
-
     public List<Object[]> getAllSP_TH(int month, int year) {
-        return selectSPBySQL("SELECT \n"
-                + "    sp.ID AS ID_SP,\n"
-                + "    sp.TenSP,\n"
-                + "    sp.Gia,\n"
-                + "    SUM(ct.SoLuong) AS SoLuongDaBan,\n"
-                + "    th.Ten AS DacDiem\n"
-                + "FROM SANPHAM sp\n"
-                + "LEFT JOIN CTHOADON ct ON sp.ID = ct.ID_SP\n"
-                + "JOIN HOADON hd ON ct.ID_HD = hd.ID\n"
-                + "JOIN THUONGHIEU th ON sp.ID_TH = th.ID\n"
-                + "WHERE hd.TrangThai = '1' AND MONTH(hd.ThoiGian) = ? AND YEAR(hd.ThoiGian) = ?\n"
-                + "GROUP BY sp.ID, sp.TenSP, sp.Gia, th.Ten\n"
-                + "ORDER BY SoLuongDaBan DESC;", month, year);
+        return selectSPBySQL("EXEC getAllSP_TH @month = ?, @year = ?;", month, year);
     }
-
     public List<Object[]> getSP_TH(int ID_DM, int month, int year) {
-        return selectSPBySQL("SELECT \n"
-                + "    sp.ID AS ID_SP,\n"
-                + "    sp.TenSP,\n"
-                + "    sp.Gia,\n"
-                + "    SUM(ct.SoLuong) AS SoLuongDaBan,\n"
-                + "    th.Ten AS DacDiem\n"
-                + "FROM SANPHAM sp\n"
-                + "LEFT JOIN CTHOADON ct ON sp.ID = ct.ID_SP\n"
-                + "JOIN HOADON hd ON ct.ID_HD = hd.ID\n"
-                + "JOIN THUONGHIEU th ON sp.ID_TH = th.ID\n"
-                + "WHERE hd.TrangThai = '1' AND th.ID = ? AND MONTH(hd.ThoiGian) = ? AND YEAR(hd.ThoiGian) = ? -- Filter for January 2024\n"
-                + "GROUP BY sp.ID, sp.TenSP, sp.Gia, th.Ten\n"
-                + "ORDER BY SoLuongDaBan DESC;", ID_DM, month, year);
+        return selectSPBySQL("EXEC getSP_TH @ID_TH = 1, @month = 8, @year = 2024;", ID_DM, month, year);
     }
-
     public List<Integer> getYearFromHD() {
         List<Integer> years = new ArrayList<>();
         try {
-            ResultSet rs = helper.executeQuery("SELECT DISTINCT YEAR(ThoiGian) AS year FROM HOADON ORDER BY year;");
+            ResultSet rs = helper.executeQuery("SELECT DISTINCT YEAR(ThoiGian) AS year FROM HOADON ORDER BY year DESC;");
             while (rs.next()) {
                 System.out.println(rs.getRow());
                 years.add(rs.getInt("year"));
@@ -103,123 +51,52 @@ public class thongkeDAO {
         }
         return years;
     }
-//    public List<Object[]> getAllSP_MS() {
-//        return selectSPBySQL("SELECT sp.ID AS ID_SP,sp.TenSP,sp.SoLuong,sp.Gia,ms.MauSac AS DacDiem FROM SANPHAM sp\n" +
-//"JOIN CTMAUSAC ctm ON sp.ID = ctm.ID_SP JOIN MAUSAC ms ON ctm.ID_MS = ms.ID;");
-//    }
-//    public List<Object[]> getSP_MS(int ID_MS) {
-//        return selectSPBySQL("SELECT sp.ID AS ID_SP,sp.TenSP,sp.SoLuong,sp.Gia,ms.MauSac AS DacDiem FROM SANPHAM sp\n" +
-//"JOIN CTMAUSAC ctm ON sp.ID = ctm.ID_SP JOIN MAUSAC ms ON ctm.ID_MS = ms.ID Where ms.ID = ?;", ID_MS);
-//    }
-//    public List<Object[]> getAllSP_Size() {
-//        return selectSPBySQL("SELECT sp.ID AS ID_SP,sp.TenSP,sp.SoLuong,sp.Gia,sz.Ten AS DacDiem FROM SANPHAM sp\n" +
-//"JOIN CTSIZE cts ON sp.ID = cts.ID_SP JOIN SIZE sz ON cts.ID_SIZE = sz.ID;");
-//    }
-//    public List<Object[]> getSP_Size(int ID_Size) {
-//        return selectSPBySQL("SELECT sp.ID AS ID_SP,sp.TenSP,sp.SoLuong,sp.Gia,sz.Ten AS DacDiem FROM SANPHAM sp\n" +
-//"JOIN CTSIZE cts ON sp.ID = cts.ID_SP JOIN SIZE sz ON cts.ID_SIZE = sz.ID Where sz.ID = ?;", ID_Size);
-//    }
-
     public List<Object[]> getAllCTDT() {
-        return selectCTDTBySQL("SELECT \n"
-                + "    FORMAT(CONVERT(DATE, hd.ThoiGian), 'dd/MM/yyyy') AS Time,\n"
-                + "    COALESCE(SUM(ct.SoLuong), 0) AS SoLuongDaBan,\n"
-                + "    COALESCE(FORMAT(SUM(ct.SoLuong * sp.Gia), 'N0'), '0') AS TongDT\n"
-                + "FROM HOADON hd\n"
-                + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
-                + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE hd.TrangThai = '1'\n"
-                + "GROUP BY CONVERT(DATE, hd.ThoiGian)\n"
-                + "ORDER BY CONVERT(DATE, hd.ThoiGian);");
+        return selectCTDTBySQL("EXEC getAllCTDT;");
     }
 
     public List<Object[]> getCTDTByDay(String dateFrom, String dateTo) {
-        return selectCTDTBySQL("SELECT \n"
-                + "    FORMAT(CONVERT(DATE, hd.ThoiGian), 'dd/MM/yyyy') AS Time,\n"
-                + "    COALESCE(SUM(ct.SoLuong), 0) AS SoLuongDaBan,\n"
-                + "    COALESCE(FORMAT(SUM(ct.SoLuong * sp.Gia), 'N0'), '0') AS TongDT\n"
-                + "FROM HOADON hd\n"
-                + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
-                + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE hd.TrangThai = '1'"
-                + "GROUP BY CONVERT(DATE, hd.ThoiGian)\n"
-                + "HAVING CONVERT(DATE, hd.ThoiGian) BETWEEN ? AND ?"
-                + "ORDER BY CONVERT(DATE, hd.ThoiGian);", dateFrom, dateTo);
+        return selectCTDTBySQL("EXEC getCTDTByDay @dateFrom = ?, @dateTo = ?;", dateFrom, dateTo);
     }
-
     public List<Object[]> getCTDTByYear(String dateFrom, String dateTo) {
-        return selectCTDTBySQL("SELECT \n"
-                + "    YEAR(hd.ThoiGian) AS Time,\n"
-                + "    COALESCE(SUM(ct.SoLuong), 0) AS SoLuongDaBan,\n"
-                + "    COALESCE(FORMAT(SUM(ct.SoLuong * sp.Gia), 'N0'), '0') AS TongDT\n"
-                + "FROM HOADON hd\n"
-                + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
-                + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE hd.TrangThai = '1' AND CONVERT(DATE, hd.ThoiGian) BETWEEN ? AND ?\n"
-                + "GROUP BY YEAR(hd.ThoiGian)\n"
-                + "ORDER BY YEAR(hd.ThoiGian);", dateFrom, dateTo);
+        return selectCTDTBySQL("EXEC getCTDTByYear @dateFrom = ?, @dateTo = ?;", dateFrom, dateTo);
     }
-
     public List<Object[]> getCTDTByMonth(String dateFrom, String dateTo) {
-        return selectCTDTBySQL("SELECT \n"
-                + "    FORMAT(hd.ThoiGian, 'MM/yyyy') AS Time,\n"
-                + "    COALESCE(SUM(ct.SoLuong), 0) AS SoLuongDaBan,\n"
-                + "    COALESCE(FORMAT(SUM(ct.SoLuong * sp.Gia), 'N0'), '0') AS TongDT\n"
-                + "FROM HOADON hd\n"
-                + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
-                + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE hd.TrangThai = '1' AND CONVERT(DATE, hd.ThoiGian) BETWEEN ? AND ?\n"
-                + "GROUP BY FORMAT(hd.ThoiGian, 'MM/yyyy')\n"
-                + "ORDER BY MIN(hd.ThoiGian);", dateFrom, dateTo);
+        return selectCTDTBySQL("EXEC getCTDTByMonth @dateFrom = ?, @dateTo = ?;", dateFrom, dateTo);
     }
-
     public Object[] getHomNayDT() {
-        return selectDTNewsBySQL("SELECT \n"
-                + "    COALESCE(FORMAT(SUM(CASE WHEN hd.TrangThai = '1' THEN ct.SoLuong * sp.Gia ELSE 0 END), 'N0'), '0') AS TongDT,\n"
-                + "    COUNT(CASE WHEN hd.TrangThai = '1' THEN 1 END) AS SoDonTC,\n"
-                + "    COUNT(CASE WHEN hd.TrangThai = '0' THEN 1 END) AS SoDonBH\n"
-                + "FROM HOADON hd\n"
-                + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
-                + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE hd.TrangThai = '1' AND CONVERT(DATE, hd.ThoiGian) = CONVERT(DATE, GETDATE());");
+        return selectDTNewsBySQL("EXEC getHomNayDT;");
     }
-
     public Object[] getThangNayDT() {
-        return selectDTNewsBySQL("SELECT \n"
-                + "    COALESCE(FORMAT(SUM(CASE WHEN hd.TrangThai = '1' THEN ct.SoLuong * sp.Gia ELSE 0 END), 'N0'), '0') AS TongDT,\n"
-                + "    COUNT(CASE WHEN hd.TrangThai = '1' THEN 1 END) AS SoDonTC,\n"
-                + "    COUNT(CASE WHEN hd.TrangThai = '0' THEN 1 END) AS SoDonBH\n"
-                + "FROM HOADON hd\n"
-                + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
-                + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE hd.TrangThai = '1' AND YEAR(hd.ThoiGian) = YEAR(GETDATE()) \n"
-                + "  AND MONTH(hd.ThoiGian) = MONTH(GETDATE());");
+        return selectDTNewsBySQL("EXEC getThangNayDT;");
     }
-
     public Object[] getNamNayDT() {
-        return selectDTNewsBySQL("  SELECT \n"
-                + "    COALESCE(FORMAT(SUM(CASE WHEN hd.TrangThai = '1' THEN ct.SoLuong * sp.Gia ELSE 0 END), 'N0'), '0') AS TongDT,\n"
-                + "    COUNT(CASE WHEN hd.TrangThai = '1' THEN 1 END) AS SoDonTC,\n"
-                + "    COUNT(CASE WHEN hd.TrangThai = '0' THEN 1 END) AS SoDonBH\n"
-                + "FROM HOADON hd\n"
-                + "JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
-                + "JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "WHERE hd.TrangThai = '1' AND YEAR(hd.ThoiGian) = YEAR(GETDATE());");
+        return selectDTNewsBySQL("EXEC getNamNayDT;");
     }
-
     public Object[] getNgayDTCaoNhat() {
-        return selectDTNewsBySQL("    SELECT TOP 1 \n"
-                + "        COALESCE(FORMAT(SUM(CASE WHEN hd.TrangThai = '1' THEN ct.SoLuong * sp.Gia ELSE 0 END), 'N0'), '0') AS TongDT,\n"
-                + "        COUNT(CASE WHEN hd.TrangThai = '1' THEN 1 END) AS SoDonTC,\n"
-                + "        COUNT(CASE WHEN hd.TrangThai = '0' THEN 1 END) AS SoDonBH,\n"
-                + "        CONVERT(DATE, hd.ThoiGian) AS Ngay\n"
-                + "    FROM HOADON hd\n"
-                + "    JOIN CTHOADON ct ON hd.ID = ct.ID_HD\n"
-                + "    JOIN SANPHAM sp ON ct.ID_SP = sp.ID\n"
-                + "    GROUP BY CONVERT(DATE, hd.ThoiGian)\n"
-                + "    ORDER BY TongDT DESC");
+        return selectDTNewsBySQL("EXEC getNgayDTCaoNhat;");
     }
-
+    public List<Object[]> getThuongHieuChart(int month, int year) {
+        return selectDataChartBySQL("EXEC getThuongHieuChart @Month = ?, @Year = ?;", month, year);
+    }
+    public List<Object[]> getDanhMucChart(int month, int year) {
+        return selectDataChartBySQL("EXEC getDanhMucChart @Month = ?, @Year = ?;", month, year);
+    }
+    public List<Object[]> getDTWeekChart(int thang, int nam){
+        return selectDataChartBySQL("EXEC getDTWeekChart @Month = ?, @Year = ?;", thang, nam);
+    }
+    public List<Object[]> getDTYearChart(int nam){
+        return selectDataChartBySQL("EXEC getDTYearChart @nam = ?;", nam);
+    }
+    public List<Object[]> getDT10daysChart(String today){
+        return selectDataChartBySQL("EXEC GetDT10daysChart @Today = ?;", today);
+    }
+    public Object[] getSPTrending() {
+        return selectExtremeBySQL("EXEC getSPTrending;");
+    }
+    public Object[] getSPBanKem() {
+        return selectExtremeBySQL("EXEC getSPBanKem;");
+    }
     public List<Object[]> selectSPBySQL(String sql, Object... args) {
         List<Object[]> lstSP = new ArrayList<>();
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
@@ -244,7 +121,6 @@ public class thongkeDAO {
         }
         return lstSP;
     }
-
     public List<Object[]> selectCTDTBySQL(String sql, Object... args) {
         List<Object[]> lstSP = new ArrayList<>();
         try {
@@ -263,57 +139,77 @@ public class thongkeDAO {
         }
         return lstSP;
     }
-
     public Object[] selectDTNewsBySQL(String sql, Object... args) {
         Object[] obj = new Object[]{};
         try {
             ResultSet rs = helper.executeQuery(sql, args);
-            while (rs.next()) {
-                System.out.println(rs.getRow());
-                obj = new Object[]{
-                    rs.getString("TongDT"),
-                    rs.getInt("SoDonTC"),
-                    rs.getInt("SoDonBH")
-                };
-            }
+            rs.next();
+            System.out.println(rs.getRow());
+            obj = new Object[]{
+                rs.getString("TongDT"),
+                rs.getInt("SoDonTC"),
+                rs.getInt("SoDonBH")
+            };
         } catch (Exception e) {
             e.printStackTrace();
         }
         return obj;
     }
-
-    public Date getMaxHDDate() {
-        Date maxDate = new Date();
+    public Object[] selectExtremeBySQL(String sql, Object... args) {
+        Object[] obj = new Object[]{};
         try {
-            String sql = "SELECT CAST(MAX(ThoiGian) AS DATE) AS MaxDate\n"
-                    + "FROM HOADON;";
-            ResultSet rs = helper.executeQuery(sql);
+            ResultSet rs = helper.executeQuery(sql, args);
             rs.next();
-            String maxDateString = rs.getString("MaxDate");
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            maxDate = format.parse(maxDateString);
+            System.out.println(rs.getRow());
+            obj = new Object[]{
+                rs.getString("name"),
+                rs.getString("value"),
+            };
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return obj;
+    }
+    public List<Object[]> selectDataChartBySQL(String sql, Object... args) {
+        List<Object[]> lstDT = new ArrayList<>();
+        try {
+            ResultSet rs = helper.executeQuery(sql, args);
+            while (rs.next()) {
+                int dtK = rs.getInt("dataValue")/1000;
+                System.out.println(rs.getRow());
+                Object[] obj = {
+                    rs.getString("chartColumn"),
+                    dtK,
+                };
+                lstDT.add(obj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstDT;
+    }
+    public Date getMaxHDDate() {
+        Date maxDate = new Date();
+            Object[] maxDateString = selectExtremeBySQL("SELECT '1' as name, CAST(MAX(ThoiGian) AS DATE) AS value FROM HOADON;");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+            maxDate = format.parse(maxDateString[1].toString());
+        } catch (Exception e) {
+        } 
         return maxDate;
     }
 
     public Date getMinHDDate() {
         Date minDate = new Date();
-        try {
-            String sql = "SELECT CAST(Min(ThoiGian) AS DATE) AS MinDate\n"
-                    + "FROM HOADON;";
-            ResultSet rs = helper.executeQuery(sql);
-            rs.next();
-            String minDateString = rs.getString("MinDate");
+            Object[] minDateString = selectExtremeBySQL("SELECT '1' as name , CAST(Min(ThoiGian) AS DATE) AS value FROM HOADON;");
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            minDate = format.parse(minDateString);
+            try {
+            minDate = format.parse(minDateString[1].toString());
         } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } 
         return minDate;
     }
-
     public static void main(String[] args) {
+        new thongkeDAO().getDTYearChart(2024);
     }
 }

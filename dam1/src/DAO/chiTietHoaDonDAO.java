@@ -16,22 +16,24 @@ import java.util.List;
  *
  * @author huyen
  */
-
 // Giờ t sẽ chỉ cách để làm Dao dễ hơn so với việc viết Dao của thầy nhé
-    // t đang dùng intellji
-    // đầu tiên tạo cho t 1 cái interface
-    // h thì implement interface vào đây
+// t đang dùng intellji
+// đầu tiên tạo cho t 1 cái interface
+// h thì implement interface vào đây
 public class chiTietHoaDonDAO implements ICTHDRepo {
+
     // sau khi đã implement interface thì triển khai code
     // đầu tiên t sẽ khai báo jdbchelper và tạo cho nó cái biến
     JDBCHelper helper;
-    public chiTietHoaDonDAO(){
+
+    public chiTietHoaDonDAO() {
         helper = new JDBCHelper();
     }
+
     @Override
     public boolean add(chitiethoadon op) {// cái việc trong excute queryupdate nó có cái j thì phụ thuộc vào thứ tự cột của cau lệnh sql, gọi nó theo thứ tự
-        String sql ="INSERT INTO CTHOADON (ID_HD, ID_SP,TenSP, SoLuong, Don_gia, Gia, TrangThai) VALUES (?, ?, ?, ?, ?, ?, 1)";
-        helper.executeUpdate(sql, op.getIdhd(),op.getIdctsp(),op.getTenSP(),op.getSoluong(),op.getDon_gia(),op.getGia());
+        String sql = "INSERT INTO CTHOADON (ID_HD, ID_SP,TenSP, SoLuong, Don_gia, Gia, TrangThai) VALUES (?, ?, ?, ?, ?, ?, 1)";
+        helper.executeUpdate(sql, op.getIdhd(), op.getIdctsp(), op.getTenSP(), op.getSoluong(), op.getDon_gia(), op.getGia());
         return true;
     }
 
@@ -45,7 +47,7 @@ public class chiTietHoaDonDAO implements ICTHDRepo {
 
     @Override
     public boolean delete(chitiethoadon op) {
-    String sql = "DELETE FROM CTHOADON WHERE ID = ?";
+        String sql = "DELETE FROM CTHOADON WHERE ID = ?";
         helper.executeUpdate(sql, op.getId());
         return true;
     }
@@ -76,17 +78,22 @@ public class chiTietHoaDonDAO implements ICTHDRepo {
         }
         return lstCTHD;
     }
-    
-    public boolean updateSL(chitiethoadon cthd){
+
+    public boolean updateSL(chitiethoadon cthd) {
         helper.executeUpdate("UPDATE CTHOADON set SoLuong = ?,Gia=? where ID_HD = ? and ID_SP = ?", cthd.getSoluong(),
-                                cthd.getGia(), cthd.getIdhd(), cthd.getIdctsp());
+                cthd.getGia(), cthd.getIdhd(), cthd.getIdctsp());
         return true;
     }
-    
-    public List<chitiethoadon> selectSLByIDCTSP(int id_hd, int id_sp){
-        return selectBySQL("select * from CTHOADON where ID_HD ="+id_hd+" and ID_SP ="+id_sp);
+    public boolean changeSL(int soLuong, double gia, int id) {
+        helper.executeUpdate("UPDATE CTHOADON set SoLuong = ?,Gia=? where ID= ?", soLuong,
+                gia , id);
+        return true;
     }
-    
+
+    public List<chitiethoadon> selectSLByIDCTSP(int id_hd, int id_sp) {
+        return selectBySQL("select * from CTHOADON where ID_HD =" + id_hd + " and ID_SP =" + id_sp);
+    }
+
     @Override
     public List<chitiethoadon> findByIDHD(int id) { // tương tự
         return selectBySQL("select * from CTHOADON where ID_HD = ?", id);
@@ -99,14 +106,14 @@ public class chiTietHoaDonDAO implements ICTHDRepo {
 
     @Override
     public List<chitiethoadon> getAll(int id) {
-        return selectBySQL("SELECT * FROM CTHOADON WHERE ID_HD = "+id);
+        return selectBySQL("SELECT * FROM CTHOADON WHERE ID_HD = " + id);
     }
-    
+
     @Override
     public boolean delete(int id) {
-    String sql = "DELETE FROM CTHOADON WHERE ID = ?";
+        String sql = "DELETE FROM CTHOADON WHERE ID = ?";
         helper.executeUpdate(sql, id);
         return true;
     }
-    
+
 }

@@ -8,6 +8,7 @@ import Helper.JDBCHelper;
 import View.viewModel.ProductDetail;
 import entity.chitietsanpham;
 import entity.hoadon;
+import entity.khachHang;
 import entity.sanpham;
 
 import java.sql.ResultSet;
@@ -28,7 +29,7 @@ public class hoaDonDAO implements IHDRepo {
 
     @Override
     public boolean add(hoadon hd) {
-        String sql = "INSERT INTO HOADON (ID_NV, MaVocher, ThoiGian, GhiChu, TT_ThanhToan, TongTien, TrangThai) VALUES (?, ?, ?, ?, 0, ?, 1)";
+        String sql = "INSERT INTO HOADON (ID_NV, SDT, TenKH, MaVocher, ThoiGian, GhiChu, TT_ThanhToan, TongTien, TrangThai) VALUES (?, ?, ?, ?, ?, ?, 0, ?, 1)";
         helper.executeUpdate(sql, hd.getIdnv(), hd.getMavocher(), hd.getThoigian(), hd.getGhichu(), hd.getTongtien());
         return true;
     }
@@ -47,8 +48,8 @@ public class hoaDonDAO implements IHDRepo {
     
     @Override
     public boolean update(hoadon hd) {
-        String sql = "UPDATE HOADON SET ID_NV = ?, MaVocher = ?, ThoiGian = ?, GhiChu = ?, TT_ThanhToan = ?, TongTien = ?, TrangThai = 1 WHERE ID = ?";
-        helper.executeUpdate(sql, hd.getIdnv(), hd.getMavocher(), hd.getThoigian(), hd.getGhichu(), hd.getTtthanhtoan(), hd.getTongtien(),  hd.getId());
+        String sql = "UPDATE HOADON SET ID_NV = ?,SDT=?, TenKH = ? , MaVocher = ?, ThoiGian = ?, GhiChu = ?, TT_ThanhToan = ?, TongTien = ?, TrangThai = 1 WHERE ID = ?";
+        helper.executeUpdate(sql, hd.getIdnv(),hd.getSdt(), hd.getTenkh(), hd.getMavocher(), hd.getThoigian(), hd.getGhichu(), hd.getTtthanhtoan(), hd.getTongtien(),  hd.getId());
         return true;
     }
 
@@ -64,6 +65,8 @@ public class hoaDonDAO implements IHDRepo {
         return selectBySQL("select \n"
                 + "		HOADON.ID,\n"
                 + "		HOADON.ID_NV,\n"
+                + "		HOADON.SDT,\n"
+                + "		HOADON.TenKH,\n"
                 + "		HOADON.MaVocher,\n"
                 + "		HOADON.ThoiGian,\n"
                 + "		HOADON.GhiChu,\n"
@@ -77,6 +80,8 @@ public class hoaDonDAO implements IHDRepo {
                 + "	 GROUP BY 	\n"
                 + "		HOADON.ID,\n"
                 + "		HOADON.ID_NV,\n"
+                + "		HOADON.SDT,\n"
+                + "		HOADON.TenKH,\n"
                 + "		HOADON.MaVocher,\n"
                 + "		HOADON.ThoiGian,\n"
                 + "		HOADON.GhiChu,\n"
@@ -88,6 +93,8 @@ public class hoaDonDAO implements IHDRepo {
         return selectBySQL("select \n"
                 + "		HOADON.ID,\n"
                 + "		HOADON.ID_NV,\n"
+                + "		HOADON.SDT,\n"
+                + "		HOADON.TenKH,\n"
                 + "		HOADON.MaVocher,\n"
                 + "		HOADON.ThoiGian,\n"
                 + "		HOADON.GhiChu,\n"
@@ -101,6 +108,8 @@ public class hoaDonDAO implements IHDRepo {
                 + "	 GROUP BY 	\n"
                 + "		HOADON.ID,\n"
                 + "		HOADON.ID_NV,\n"
+                + "		HOADON.SDT,\n"
+                + "		HOADON.TenKH,\n"
                 + "		HOADON.MaVocher,\n"
                 + "		HOADON.ThoiGian,\n"
                 + "		HOADON.GhiChu,\n"
@@ -112,6 +121,8 @@ public class hoaDonDAO implements IHDRepo {
         return selectBySQL("select \n"
                 + "		HOADON.ID,\n"
                 + "		HOADON.ID_NV,\n"
+                + "		HOADON.SDT,\n"
+                + "		HOADON.TenKH,\n"
                 + "		HOADON.MaVocher,\n"
                 + "		HOADON.ThoiGian,\n"
                 + "		HOADON.GhiChu,\n"
@@ -125,6 +136,8 @@ public class hoaDonDAO implements IHDRepo {
                 + "	 GROUP BY 	\n"
                 + "		HOADON.ID,\n"
                 + "		HOADON.ID_NV,\n"
+                + "		HOADON.SDT,\n"
+                + "		HOADON.TenKH,\n"
                 + "		HOADON.MaVocher,\n"
                 + "		HOADON.ThoiGian,\n"
                 + "		HOADON.GhiChu,\n"
@@ -137,6 +150,8 @@ public class hoaDonDAO implements IHDRepo {
         return selectBySQL("select \n"
                 + "		HOADON.ID,\n"
                 + "		HOADON.ID_NV,\n"
+                + "		HOADON.SDT,\n"
+                + "		HOADON.TenKH,\n"
                 + "		HOADON.MaVocher,\n"
                 + "		HOADON.ThoiGian,\n"
                 + "		HOADON.GhiChu,\n"
@@ -150,6 +165,8 @@ public class hoaDonDAO implements IHDRepo {
                 + "	 GROUP BY 	\n"
                 + "		HOADON.ID,\n"
                 + "		HOADON.ID_NV,\n"
+                + "		HOADON.SDT,\n"
+                + "		HOADON.TenKH,\n"
                 + "		HOADON.MaVocher,\n"
                 + "		HOADON.ThoiGian,\n"
                 + "		HOADON.GhiChu,\n"
@@ -167,6 +184,8 @@ public class hoaDonDAO implements IHDRepo {
                 hoadon hd = new hoadon();
                 hd.setId(rs.getInt("ID"));
                 hd.setIdnv(rs.getInt("ID_NV"));
+                hd.setSdt(rs.getString("SDT"));
+                hd.setTenkh(rs.getString("TenKH"));
                 hd.setMavocher(rs.getString("MaVocher"));
                 hd.setThoigian(rs.getString("ThoiGian"));
                 hd.setGhichu(rs.getString("GhiChu"));
@@ -252,4 +271,6 @@ public class hoaDonDAO implements IHDRepo {
     public List<ProductDetail> findByBrandProduct(String name) {
         return selectAllByProduct("select * from ProductDetails where BrandName = '" + name + "'");
     }
+    
+ 
 }

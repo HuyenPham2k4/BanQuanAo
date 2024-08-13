@@ -12,6 +12,8 @@ public class hoadon {
 
     int id;
     int idnv;
+    String sdt;
+    String tenkh;
     String mavocher;
     String thoigian;
     String ghichu;
@@ -22,9 +24,11 @@ public class hoadon {
     public hoadon() {
     }
 
-    public hoadon(int id, int idnv, String mavocher, String thoigian, String ghichu, int ttthanhtoan, int tongtien, int trangthai) {
+    public hoadon(int id, int idnv, String sdt, String tenkh, String mavocher, String thoigian, String ghichu, int ttthanhtoan, int tongtien, int trangthai) {
         this.id = id;
         this.idnv = idnv;
+        this.sdt = sdt;
+        this.tenkh = tenkh;
         this.mavocher = mavocher;
         this.thoigian = thoigian;
         this.ghichu = ghichu;
@@ -47,6 +51,22 @@ public class hoadon {
 
     public void setIdnv(int idnv) {
         this.idnv = idnv;
+    }
+
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
+    public String getTenkh() {
+        return tenkh;
+    }
+
+    public void setTenkh(String tenkh) {
+        this.tenkh = tenkh;
     }
 
     public String getMavocher() {
@@ -89,7 +109,7 @@ public class hoadon {
         this.tongtien = tongtien;
     }
 
-    public int getTrangThai() {
+    public int getTrangthai() {
         return trangthai;
     }
 
@@ -97,4 +117,5 @@ public class hoadon {
         this.trangthai = trangthai;
     }
 
+    
 }

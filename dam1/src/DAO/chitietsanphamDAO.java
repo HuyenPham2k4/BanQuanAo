@@ -78,4 +78,36 @@ public class chitietsanphamDAO {
         }
         return ctsanphams;
     }
+
+    public List<chitietsanpham> selectBySql(String sql, Object... args) {
+        List<chitietsanpham> ctsanphams = new ArrayList<>();
+        try {
+            ResultSet rs = helper.executeQuery(sql, args);
+            while (rs.next()) {
+                chitietsanpham ctsp = new chitietsanpham();
+                ctsp.setMasp(rs.getString("ID"));
+                ctsp.setTensp(rs.getString("TenSP"));
+                ctsp.setMoTa(rs.getString("MoTa"));
+                ctsp.setSoLuong(rs.getInt("SoLuong"));
+                ctsp.setGia(rs.getString("Gia"));
+                ctsanphams.add(ctsp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ctsanphams;
+    }
+
+    public chitietsanpham findByID(int id) {
+        List<chitietsanpham> lstSp = selectBySql("select * from SANPHAM where ID =" + id);
+        if (lstSp.isEmpty()) {
+            return null;
+        }
+        return lstSp.get(0);
+    }
+
+    public boolean updateSL(int soLuong, int id) {
+        helper.executeUpdate("UPDATE SANPHAM set SoLuong = " + soLuong + " where ID = " + id);
+        return true;
+    }
 }
