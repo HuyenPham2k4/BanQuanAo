@@ -30,7 +30,7 @@ public class hoaDonDAO implements IHDRepo {
     @Override
     public boolean add(hoadon hd) {
         String sql = "INSERT INTO HOADON (ID_NV, SDT, TenKH, MaVocher, ThoiGian, GhiChu, TT_ThanhToan, TongTien, TrangThai) VALUES (?, ?, ?, ?, ?, ?, 0, ?, 1)";
-        helper.executeUpdate(sql, hd.getIdnv(), hd.getMavocher(), hd.getThoigian(), hd.getGhichu(), hd.getTongtien());
+        helper.executeUpdate(sql, hd.getIdnv(),hd.getSdt(),hd.getTenkh(), hd.getMavocher(), hd.getThoigian(), hd.getGhichu(), hd.getTongtien());
         return true;
     }
     
