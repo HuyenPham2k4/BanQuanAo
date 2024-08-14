@@ -9,9 +9,9 @@ import java.sql.SQLException;
 public class JDBCHelper {
 
 //        private static String forName = "jdbc:sqlserver://localhost:1436;databaseName= thithu;encrypt=true;trustServerCertificate=true";
-        private static String url = "jdbc:sqlserver://localhost:1433;databaseName= QL_BAN_QUAN_AO;encrypt=true;trustServerCertificate=true";
+        private static String url = "jdbc:sqlserver://localhost:1436;databaseName= QL_BAN_QUAN_AO44;encrypt=true;trustServerCertificate=true";
         private static final String username = "sa";
-        private static final String password = "123456789"; // phụ thuộc tài khoản đăng nhập azude
+        private static final String password = "1Secure*Password1"; // phụ thuộc tài khoản đăng nhập azude
 
         public static PreparedStatement prepareStatement(String sql, Object... args) throws SQLException {
             Connection connection = DriverManager.getConnection(url, username, password);
