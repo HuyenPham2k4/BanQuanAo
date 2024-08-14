@@ -117,6 +117,33 @@ public class hoaDonDAO implements IHDRepo {
                 + "		HOADON.TrangThai");
     }
     
+    public List<hoadon> getAllByDathanhtoanvsDaHuy() {
+        return selectBySQL("select \n"
+                + "		HOADON.ID,\n"
+                + "		HOADON.ID_NV,\n"
+                + "		HOADON.SDT,\n"
+                + "		HOADON.TenKH,\n"
+                + "		HOADON.MaVocher,\n"
+                + "		HOADON.ThoiGian,\n"
+                + "		HOADON.GhiChu,\n"
+                + "		HOADON.TT_ThanhToan,\n"
+                + "		SUM(CTHOADON.Gia) AS TongTien,\n"
+                + "		HOADON.TrangThai\n"
+                + "	From \n"
+                + "		HOADON\n"
+                + "	LEFT JOIN CTHOADON ON HOADON.ID  = CTHOADON.ID_HD \n"
+                + "	WHERE HOADON.TrangThai IN (0, 2)\n"
+                + "	 GROUP BY 	\n"
+                + "		HOADON.ID,\n"
+                + "		HOADON.ID_NV,\n"
+                + "		HOADON.SDT,\n"
+                + "		HOADON.TenKH,\n"
+                + "		HOADON.MaVocher,\n"
+                + "		HOADON.ThoiGian,\n"
+                + "		HOADON.GhiChu,\n"
+                + "		HOADON.TT_ThanhToan,\n"
+                + "		HOADON.TrangThai");
+    }
     public List<hoadon> getAllByDathanhtoan() {
         return selectBySQL("select \n"
                 + "		HOADON.ID,\n"
@@ -132,7 +159,7 @@ public class hoaDonDAO implements IHDRepo {
                 + "	From \n"
                 + "		HOADON\n"
                 + "	LEFT JOIN CTHOADON ON HOADON.ID  = CTHOADON.ID_HD \n"
-                + "	WHERE HOADON.TrangThai =0\n"
+                + "	WHERE HOADON.TrangThai IN (0, 2)\n"
                 + "	 GROUP BY 	\n"
                 + "		HOADON.ID,\n"
                 + "		HOADON.ID_NV,\n"
@@ -213,7 +240,11 @@ public class hoaDonDAO implements IHDRepo {
     public List<hoadon> findByName(String name) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
+    public List<hoadon> findByDate(String ngaylap) {
+        return selectBySQL("SELECT * FROM HOADON WHERE CONVERT(VARCHAR, ThoiGian, 120) LIKE '%"+ngaylap+"%'");
+    }
+    
     public List<ProductDetail> selectAllByProduct(String sql, Object... args) {
         List<ProductDetail> lst = new ArrayList<>();
         try {

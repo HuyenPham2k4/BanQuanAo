@@ -90,7 +90,6 @@ public class XuatHDDialog extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         lblTongTien = new javax.swing.JLabel();
         lblKhuyenMai = new javax.swing.JLabel();
-        lblChieuKhau = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCthd = new javax.swing.JTable();
 
@@ -102,7 +101,7 @@ public class XuatHDDialog extends javax.swing.JDialog {
         jLabel1.setText("HÓA ĐƠN");
 
         lblMahd.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
-        lblMahd.setText("Mã hóa đơn\\:");
+        lblMahd.setText("Mã hóa đơn:");
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
         jLabel9.setText("Cửa hàng quần áo");
@@ -222,9 +221,6 @@ public class XuatHDDialog extends javax.swing.JDialog {
         lblKhuyenMai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblKhuyenMai.setText("Tỉ lệ khuyến mãi:");
 
-        lblChieuKhau.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblChieuKhau.setText("Chiết khấu:");
-
         tblCthd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -255,9 +251,7 @@ public class XuatHDDialog extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1119, Short.MAX_VALUE)))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblChieuKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(150, 150, 150))
         );
         jPanel2Layout.setVerticalGroup(
@@ -265,11 +259,9 @@ public class XuatHDDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(29, 29, 29)
                 .addComponent(lblKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lblChieuKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanelControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -373,7 +365,6 @@ public class XuatHDDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelHeader;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JLabel lblChieuKhau;
     private javax.swing.JLabel lblKhuyenMai;
     private javax.swing.JLabel lblMahd;
     private javax.swing.JLabel lblNhanVien;

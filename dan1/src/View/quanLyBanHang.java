@@ -84,9 +84,24 @@ public class quanLyBanHang extends javax.swing.JPanel {
 //        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
+//    void fill() {
+//        List<hoadon> lhd = hdDAO.getAll();
+//        fillDataTableHoaDon(lhd);
+//    }
     void fill() {
-        List<hoadon> lhd = hdDAO.getAll();
-        fillDataTableHoaDon(lhd);
+        List<hoadon> lst = hdDAO.getAll();
+        fillDataTableHoaDon(lst);
+
+        // Kiểm tra xem bảng có dữ liệu hay không
+        int rowCount = tblHoaDon_HoaDon.getRowCount();
+        if (rowCount > 0) {
+            // Chọn dòng cuối cùng
+            tblHoaDon_HoaDon.setRowSelectionInterval(rowCount - 1, rowCount - 1);
+
+            // Lấy thông tin hóa đơn cuối cùng và hiển thị
+            int id_HD = Integer.parseInt(tblHoaDon_HoaDon.getValueAt(rowCount - 1, 0).toString());
+            fillDataTableChiTietHoaDon(id_HD);
+        }
     }
 
     /**
@@ -155,6 +170,7 @@ public class quanLyBanHang extends javax.swing.JPanel {
         cbbColor = new javax.swing.JComboBox<>();
         lblSoLuong_CTPM8 = new javax.swing.JLabel();
         txtRowHD = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         Ao.setText("jLabel1");
 
@@ -700,7 +716,9 @@ public class quanLyBanHang extends javax.swing.JPanel {
                                 .addComponent(lblSoLuong_CTPM4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtIIDCTHD, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(209, 209, 209)
+                                .addGap(59, 59, 59)
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
                                 .addComponent(jLabel14)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtSoLuong_ChiTietHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -739,7 +757,8 @@ public class quanLyBanHang extends javax.swing.JPanel {
                         .addComponent(btnXoaSp_CTHD))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtIIDCTHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblSoLuong_CTPM4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblSoLuong_CTPM4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
@@ -1118,17 +1137,29 @@ public class quanLyBanHang extends javax.swing.JPanel {
 
     private void btnHuyHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyHDActionPerformed
         // TODO add your handling code here:
-        hdDAO.huyHD(Integer.valueOf(txtMa_HD.getText()));
+
+        int idHD = Integer.parseInt(txtMa_HD.getText());
+        List<chitiethoadon> lstCthd = cthdDAO.findByIDHD(idHD);
+        for (chitiethoadon x : lstCthd) {
+            int idSP = x.getIdctsp();
+            chitietsanpham ctsp = ctspDao.findByID(idSP);
+            int slBandau = ctsp.getSoLuong();
+            int slTraLai = x.getSoluong();
+            int slTong = slBandau + slTraLai;
+            ctspDao.updateSL(slTong, idSP);
+            fillDataTableSanPham();
+        }
+        hdDAO.huyHD(idHD);
         fill();
 
     }//GEN-LAST:event_btnHuyHDActionPerformed
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
-        hdDAO.thanhtoan(Integer.valueOf(txtMa_HD.getText()));
+        hdDAO.thanhtoan(Integer.parseInt(txtMa_HD.getText()));
         fill();
 
-        int id_hd = Integer.valueOf(txtMa_HD.getText());
+        int id_hd = Integer.parseInt(txtMa_HD.getText());
         XuatHDDialog hd = new XuatHDDialog(mainFrame, true, id_hd);
         hd.setVisible(true);
     }//GEN-LAST:event_btnThanhToanActionPerformed
@@ -1305,6 +1336,7 @@ public class quanLyBanHang extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbbDanhMuc;
     private javax.swing.JComboBox<String> cbbSize;
     private javax.swing.JComboBox<String> cbbTH;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
