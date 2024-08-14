@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class JDBCHelper {
 
 //        private static String forName = "jdbc:sqlserver://localhost:1436;databaseName= thithu;encrypt=true;trustServerCertificate=true";
-        private static String url = "jdbc:sqlserver://localhost:1436;databaseName= QL_BAN_QUAN_AO9;encrypt=true;trustServerCertificate=true";
+        private static String url = "jdbc:sqlserver://localhost:1436;databaseName= QL_BAN_QUAN_AO44;encrypt=true;trustServerCertificate=true";
         private static final String username = "sa";
         private static final String password = "1Secure*Password1"; // phụ thuộc tài khoản đăng nhập azude
 
