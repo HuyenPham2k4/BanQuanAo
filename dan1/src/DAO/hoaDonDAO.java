@@ -26,182 +26,196 @@ public class hoaDonDAO implements IHDRepo {
     public hoaDonDAO() {
         helper = new JDBCHelper();
     }
-
+    // thêm
     @Override
     public boolean add(hoadon hd) {
-        String sql = "INSERT INTO HOADON (ID_NV, SDT, TenKH, MaVocher, ThoiGian, GhiChu, TT_ThanhToan, TongTien, TrangThai) VALUES (?, ?, ?, ?, ?, ?, 0, ?, 1)";
-        helper.executeUpdate(sql, hd.getIdnv(),hd.getSdt(),hd.getTenkh(), hd.getMavocher(), hd.getThoigian(), hd.getGhichu(), hd.getTongtien());
+        String sql = "INSERT INTO HOADON (ID_NV, ID_KH, MaVocher, ThoiGian, GhiChu, TT_ThanhToan, TongTien, TrangThai) VALUES (?, ?, ?, ?, ?, 0, ?, 1)";
+        helper.executeUpdate(sql, hd.getIdnv(), hd.getId_kh(), hd.getMavocher(), hd.getThoigian(), hd.getGhichu(), hd.getTongtien());
         return true;
     }
-    
-    public boolean thanhtoan(int id){
+    // thanh toán
+    public boolean thanhtoan(int id) {
         String sql = "UPDATE HOADON SET TrangThai = 0 WHERE ID = ?";
         helper.executeUpdate(sql, id);
         return true;
     }
-    
-    public boolean huyHD(int id){
+    // huỷ
+    public boolean huyHD(int id) {
         String sql = "UPDATE HOADON SET TrangThai = 2 WHERE ID = ?";
         helper.executeUpdate(sql, id);
         return true;
     }
-    
+    // sửa hoá đơn
     @Override
     public boolean update(hoadon hd) {
-        String sql = "UPDATE HOADON SET ID_NV = ?,SDT=?, TenKH = ? , MaVocher = ?, ThoiGian = ?, GhiChu = ?, TT_ThanhToan = ?, TongTien = ?, TrangThai = 1 WHERE ID = ?";
-        helper.executeUpdate(sql, hd.getIdnv(),hd.getSdt(), hd.getTenkh(), hd.getMavocher(), hd.getThoigian(), hd.getGhichu(), hd.getTtthanhtoan(), hd.getTongtien(),  hd.getId());
+        String sql = "UPDATE HOADON SET ID_NV = ?,ID_KH=? , MaVocher = ?,  GhiChu = ?, TT_ThanhToan = ?, TongTien = ?, TrangThai = 1 WHERE ID = ?";
+        helper.executeUpdate(sql, hd.getIdnv(), hd.getId_kh(), hd.getMavocher(),  hd.getGhichu(), hd.getTtthanhtoan(), hd.getTongtien(), hd.getId());
         return true;
     }
-
+    //xoá
     @Override
     public boolean delete(hoadon hd) {
         String sql = "DELETE FROM HOADON WHERE ID = ?";
         helper.executeUpdate(sql, hd.getId());
         return true;
     }
-
+    // lấy all nhưng phải inner join và left join với bảng khách hàng và cthd
     @Override
     public List<hoadon> getAll() {
-        return selectBySQL("select \n"
-                + "		HOADON.ID,\n"
-                + "		HOADON.ID_NV,\n"
-                + "		HOADON.SDT,\n"
-                + "		HOADON.TenKH,\n"
-                + "		HOADON.MaVocher,\n"
-                + "		HOADON.ThoiGian,\n"
-                + "		HOADON.GhiChu,\n"
-                + "		HOADON.TT_ThanhToan,\n"
-                + "		SUM(CTHOADON.Gia) AS TongTien,\n"
-                + "		HOADON.TrangThai\n"
-                + "	From \n"
-                + "		HOADON\n"
-                + "	LEFT JOIN CTHOADON ON HOADON.ID  = CTHOADON.ID_HD \n"
-                + "	WHERE HOADON.TrangThai =1\n"
-                + "	 GROUP BY 	\n"
-                + "		HOADON.ID,\n"
-                + "		HOADON.ID_NV,\n"
-                + "		HOADON.SDT,\n"
-                + "		HOADON.TenKH,\n"
-                + "		HOADON.MaVocher,\n"
-                + "		HOADON.ThoiGian,\n"
-                + "		HOADON.GhiChu,\n"
-                + "		HOADON.TT_ThanhToan,\n"
-                + "		HOADON.TrangThai");
+        return selectBySQL("SELECT \n"
+                + "    HOADON.ID, \n"
+                + "    HOADON.ID_NV, \n"
+                + "    HOADON.ID_KH, \n"
+                + "    KHACHHANG.TenKhachHang,\n"
+                + "    KHACHHANG.SoDienThoai, \n"
+                + "    HOADON.MaVocher, \n"
+                + "    HOADON.ThoiGian, \n"
+                + "    HOADON.GhiChu, \n"
+                + "    HOADON.TT_ThanhToan, \n"
+                + "    SUM(CTHOADON.Gia) AS TongTien, \n"
+                + "    HOADON.TrangThai\n"
+                + "FROM \n"
+                + "    HOADON \n"
+                + "    LEFT JOIN CTHOADON ON HOADON.ID = CTHOADON.ID_HD\n"
+                + "    INNER JOIN KHACHHANG ON HOADON.ID_KH = KHACHHANG.ID\n"
+                + "WHERE \n"
+                + "    HOADON.TrangThai = 1\n"
+                + "GROUP BY 	 		\n"
+                + "    HOADON.ID, 		\n"
+                + "    HOADON.ID_NV, 		\n"
+                + "    HOADON.ID_KH, \n"
+                + "    KHACHHANG.TenKhachHang,\n"
+                + "    KHACHHANG.SoDienThoai, 		\n"
+                + "    HOADON.MaVocher, 		\n"
+                + "    HOADON.ThoiGian, 		\n"
+                + "    HOADON.GhiChu, 		\n"
+                + "    HOADON.TT_ThanhToan, 		\n"
+                + "    HOADON.TrangThai;");
     }
-    
+    // tim theo id van phai join
     public List<hoadon> getHDByID(int id) {
-        return selectBySQL("select \n"
-                + "		HOADON.ID,\n"
-                + "		HOADON.ID_NV,\n"
-                + "		HOADON.SDT,\n"
-                + "		HOADON.TenKH,\n"
-                + "		HOADON.MaVocher,\n"
-                + "		HOADON.ThoiGian,\n"
-                + "		HOADON.GhiChu,\n"
-                + "		HOADON.TT_ThanhToan,\n"
-                + "		SUM(CTHOADON.Gia) AS TongTien,\n"
-                + "		HOADON.TrangThai\n"
-                + "	From \n"
-                + "		HOADON\n"
-                + "	LEFT JOIN CTHOADON ON HOADON.ID  = CTHOADON.ID_HD \n"
-                + "	WHERE HOADON.ID = "+id+"\n"
-                + "	 GROUP BY 	\n"
-                + "		HOADON.ID,\n"
-                + "		HOADON.ID_NV,\n"
-                + "		HOADON.SDT,\n"
-                + "		HOADON.TenKH,\n"
-                + "		HOADON.MaVocher,\n"
-                + "		HOADON.ThoiGian,\n"
-                + "		HOADON.GhiChu,\n"
-                + "		HOADON.TT_ThanhToan,\n"
-                + "		HOADON.TrangThai");
+        return selectBySQL("SELECT \n"
+                + "    HOADON.ID, \n"
+                + "    HOADON.ID_NV, \n"
+                + "    HOADON.ID_KH, \n"
+                + "    KHACHHANG.TenKhachHang,\n"
+                + "    KHACHHANG.SoDienThoai, \n"
+                + "    HOADON.MaVocher, \n"
+                + "    HOADON.ThoiGian, \n"
+                + "    HOADON.GhiChu, \n"
+                + "    HOADON.TT_ThanhToan, \n"
+                + "    SUM(CTHOADON.Gia) AS TongTien, \n"
+                + "    HOADON.TrangThai\n"
+                + "FROM \n"
+                + "    HOADON \n"
+                + "    LEFT JOIN CTHOADON ON HOADON.ID = CTHOADON.ID_HD\n"
+                + "    INNER JOIN KHACHHANG ON HOADON.ID_KH = KHACHHANG.ID\n"
+                + "WHERE \n"
+                + "    HOADON.ID = " + id + "\n"
+                + "GROUP BY 	 		\n"
+                + "    HOADON.ID, 		\n"
+                + "    HOADON.ID_NV, 		\n"
+                + "    HOADON.ID_KH, \n"
+                + "    KHACHHANG.TenKhachHang,\n"
+                + "    KHACHHANG.SoDienThoai, 		\n"
+                + "    HOADON.MaVocher, 		\n"
+                + "    HOADON.ThoiGian, 		\n"
+                + "    HOADON.GhiChu, 		\n"
+                + "    HOADON.TT_ThanhToan, 		\n"
+                + "    HOADON.TrangThai;");
     }
-    
+
     public List<hoadon> getAllByDathanhtoanvsDaHuy() {
-        return selectBySQL("select \n"
-                + "		HOADON.ID,\n"
-                + "		HOADON.ID_NV,\n"
-                + "		HOADON.SDT,\n"
-                + "		HOADON.TenKH,\n"
-                + "		HOADON.MaVocher,\n"
-                + "		HOADON.ThoiGian,\n"
-                + "		HOADON.GhiChu,\n"
-                + "		HOADON.TT_ThanhToan,\n"
-                + "		SUM(CTHOADON.Gia) AS TongTien,\n"
-                + "		HOADON.TrangThai\n"
-                + "	From \n"
-                + "		HOADON\n"
-                + "	LEFT JOIN CTHOADON ON HOADON.ID  = CTHOADON.ID_HD \n"
-                + "	WHERE HOADON.TrangThai IN (0, 2)\n"
-                + "	 GROUP BY 	\n"
-                + "		HOADON.ID,\n"
-                + "		HOADON.ID_NV,\n"
-                + "		HOADON.SDT,\n"
-                + "		HOADON.TenKH,\n"
-                + "		HOADON.MaVocher,\n"
-                + "		HOADON.ThoiGian,\n"
-                + "		HOADON.GhiChu,\n"
-                + "		HOADON.TT_ThanhToan,\n"
-                + "		HOADON.TrangThai");
+        return selectByHoaDon("SELECT \n"
+                + "    HOADON.ID, \n"
+                + "    HOADON.ID_NV, \n"
+                + "    HOADON.ID_KH, \n"
+                + "    HOADON.MaVocher, \n"
+                + "    HOADON.ThoiGian, \n"
+                + "    HOADON.GhiChu, \n"
+                + "    HOADON.TT_ThanhToan, \n"
+                + "    SUM(CTHOADON.Gia) AS TongTien, \n"
+                + "    HOADON.TrangThai\n"
+                + "FROM \n"
+                + "    HOADON \n"
+                + "    LEFT JOIN CTHOADON ON HOADON.ID = CTHOADON.ID_HD\n"
+                + "WHERE \n"
+                + "    HOADON.TrangThai IN (0,2)\n"
+                + "GROUP BY 	 		\n"
+                + "    HOADON.ID, 		\n"
+                + "    HOADON.ID_NV, 		\n"
+                + "    HOADON.ID_KH,    	\n"
+                + "    HOADON.MaVocher, 		\n"
+                + "    HOADON.ThoiGian, 		\n"
+                + "    HOADON.GhiChu, 		\n"
+                + "    HOADON.TT_ThanhToan, 		\n"
+                + "    HOADON.TrangThai;");
     }
+
     public List<hoadon> getAllByDathanhtoan() {
-        return selectBySQL("select \n"
-                + "		HOADON.ID,\n"
-                + "		HOADON.ID_NV,\n"
-                + "		HOADON.SDT,\n"
-                + "		HOADON.TenKH,\n"
-                + "		HOADON.MaVocher,\n"
-                + "		HOADON.ThoiGian,\n"
-                + "		HOADON.GhiChu,\n"
-                + "		HOADON.TT_ThanhToan,\n"
-                + "		SUM(CTHOADON.Gia) AS TongTien,\n"
-                + "		HOADON.TrangThai\n"
-                + "	From \n"
-                + "		HOADON\n"
-                + "	LEFT JOIN CTHOADON ON HOADON.ID  = CTHOADON.ID_HD \n"
-                + "	WHERE HOADON.TrangThai IN (0, 2)\n"
-                + "	 GROUP BY 	\n"
-                + "		HOADON.ID,\n"
-                + "		HOADON.ID_NV,\n"
-                + "		HOADON.SDT,\n"
-                + "		HOADON.TenKH,\n"
-                + "		HOADON.MaVocher,\n"
-                + "		HOADON.ThoiGian,\n"
-                + "		HOADON.GhiChu,\n"
-                + "		HOADON.TT_ThanhToan,\n"
-                + "		HOADON.TrangThai");
+        return selectBySQL("SELECT \n"
+                + "    HOADON.ID, \n"
+                + "    HOADON.ID_NV, \n"
+                + "    HOADON.ID_KH, \n"
+                + "    KHACHHANG.TenKhachHang,\n"
+                + "    KHACHHANG.SoDienThoai, \n"
+                + "    HOADON.MaVocher, \n"
+                + "    HOADON.ThoiGian, \n"
+                + "    HOADON.GhiChu, \n"
+                + "    HOADON.TT_ThanhToan, \n"
+                + "    SUM(CTHOADON.Gia) AS TongTien, \n"
+                + "    HOADON.TrangThai\n"
+                + "FROM \n"
+                + "    HOADON \n"
+                + "    LEFT JOIN CTHOADON ON HOADON.ID = CTHOADON.ID_HD\n"
+                + "    INNER JOIN KHACHHANG ON HOADON.ID_KH = KHACHHANG.ID\n"
+                + "WHERE \n"
+                + "    HOADON.TrangThai = 0\n"
+                + "GROUP BY 	 		\n"
+                + "    HOADON.ID, 		\n"
+                + "    HOADON.ID_NV, 		\n"
+                + "    HOADON.ID_KH, \n"
+                + "    KHACHHANG.TenKhachHang,\n"
+                + "    KHACHHANG.SoDienThoai, 		\n"
+                + "    HOADON.MaVocher, 		\n"
+                + "    HOADON.ThoiGian, 		\n"
+                + "    HOADON.GhiChu, 		\n"
+                + "    HOADON.TT_ThanhToan, 		\n"
+                + "    HOADON.TrangThai;");
     }
-    
-    
+
     public List<hoadon> getAllByDaHuy() {
-        return selectBySQL("select \n"
-                + "		HOADON.ID,\n"
-                + "		HOADON.ID_NV,\n"
-                + "		HOADON.SDT,\n"
-                + "		HOADON.TenKH,\n"
-                + "		HOADON.MaVocher,\n"
-                + "		HOADON.ThoiGian,\n"
-                + "		HOADON.GhiChu,\n"
-                + "		HOADON.TT_ThanhToan,\n"
-                + "		SUM(CTHOADON.Gia) AS TongTien,\n"
-                + "		HOADON.TrangThai\n"
-                + "	From \n"
-                + "		HOADON\n"
-                + "	LEFT JOIN CTHOADON ON HOADON.ID  = CTHOADON.ID_HD \n"
-                + "	WHERE HOADON.TrangThai = 2\n"
-                + "	 GROUP BY 	\n"
-                + "		HOADON.ID,\n"
-                + "		HOADON.ID_NV,\n"
-                + "		HOADON.SDT,\n"
-                + "		HOADON.TenKH,\n"
-                + "		HOADON.MaVocher,\n"
-                + "		HOADON.ThoiGian,\n"
-                + "		HOADON.GhiChu,\n"
-                + "		HOADON.TT_ThanhToan,\n"
-                + "		HOADON.TrangThai");
+        return selectBySQL("SELECT \n"
+                + "    HOADON.ID, \n"
+                + "    HOADON.ID_NV, \n"
+                + "    HOADON.ID_KH, \n"
+                + "    KHACHHANG.TenKhachHang,\n"
+                + "    KHACHHANG.SoDienThoai, \n"
+                + "    HOADON.MaVocher, \n"
+                + "    HOADON.ThoiGian, \n"
+                + "    HOADON.GhiChu, \n"
+                + "    HOADON.TT_ThanhToan, \n"
+                + "    SUM(CTHOADON.Gia) AS TongTien, \n"
+                + "    HOADON.TrangThai\n"
+                + "FROM \n"
+                + "    HOADON \n"
+                + "    LEFT JOIN CTHOADON ON HOADON.ID = CTHOADON.ID_HD\n"
+                + "    INNER JOIN KHACHHANG ON HOADON.ID_KH = KHACHHANG.ID\n"
+                + "WHERE \n"
+                + "    HOADON.TrangThai = 2\n"
+                + "GROUP BY 	 		\n"
+                + "    HOADON.ID, 		\n"
+                + "    HOADON.ID_NV, 		\n"
+                + "    HOADON.ID_KH, \n"
+                + "    KHACHHANG.TenKhachHang,\n"
+                + "    KHACHHANG.SoDienThoai, 		\n"
+                + "    HOADON.MaVocher, 		\n"
+                + "    HOADON.ThoiGian, 		\n"
+                + "    HOADON.GhiChu, 		\n"
+                + "    HOADON.TT_ThanhToan, 		\n"
+                + "    HOADON.TrangThai;");
     }
-    
-    
+
     @Override
     public List<hoadon> selectBySQL(String sql, Object... args) {
         List<hoadon> lstHD = new ArrayList<>();
@@ -209,16 +223,40 @@ public class hoaDonDAO implements IHDRepo {
             ResultSet rs = helper.executeQuery(sql, args);
             while (rs.next()) {
                 hoadon hd = new hoadon();
-                hd.setId(rs.getInt("ID"));
-                hd.setIdnv(rs.getInt("ID_NV"));
-                hd.setSdt(rs.getString("SDT"));
-                hd.setTenkh(rs.getString("TenKH"));
-                hd.setMavocher(rs.getString("MaVocher"));
-                hd.setThoigian(rs.getString("ThoiGian"));
-                hd.setGhichu(rs.getString("GhiChu"));
-                hd.setTtthanhtoan(rs.getInt("TT_ThanhToan"));
-                hd.setTongtien(rs.getInt("TongTien"));
-                hd.setTrangthai(rs.getInt("TrangThai"));
+                hd.setId(rs.getInt("ID"));//id hd
+                hd.setIdnv(rs.getInt("ID_NV"));// id nhan vien
+                hd.setId_kh(rs.getInt("ID_KH"));// id khach hang 
+                hd.setSdt(rs.getString("SoDienThoai"));// sdt
+                hd.setTenkh(rs.getString("TenKhachHang")); // ten kh 
+                hd.setMavocher(rs.getString("MaVocher")); // ma voucher
+                hd.setThoigian(rs.getString("ThoiGian")); // thoi gian tao hd
+                hd.setGhichu(rs.getString("GhiChu"));// ghi chu 
+                hd.setTtthanhtoan(rs.getInt("TT_ThanhToan"));// tt thanh toan
+                hd.setTongtien(rs.getInt("TongTien"));// tong tien san pham
+                hd.setTrangthai(rs.getInt("TrangThai"));// trang thai
+                lstHD.add(hd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHD;
+    }
+    
+    public List<hoadon> selectByHoaDon(String sql, Object... args) {
+        List<hoadon> lstHD = new ArrayList<>();
+        try {
+            ResultSet rs = helper.executeQuery(sql, args);
+            while (rs.next()) {
+                hoadon hd = new hoadon();
+                hd.setId(rs.getInt("ID"));//id hd
+                hd.setIdnv(rs.getInt("ID_NV"));// id nhan vien
+                hd.setId_kh(rs.getInt("ID_KH"));// id khach hang 
+                hd.setMavocher(rs.getString("MaVocher")); // ma voucher
+                hd.setThoigian(rs.getString("ThoiGian")); // thoi gian tao hd
+                hd.setGhichu(rs.getString("GhiChu"));// ghi chu 
+                hd.setTtthanhtoan(rs.getInt("TT_ThanhToan"));// tt thanh toan
+                hd.setTongtien(rs.getInt("TongTien"));// tong tien san pham
+                hd.setTrangthai(rs.getInt("TrangThai"));// trang thai
                 lstHD.add(hd);
             }
         } catch (Exception e) {
@@ -229,22 +267,47 @@ public class hoaDonDAO implements IHDRepo {
 
     @Override
     public hoadon findByID(int id) {
-        List<hoadon> lsthd = selectBySQL("SELECT * FROM HOADON WHERE ID = ?", id);
-        if(lsthd.isEmpty()){
+        List<hoadon> lsthd = selectBySQL("SELECT \n"
+                + "    HOADON.ID, \n"
+                + "    HOADON.ID_NV, \n"
+                + "    HOADON.ID_KH, \n"
+                + "    KHACHHANG.TenKhachHang,\n"
+                + "    KHACHHANG.SoDienThoai, \n"
+                + "    HOADON.MaVocher, \n"
+                + "    HOADON.ThoiGian, \n"
+                + "    HOADON.GhiChu, \n"
+                + "    HOADON.TT_ThanhToan, \n"
+                + "    SUM(CTHOADON.Gia) AS TongTien, \n"
+                + "    HOADON.TrangThai\n"
+                + "FROM \n"
+                + "    HOADON \n"
+                + "    LEFT JOIN CTHOADON ON HOADON.ID = CTHOADON.ID_HD\n"
+                + "    INNER JOIN KHACHHANG ON HOADON.ID_KH = KHACHHANG.ID\n"
+                + "WHERE \n"
+                + "    HOADON.ID = "+id+"\n"
+                + "GROUP BY 	 		\n"
+                + "    HOADON.ID, 		\n"
+                + "    HOADON.ID_NV, 		\n"
+                + "    HOADON.ID_KH, \n"
+                + "    KHACHHANG.TenKhachHang,\n"
+                + "    KHACHHANG.SoDienThoai, 		\n"
+                + "    HOADON.MaVocher, 		\n"
+                + "    HOADON.ThoiGian, 		\n"
+                + "    HOADON.GhiChu, 		\n"
+                + "    HOADON.TT_ThanhToan, 		\n"
+                + "    HOADON.TrangThai;");
+        if (lsthd.isEmpty()) {
             return null;
         }
+        // lấy phần tử đầu tiên của list
         return lsthd.get(0);
     }
 
-    @Override
-    public List<hoadon> findByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
     
     public List<hoadon> findByDate(String ngaylap) {
-        return selectBySQL("SELECT * FROM HOADON WHERE CONVERT(VARCHAR, ThoiGian, 120) LIKE '%"+ngaylap+"%'");
+        return selectByHoaDon("SELECT * FROM HOADON WHERE CONVERT(VARCHAR, ThoiGian, 120) LIKE '%" + ngaylap + "%'");
     }
-    
+
     public List<ProductDetail> selectAllByProduct(String sql, Object... args) {
         List<ProductDetail> lst = new ArrayList<>();
         try {
@@ -271,7 +334,7 @@ public class hoaDonDAO implements IHDRepo {
         return lst;
     }
 
-    public ProductDetail fillSLvsGiaProduct(int id) {
+    public ProductDetail findProductByID(int id) {
         List<ProductDetail> detail = selectAllByProduct("select * from ProductDetails where ProductID = " + id + " AND ProductStatus = 1");
         if (detail.isEmpty()) {
             return null;
@@ -288,20 +351,19 @@ public class hoaDonDAO implements IHDRepo {
     }
 
     public List<ProductDetail> findByCategory(String name) {
-        return selectAllByProduct("select * from ProductDetails where CategoryName = '" + name + "'");
+        return selectAllByProduct("select * from ProductDetails where CategoryName LIKE N'%" + name + "%'");
     }
 
     public List<ProductDetail> findByColorProduct(String name) {
-        return selectAllByProduct("select * from ProductDetails where ColorNames = '" + name + "'");
+        return selectAllByProduct("select * from ProductDetails where ColorNames LIKE N'%" + name + "%'");
     }
 
     public List<ProductDetail> findBySizeProduct(String name) {
-        return selectAllByProduct("select * from ProductDetails where SizeNames = '" + name + "'");
+        return selectAllByProduct("select * from ProductDetails where SizeNames LIKE N'%" + name + "%'");
     }
 
     public List<ProductDetail> findByBrandProduct(String name) {
-        return selectAllByProduct("select * from ProductDetails where BrandName = '" + name + "'");
+        return selectAllByProduct("select * from ProductDetails where BrandName LIKE N'%" + name + "%'");
     }
-    
- 
+
 }

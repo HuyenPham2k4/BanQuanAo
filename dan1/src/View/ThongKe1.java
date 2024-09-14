@@ -55,6 +55,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         pnlSPColumnChartDraw();
         pnlDTLColumnChartDraw();
         AnhOfferSP();
+        lblIMGBanChay.setSize(316, 316);
     }
     void AnhOfferSP(){
         Object[] banChay = new thongkeDAO().getSPTrending();
@@ -63,6 +64,7 @@ public class ThongKe1 extends javax.swing.JDialog {
         ThongKeWidget.ImgIcon(lblIMGBanChay, banChay[1].toString());
         lblNameBanKem.setText(banKem[0].toString());
         ThongKeWidget.ImgIcon(lblIMGBanKem, banKem[1].toString());
+        
     }
     void pnlDTLColumnChartDraw(){
         String category = "";

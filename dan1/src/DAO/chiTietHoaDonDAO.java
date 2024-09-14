@@ -39,8 +39,8 @@ public class chiTietHoaDonDAO implements ICTHDRepo {
 
     @Override
     public boolean update(chitiethoadon op) {
-        String sql = "UPDATE CTHOADON SET ID_HD = ?, ID_CTSP = ?, SoLuong = ?, Gia = ?, TrangThai = ? WHERE ID = ?";
-        helper.executeUpdate(sql, op.getIdhd(), op.getIdctsp(), op.getSoluong(), op.getGia(), op.isTrangthai(), op.getId());
+        String sql = "UPDATE CTHOADON SET ID_HD = ?, ID_CTSP = ?, SoLuong = ?, Gia = ?, TrangThai = 1 WHERE ID = ?";
+        helper.executeUpdate(sql, op.getIdhd(), op.getIdctsp(), op.getSoluong(), op.getGia(),  op.getId());
         return true;
 
     }

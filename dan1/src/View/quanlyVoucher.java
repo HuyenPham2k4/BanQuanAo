@@ -136,6 +136,11 @@ public class quanlyVoucher extends javax.swing.JPanel {
                 jTextField6ActionPerformed(evt);
             }
         });
+        jTextField6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField6KeyReleased(evt);
+            }
+        });
 
         jButton5.setText("Tìm kiếm");
 
@@ -501,6 +506,25 @@ public class quanlyVoucher extends javax.swing.JPanel {
             }
         }   // TODO add your handling code here:
     }//GEN-LAST:event_tblThongTinMouseClicked
+
+    private void jTextField6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyReleased
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tblThongTin.getModel();
+        
+        String timKiem = jTextField6.getText().trim();
+        
+        List<voucher> vcList = new voucherDAO().findByIDVoucher(timKiem);
+        
+        model = (DefaultTableModel) tblThongTin.getModel();
+        model.setRowCount(0);
+
+        for (voucher vd : vcList) {
+            Object[] row = {vd.getMavoucher(), vd.getPhanTramGiam(), vd.getNgaybatdau(), vd.getNgayketthuc(), vd.isTrangthai()};
+            model.addRow(row);
+        }
+
+
+    }//GEN-LAST:event_jTextField6KeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -71,6 +71,10 @@ public class voucherDAO implements IVRepo {
         return list.isEmpty() ? null : list.get(0);
     }
     
+     public List<voucher> findByIDVoucher(String mavoucher) {
+        return selectBySQL("SELECT * FROM VOUCHER WHERE MaVocher LIKE N'%"+ mavoucher+"%'");
+      
+    }
     @Override
     public List<voucher> findByDateRange(int startDate, int endDate) {
         return selectBySQL("SELECT * FROM VOUCHER WHERE NgayBatDau >= ? AND NgayKetThuc <= ?", startDate, endDate);

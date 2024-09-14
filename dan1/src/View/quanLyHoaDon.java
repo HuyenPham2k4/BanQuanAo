@@ -85,11 +85,18 @@ public class quanLyHoaDon extends javax.swing.JPanel {
         model = (DefaultTableModel) tblHoaDon.getModel();
         model.setRowCount(0);
         for (hoadon hd : lhd) {
-            Object[] rowData = new Object[4];
+            Object[] rowData = new Object[5];
             rowData[0] = hd.getId();
             rowData[1] = hd.getThoigian();
             rowData[2] = hd.getTongtien();
             rowData[3] = hd.getTtthanhtoan();
+            if(hd.getTrangthai() == 2){
+                rowData[4] = "Đã huỷ";
+            }
+            else if(hd.getTrangthai() == 0){
+                rowData[4] = "Đã thanh toán";
+            }
+            
             model.addRow(rowData);
         }
     }
@@ -121,13 +128,13 @@ public class quanLyHoaDon extends javax.swing.JPanel {
 
         tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Ngày lập", "Tổng tiền", "TT_ Thanh Toán"
+                "ID", "Ngày lập", "Tổng tiền", "TT_ Thanh Toán", "Trạng thái"
             }
         ));
         tblHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {

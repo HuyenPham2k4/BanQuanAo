@@ -19,7 +19,6 @@ public interface IHDRepo {
     public List<hoadon> getAll();
     public List<hoadon> selectBySQL(String sql, Object... args);
     public hoadon findByID(int id);
-    public List<hoadon> findByName(String name);
 }
 
 

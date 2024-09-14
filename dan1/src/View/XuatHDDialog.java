@@ -42,12 +42,12 @@ public class XuatHDDialog extends javax.swing.JDialog {
         lblNhanVien.setText("Nhân viên: "+Auth.user.getHoten());
         lblThoiGian.setText("Thời gian: "+Ivoice.hd.getThoigian());
         lblKhuyenMai.setText("Tỉ lệ khuyến mãi: "+String.valueOf(VoucherSupport.vch.getPhanTramGiam())+"%");
-        lblTongTien.setText("Tổng tiền: "+String.valueOf(Ivoice.hd.getTtthanhtoan())+" VND");
+        lblTongTien.setText("Cần thanh toán: "+String.valueOf(Ivoice.hd.getTtthanhtoan())+" VND");
     }
 //    int getDonGia(int id){
 //        int row = tblCthd.getrow
 //        
-//        ProductDetail prd = hddao.fillSLvsGiaProduct(id);
+//        ProductDetail prd = hddao.findProductByID(id);
 //        
 //        return don_gia;
 //    }
@@ -200,7 +200,7 @@ public class XuatHDDialog extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblTongTien.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
-        lblTongTien.setText("Tổng tiền:");
+        lblTongTien.setText("Cần thanh toán:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -208,8 +208,8 @@ public class XuatHDDialog extends javax.swing.JDialog {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,7 +252,7 @@ public class XuatHDDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(150, 150, 150))
+                .addGap(216, 216, 216))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -28,7 +28,7 @@ public class khachHangDao  {
 
     public boolean update(khachHang kh) {
         String sql = "UPDATE KHACHHANG SET SoDienThoai = ?, TenKhachHang = ?, GioiTinh = ?, Email = ?, DiaChi = ? WHERE ID = ?";
-        helper.executeUpdate(sql, kh.getSoDienThoai(), kh.getTenKhachHang(), kh.isGioiTinh(), kh.getEmail(), kh.getDiaChi(), kh.getId());
+        helper.executeUpdate(sql, kh.getSoDienThoai(), kh.getTenKhachHang(), kh.isGioiTinh()?1:0, kh.getEmail(), kh.getDiaChi(), kh.getId());
         return true;
     }
 
@@ -62,7 +62,16 @@ public class khachHangDao  {
     }
 
     public khachHang findBySDT(String SDT) {
-        List<khachHang> list = selectBySQL("SELECT * FROM KHACHHANG WHERE SoDienThoai LIKE N'%"+SDT+"%'");
+        List<khachHang> list = selectBySQL("SELECT * FROM KHACHHANG WHERE SoDienThoai = ?",SDT);
+        return list.isEmpty() ? null : list.get(0);
+    }
+    public List<khachHang> searchSDT(String SDT) {
+       
+        return selectBySQL("SELECT * FROM KHACHHANG WHERE SoDienThoai LIKE N'%"+SDT+"%'");
+         
+    }
+    public khachHang findByID(int id) {
+        List<khachHang> list = selectBySQL("SELECT * FROM KHACHHANG WHERE ID = ?",id);
         return list.isEmpty() ? null : list.get(0);
     }
     
